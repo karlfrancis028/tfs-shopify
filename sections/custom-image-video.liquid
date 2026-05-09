@@ -1,0 +1,301 @@
+{% schema %}
+{
+  "name": "Custom ImageVideo Card",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Image"
+    },
+    {
+      "type": "url",
+      "id": "left_button_link",
+      "label": "Left Button Link"
+    },
+    {
+      "type": "text",
+      "id": "left_button_text",
+      "label": "Left Button Text",
+    },
+    {
+      "type": "text",
+      "id": "right_title",
+      "label": "Right Title",
+      "default": "Lorem ipsum"
+    },
+    {
+      "type": "text",
+      "id": "right_content",
+      "label": "Right Content",
+      "default": "Lorem ipsum"
+    },
+    {
+      "type": "video",
+      "id": "right_video",
+      "label": "Right Video"
+    },
+    {
+      "type": "url",
+      "id": "right_button_link",
+      "label": "Right Button Link"
+    },
+    {
+      "type": "text",
+      "id": "right_button_text",
+      "label": "Right Button Text",
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Font Size (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "content_size",
+      "label": "Content Font Size (px)",
+      "min": 14,
+      "max": 72,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom ImageVideo Card"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="custom-media-section">
+  <div class="container">
+    <div class="cards">
+      <div class="card active">
+        
+        <!-- LEFT MEDIA -->
+        <div class="left">
+          {%- if section.settings.left_image != blank -%}
+            {%- liquid
+              assign image_height = section.settings.left_image.width | divided_by: section.settings.left_image.aspect_ratio
+            -%}
+            {{ section.settings.left_image 
+              | image_url: width: 3840 
+              | image_tag: 
+                width: section.settings.left_image.width, 
+                height: image_height, 
+                sizes: "100vw", 
+                class: "left-image" 
+            }}
+          {%- endif -%}
+          {%- if section.settings.left_button_text != blank -%}
+            <a href="{{ section.settings.left_button_link }}" class="btn">{{ section.settings.left_button_text }}</a>
+          {%- endif -%}
+        </div>
+
+        <!-- RIGHT CONTENT (split into text + video) -->
+        <div class="right">
+          <div class="right-top container-text" style="text-align: {{ section.settings.text_alignment }};">
+            <div class="title" style="font-size: {{ section.settings.title_size }}px;">
+              <p>{{ section.settings.right_title }}</p>
+            </div>
+            <div class="content" style="font-size: {{ section.settings.content_size }}px;">
+              <h1>{{ section.settings.right_content }}</h1>
+            </div>
+          </div>
+
+          <div class="right-bottom video-container">
+            {%- if section.settings.right_video != blank -%}
+             <div class="custom-video-wrapper">
+                {{
+                    section.settings.right_video
+                    | video_tag: 
+                    image_size: "1100x",
+                    autoplay: false,
+                    loop: true,
+                    muted: false
+                }}
+              <button class="video-overlay-btn" aria-label="Play/Pause">
+                ▶
+                </button>
+            </div>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.right_button_text != blank -%}
+            <a href="{{ section.settings.right_button_link }}" class="btn">{{ section.settings.right_button_text }}</a>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.custom-media-section {
+  width: 100%;
+}
+.custom-media-section .container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.custom-media-section .cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin: 20px 0;
+}
+.custom-media-section .card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  min-height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 12px;
+}
+
+/* LEFT */
+.custom-media-section .left,
+.custom-media-section .right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.custom-media-section .left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right > video,
+.left > img 
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* crop/scale to fill */
+    display: block;
+}
+
+/* RIGHT split */
+.custom-media-section .right {
+  display: flex;
+  flex-direction: column;
+}
+.custom-media-section .right-top {
+  flex: 1;
+  padding: 20px;
+}
+.custom-media-section .right-bottom {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-media-section .video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer; 
+}
+
+.custom-video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Buttons */
+.custom-media-section .btn {
+  position: absolute;
+  bottom: 14px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+.custom-media-section .left .btn {
+  left: 14px;
+}
+.custom-media-section .right .btn {
+  right: 14px;
+}
+
+.video-overlay-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 2rem;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  opacity: 0;
+}
+
+.custom-video-wrapper:hover .video-overlay-btn {
+  background: rgba(0,0,0,0.8);
+  opacity: 1;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const wrapper = document.querySelector('.custom-video-wrapper');
+  if(wrapper){
+    const video = wrapper.querySelector('video');
+    const btn = wrapper.querySelector('.video-overlay-btn');
+
+    wrapper.addEventListener('click', function(){
+      if(video.paused){
+        video.play();
+        btn.textContent = "❚❚"; // pause icon
+      } else {
+        video.pause();
+        btn.textContent = "▶"; // play icon
+      }
+    });
+  }
+});
+</script>

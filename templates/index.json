@@ -1,0 +1,742 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_KbGw4i": {
+      "type": "image-banner",
+      "blocks": {
+        "text_eyebrow": {
+          "type": "text",
+          "settings": {
+            "text": "Craftsmanship | Refinement | Exploration",
+            "text_style": "body"
+          }
+        },
+        "heading_yi9LK8": {
+          "type": "heading",
+          "settings": {
+            "heading": "A Curated Lifestyle for the Modern Gentleman",
+            "heading_size": "h0"
+          }
+        },
+        "text_QDnAdR": {
+          "type": "text",
+          "settings": {
+            "text": "Where craftsmanship meets cultural discovery—expressed through quarterly pairings and monthly discoveries.",
+            "text_style": "body"
+          }
+        },
+        "buttons_ppt9BP": {
+          "type": "buttons",
+          "name": "Become_a_son",
+          "settings": {
+            "button_label_1": "Become A Son",
+            "button_link_1": "shopify://pages/subscription-page",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text_eyebrow",
+        "heading_yi9LK8",
+        "text_QDnAdR",
+        "buttons_ppt9BP"
+      ],
+      "custom_css": [
+        ".banner {background: #eeeeee !important;}",
+        ".banner::before,.banner__media::before,.banner__content::before {padding-bottom: 0 !important; display: none !important;}",
+        ".banner__media {background: transparent !important;}",
+        ".banner__buttons .button {--buttons-radius: 999px !important; --buttons-radius-outset: 999px !important;}"
+      ],
+      "name": "Head_image",
+      "settings": {
+        "image": "shopify://shop_images/new_hero_image.png",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "top-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "scheme-5",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "logo_bar_main": {
+      "type": "logo-bar",
+      "blocks": {
+        "logo_tino": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Tino.png",
+            "asset_filename": "",
+            "darken": true,
+            "scale": 100
+          }
+        },
+        "logo_mono": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Mono_acbad344-873f-4175-8e56-6462e335e28d.png",
+            "asset_filename": "",
+            "darken": false,
+            "scale": 100
+          }
+        },
+        "logo_cordone": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Cordone_dd28719e-a828-4358-8219-0eb53b43fb01.png",
+            "asset_filename": "",
+            "darken": false,
+            "scale": 100
+          }
+        },
+        "logo_stjames": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/St._James.png",
+            "asset_filename": "",
+            "darken": false,
+            "scale": 100
+          }
+        },
+        "logo_kinetix": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Kinetix_a7427e4d-62c5-44d7-8032-10114eac6a52.png",
+            "asset_filename": "",
+            "darken": false,
+            "scale": 100
+          }
+        },
+        "logo_nishiguchi": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Nishiguchi_40204b9b-9463-4bc9-9d13-fcc642ec2155.png",
+            "asset_filename": "",
+            "darken": false,
+            "scale": 100
+          }
+        },
+        "logo_officine": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Paladino.png",
+            "asset_filename": "",
+            "darken": false,
+            "scale": 100
+          }
+        },
+        "logo_spingle": {
+          "type": "logo",
+          "settings": {
+            "asset_filename": "spingle.svg",
+            "darken": false,
+            "scale": 60
+          }
+        }
+      },
+      "block_order": [
+        "logo_tino",
+        "logo_mono",
+        "logo_cordone",
+        "logo_stjames",
+        "logo_kinetix",
+        "logo_nishiguchi",
+        "logo_officine",
+        "logo_spingle"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "background_color": "#dfe6e2",
+        "speed": 40,
+        "logo_height": 56,
+        "gap": 80
+      }
+    },
+    "pricing_tiers_main": {
+      "type": "pricing-tiers",
+      "blocks": {
+        "tier_pioneer": {
+          "type": "tier",
+          "settings": {
+            "name": "The Pioneer",
+            "price": "P 20,000",
+            "price_suffix": "/quarter",
+            "description": "<p>For the man beginning his journey into refinement. A quiet yet deliberate entrance into The Fortunate Son circle — where pursuit meets purpose.</p>",
+            "features": "4 to 5 Items inside the box\nTop & Bottom Garments\nComplimentary Accessories\nVIP access to The Fortunate Son events",
+            "is_popular": false,
+            "popular_label": "Most Popular",
+            "button_label": "ADD TO CART",
+            "button_link": "",
+            "open_new_tab": false
+          }
+        },
+        "tier_heirloom": {
+          "type": "tier",
+          "settings": {
+            "name": "The Heirloom",
+            "price": "P 30,000",
+            "price_suffix": "/quarter",
+            "description": "<p>For the gentleman who values the lineage of craft and the grace of enduring taste. This box unveils more premium selections, each curated to express the continuity of heritage and modern mastery.</p>",
+            "features": "A curation of 5+ Premium items\nPremium Top & Bottom garments\nPremium-tier apparel and accessories\nExclusive access to The Fortunate Son events\nPremium-tier pair of shoes\nAnnual Limited Collection Birthday gift.",
+            "is_popular": true,
+            "popular_label": "Most Popular",
+            "button_label": "ADD TO CART",
+            "button_link": "",
+            "open_new_tab": false
+          }
+        },
+        "tier_legacy": {
+          "type": "tier",
+          "settings": {
+            "name": "The Legacy",
+            "price": "P 50,000",
+            "price_suffix": "/quarter",
+            "description": "<p>For the distinguished few who build their own tradition. Each quarterly box is a collector's edition of craftsmanship — pieces that bridge artistry and identity, precision and permanence.</p>",
+            "features": "A curation of 5+ Premium items\nPremium Top & Bottom garments\nPremium-tier pair of Shoes\nPremium-tier apparel and accessories\nVIP access privileges on The Fortunate Son events\nPriority invitations to The Fortunate Son private experience",
+            "is_popular": false,
+            "popular_label": "Most Popular",
+            "button_label": "ADD TO CART",
+            "button_link": "",
+            "open_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "tier_pioneer",
+        "tier_heirloom",
+        "tier_legacy"
+      ],
+      "settings": {
+        "heading": "What's Inside the Box?",
+        "subheading": "Your boxes reflects your archetype, curated from brands that share our ethos.",
+        "background_color": "#eeeeee"
+      }
+    },
+    "hero_brands_main": {
+      "type": "hero-brands",
+      "blocks": {
+        "hb_tino": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Tino_Bone_150.png",
+            "asset_filename": "",
+            "darken": true
+          }
+        },
+        "hb_spingle": {
+          "type": "logo",
+          "settings": {
+            "asset_filename": "spingle.svg",
+            "darken": false
+          }
+        },
+        "hb_colony": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Colony_Clothing.png",
+            "asset_filename": "",
+            "darken": false
+          }
+        },
+        "hb_nishiguchi": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Nishiguchi.png",
+            "asset_filename": "",
+            "darken": false
+          }
+        },
+        "hb_captain": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Captain_Santors.png",
+            "asset_filename": "",
+            "darken": true
+          }
+        },
+        "hb_stjames": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/St_James.png",
+            "asset_filename": "",
+            "darken": false
+          }
+        },
+        "hb_fieldguide": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/The_Gentleman_s_Fieldguide.png",
+            "asset_filename": "",
+            "darken": true
+          }
+        }
+      },
+      "block_order": [
+        "hb_tino",
+        "hb_spingle",
+        "hb_colony",
+        "hb_nishiguchi",
+        "hb_captain",
+        "hb_stjames",
+        "hb_fieldguide"
+      ],
+      "settings": {
+        "heading": "Hero Brands",
+        "subheading": "Makers and crafts featured this season—alongside signature pieces from The Fortunate Son, reflected in your pairing.",
+        "background_color": "#eeeeee"
+      }
+    },
+    "how_it_works_main": {
+      "type": "how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon_asset": "icon-oath.svg",
+            "title": "Take the Oath of Discretion",
+            "body": "A required induction to define your profile—ensuring each quarterly pairing or discovery box is curated with precision."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon_asset": "icon-curation.svg",
+            "title": "The Curation Begins",
+            "body": "Once your induction is complete, we begin curating your selection—either a quarterly pairing or a monthly discovery box—each prepared with care and delivered accordingly."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon_asset": "icon-arrival.svg",
+            "title": "The Arrival",
+            "body": "Your selection arrives—composed with intention and yours to keep. Should refinement in size or fit be required, we will personally see to the exchange—at no cost."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "heading": "How It Works",
+        "subheading": "A seamless three-step process—from induction to delivery.",
+        "background_color": "#dfe6e2",
+        "link_text": "Begin your journey",
+        "link_url": "",
+        "button_label": "TAKE THE OATH OF DISCRETION",
+        "button_url": ""
+      }
+    },
+    "quarterly_pairing": {
+      "type": "horizontal-scroll",
+      "blocks": {
+        "qp_1": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/clubman.png",
+            "title": "The Classic Clubman",
+            "subtitle": "",
+            "body": "For the man at ease from course to clubhouse — classics that wear well through the day."
+          }
+        },
+        "qp_2": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/yachtman.png",
+            "title": "The Riviera Yachtman",
+            "subtitle": "",
+            "body": "For the man who leaves shore behind — a uniform for unhurried days aboard a yacht."
+          }
+        },
+        "qp_3": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/frontiersman.png",
+            "title": "The Hinterland Frontiersman",
+            "subtitle": "",
+            "body": "For the man drawn beyond the familiar — moving between city edge and open ground."
+          }
+        },
+        "qp_4": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/academic.png",
+            "title": "The Academic",
+            "subtitle": "",
+            "body": "For the man shaped by thought — moving with quiet clarity wherever he goes."
+          }
+        },
+        "qp_5": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/operator.png",
+            "title": "The Operator",
+            "subtitle": "",
+            "body": "For the man at ease in every setting — composed, considered, enduring."
+          }
+        }
+      },
+      "block_order": [
+        "qp_1",
+        "qp_2",
+        "qp_3",
+        "qp_4",
+        "qp_5"
+      ],
+      "settings": {
+        "heading": "Quarterly Pairing",
+        "subheading": "Shaped by your profile, function, and lifestyle.\nStructured across three quarterly tiers—progressing from essential foundations to a complete expression.",
+        "background_color": "#eeeeee",
+        "link_text": "Inspired Gentleman Style",
+        "link_url": "",
+        "button_label": "TAKE THE OATH OF DISCRETION",
+        "button_url": ""
+      }
+    },
+    "discovery_box": {
+      "type": "horizontal-scroll",
+      "blocks": {
+        "db_1": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/mokaflor.png",
+            "title": "Florence in a cup",
+            "subtitle": "Mokaflor",
+            "body": ""
+          }
+        },
+        "db_2": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/spingle_loafers.png",
+            "title": "Belgian Loafers",
+            "subtitle": "Spingle",
+            "body": ""
+          }
+        },
+        "db_3": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/colony_field_jacket.png",
+            "title": "Field Jacket",
+            "subtitle": "Colony Clothing",
+            "body": ""
+          }
+        },
+        "db_4": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/spingle_boat.png",
+            "title": "Lausetto Boat Sneakers",
+            "subtitle": "Spingle",
+            "body": ""
+          }
+        }
+      },
+      "block_order": [
+        "db_1",
+        "db_2",
+        "db_3",
+        "db_4"
+      ],
+      "settings": {
+        "heading": "Discovery Box",
+        "subheading": "Lorem ipsum dolor sit amet consectetur. Sed vitae sem id risus.",
+        "background_color": "#eeeeee",
+        "link_text": "",
+        "link_url": "",
+        "button_label": "",
+        "button_url": ""
+      }
+    },
+    "unboxing_main": {
+      "type": "unboxing-experience",
+      "blocks": {
+        "unb_1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/unboxing_experience_1.png"
+          }
+        },
+        "unb_2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/unboxing_experience_2.png"
+          }
+        },
+        "unb_3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/unboxing_experience_3.png"
+          }
+        }
+      },
+      "block_order": [
+        "unb_1",
+        "unb_2",
+        "unb_3"
+      ],
+      "settings": {
+        "heading": "The Unboxing Experience",
+        "subheading": "Those with discerning taste live with intention. Every choice considered, every detail purposeful.",
+        "background_color": "#eeeeee",
+        "scroll_speed": 40
+      }
+    },
+    "testimonials_main": {
+      "type": "testimonials",
+      "blocks": {
+        "testim_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"A quarterly ritual I've come to rely on — curated with an editor's eye.\"",
+            "name": "Full Name",
+            "role": "Member since 2024"
+          }
+        },
+        "testim_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"Considered, intentional, and quietly beautiful. Everything I hoped a membership could be.\"",
+            "name": "Full Name",
+            "role": "Member since 2024"
+          }
+        },
+        "testim_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"The closest thing I've found to a personal archivist of taste.\"",
+            "name": "Full Name",
+            "role": "Member since 2024"
+          }
+        }
+      },
+      "block_order": [
+        "testim_1",
+        "testim_2",
+        "testim_3"
+      ],
+      "settings": {
+        "heading": "In Their Words",
+        "subheading": "",
+        "background_color": "#eeeeee"
+      }
+    },
+    "faq_main": {
+      "type": "faq-section",
+      "blocks": {
+        "cat_general": {
+          "type": "category",
+          "settings": {
+            "label": "General Information"
+          }
+        },
+        "q_general_1": {
+          "type": "question",
+          "settings": {
+            "question": "Who can subscribe to The Fortunate Son?",
+            "answer": "<p>Our subscription service is available to individuals aged 18 years old and above. By subscribing, you confirm that you meet this requirement.</p>"
+          }
+        },
+        "cat_cycle": {
+          "type": "category",
+          "settings": {
+            "label": "Subscription & Cycle"
+          }
+        },
+        "q_cycle_1": {
+          "type": "question",
+          "settings": {
+            "question": "How does the subscription cycle work?",
+            "answer": "<p>Subscriptions run on a rolling three-month cycle starting from the month you subscribe.</p>"
+          }
+        },
+        "q_cycle_2": {
+          "type": "question",
+          "settings": {
+            "question": "When will I receive my curated box?",
+            "answer": "<p>Your box will be shipped during the third month of your subscription cycle.</p>"
+          }
+        },
+        "q_cycle_3": {
+          "type": "question",
+          "settings": {
+            "question": "Does my subscription automatically renew?",
+            "answer": "<p>Yes. Subscriptions automatically renew for the next quarterly cycle unless you make changes or cancel within the allowed window.</p>"
+          }
+        },
+        "cat_updown": {
+          "type": "category",
+          "settings": {
+            "label": "Upgrading, Downgrading & Cancellation"
+          }
+        },
+        "q_ud_1": {
+          "type": "question",
+          "settings": {
+            "question": "Can I upgrade or downgrade my subscription?",
+            "answer": "<p>Yes. You may upgrade or downgrade your plan within 7 days after your current cycle ends.</p>"
+          }
+        },
+        "q_ud_2": {
+          "type": "question",
+          "settings": {
+            "question": "Can I cancel my subscription?",
+            "answer": "<p>Yes. You may stop the next cycle during the same 7-day window after your current cycle ends.</p>"
+          }
+        },
+        "q_ud_3": {
+          "type": "question",
+          "settings": {
+            "question": "What happens if I don't make any changes or cancellation?",
+            "answer": "<p>If no action is taken during the adjustment period, your subscription will automatically continue into the next cycle.</p><p><strong>Example:</strong><br>Cycle runs February–April<br>Box ships in April<br>Changes or cancellation allowed May 1–7<br>Subscription renews automatically after May 7</p>"
+          }
+        },
+        "cat_payments": {
+          "type": "category",
+          "settings": {
+            "label": "Payments"
+          }
+        },
+        "q_pay_1": {
+          "type": "question",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept credit cards: VISA, MasterCard, and AMEX.</p>"
+          }
+        },
+        "q_pay_2": {
+          "type": "question",
+          "settings": {
+            "question": "Will I be charged automatically?",
+            "answer": "<p>Yes. By subscribing, you authorize recurring billing for each quarterly cycle.</p>"
+          }
+        },
+        "q_pay_3": {
+          "type": "question",
+          "settings": {
+            "question": "What happens if my payment fails?",
+            "answer": "<p>Your subscription may be temporarily suspended until payment is successfully processed.</p>"
+          }
+        },
+        "q_pay_4": {
+          "type": "question",
+          "settings": {
+            "question": "Are payments refundable?",
+            "answer": "<p>Subscription payments are non-refundable, except in cases involving damaged or incorrect items.</p>"
+          }
+        },
+        "cat_box": {
+          "type": "category",
+          "settings": {
+            "label": "Subscription Box Contents"
+          }
+        },
+        "q_box_1": {
+          "type": "question",
+          "settings": {
+            "question": "Are the garments custom-made?",
+            "answer": "<p>No. Boxes contain Ready-to-Wear (RTW) pieces, not bespoke or made-to-measure garments.</p>"
+          }
+        },
+        "q_box_2": {
+          "type": "question",
+          "settings": {
+            "question": "Why do you collect measurements?",
+            "answer": "<p>Measurements help us select the most suitable RTW size for you.</p>"
+          }
+        },
+        "q_box_3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer alterations?",
+            "answer": "<p>Alterations are not provided by The Fortunate Son.</p>"
+          }
+        },
+        "cat_returns": {
+          "type": "category",
+          "settings": {
+            "label": "Returns & Exchanges"
+          }
+        },
+        "q_ret_1": {
+          "type": "question",
+          "settings": {
+            "question": "Do you accept returns or exchanges?",
+            "answer": "<p>Returns and exchanges are generally not accepted, except under specific conditions.</p><p><strong>Damaged or Incorrect Items</strong><br>Notify us within 7 days of delivery. Provide supporting photos. Our Customer Service/Valet Team will assist on a case-by-case basis.</p><p><strong>Fit Issues</strong><br>Fit concerns may be reviewed only if accurate measurements were submitted during onboarding. Customers may visit a local tailor, or get assistance at our partner store Tino Suits. Providing accurate measurements helps minimize fit issues.</p>"
+          }
+        },
+        "cat_delivery": {
+          "type": "category",
+          "settings": {
+            "label": "Delivery"
+          }
+        },
+        "q_del_1": {
+          "type": "question",
+          "settings": {
+            "question": "What should I do if my box hasn't arrived?",
+            "answer": "<p>Please contact our Customer Service/Valet Team so we can coordinate with the courier and provide updates.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat_general",
+        "q_general_1",
+        "cat_cycle",
+        "q_cycle_1",
+        "q_cycle_2",
+        "q_cycle_3",
+        "cat_updown",
+        "q_ud_1",
+        "q_ud_2",
+        "q_ud_3",
+        "cat_payments",
+        "q_pay_1",
+        "q_pay_2",
+        "q_pay_3",
+        "q_pay_4",
+        "cat_box",
+        "q_box_1",
+        "q_box_2",
+        "q_box_3",
+        "cat_returns",
+        "q_ret_1",
+        "cat_delivery",
+        "q_del_1"
+      ],
+      "settings": {
+        "heading": "FAQs",
+        "background_color": "#dfe6e2"
+      }
+    }
+  },
+  "order": [
+    "image_banner_KbGw4i",
+    "logo_bar_main",
+    "pricing_tiers_main",
+    "hero_brands_main",
+    "how_it_works_main",
+    "quarterly_pairing",
+    "discovery_box",
+    "unboxing_main",
+    "testimonials_main",
+    "faq_main"
+  ]
+}

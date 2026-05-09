@@ -1,0 +1,328 @@
+{% schema %}
+{
+  "name": "Custom Image Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Image"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section Height",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "text",
+      "id": "title_text",
+      "label": "Title Text",
+      "default": "Lorem Ipsum"
+    },
+    {
+      "type": "text",
+      "id": "content_text",
+      "label": "Content Text",
+      "default": "Dolor Sit Amet"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Font Size (px)",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_size",
+      "label": "Content Font Size (px)",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text Vertical Position",
+      "default": "center",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_side",
+      "label": "Text Overlay Side",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left Image" },
+        { "value": "right", "label": "Right Image" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Image Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-container">
+  <div class="custom-cards">
+    <div class="custom-section custom-height-{{ section.settings.section_height }}">
+      
+      <!-- Left Image -->
+      <div class="custom-left">
+        {%- if section.settings.left_image != blank -%}
+          {%- liquid
+            assign image_height = section.settings.left_image.width | divided_by: section.settings.left_image.aspect_ratio
+            assign sizes = '100vw'
+            assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+          -%}
+          {{
+            section.settings.left_image
+            | image_url: width: 3840
+            | image_tag:
+              width: section.settings.left_image.width,
+              height: image_height,
+              class: 'custom-image',
+              sizes: sizes,
+              widths: widths,
+              fetchpriority: 'high'
+          }}
+        {%- endif -%}
+
+        {% if section.settings.text_side == "left" %}
+          <div class="text-container text-{{ section.settings.text_alignment }} pos-{{ section.settings.text_position }}">
+            <div class="title" style="font-size: {{ section.settings.title_size }}px;">
+              <p>{{ section.settings.title_text }}</p>
+            </div>
+            <div class="content" style="font-size: {{ section.settings.content_size }}px;">
+              <h1>{{ section.settings.content_text }}</h1>
+            </div>
+            {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+              <a href="{{ section.settings.button_link }}" class="custom-button">
+                {{ section.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Right Image -->
+      <div class="custom-right">
+        {%- if section.settings.right_image != blank -%}
+          {%- liquid
+            assign image_height = section.settings.right_image.width | divided_by: section.settings.right_image.aspect_ratio
+            assign sizes = '100vw'
+            assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+          -%}
+          {{
+            section.settings.right_image
+            | image_url: width: 3840
+            | image_tag:
+              width: section.settings.right_image.width,
+              height: image_height,
+              class: 'custom-image',
+              sizes: sizes,
+              widths: widths
+          }}
+        {%- endif -%}
+
+        {% if section.settings.text_side == "right" %}
+          <div class="text-container text-{{ section.settings.text_alignment }} pos-{{ section.settings.text_position }}">
+            <div class="title" style="font-size: {{ section.settings.title_size }}px;">
+              <p>{{ section.settings.title_text }}</p>
+            </div>
+            <div class="content" style="font-size: {{ section.settings.content_size }}px;">
+              <h1>{{ section.settings.content_text }}</h1>
+            </div>
+            {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+              <a href="{{ section.settings.button_link }}" class="custom-button">
+                {{ section.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-container {
+    width: 100%;
+  }
+  .custom-cards {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0;
+  }
+  .custom-section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+  }
+  .custom-left,
+  .custom-right {
+    flex: 1 1 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* ✅ keeps images inside container */
+  }
+  .custom-image {
+    width: 100%;          /* ✅ fill container width */
+    height: 100%;         /* ✅ fill container height */
+    object-fit: cover;    /* ✅ crop to fit */
+    object-position: center center;
+    display: block;       /* ✅ prevent inline spacing */
+  }
+
+  /* Text overlay */
+  .text-container {
+    position: absolute;
+    width: 100%;
+    padding: 16px;
+    color: #fff;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+  .text-left { text-align: left; }
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+
+  .pos-top { top: 10%; transform: translateY(-10%); }
+  .pos-center { top: 50%; transform: translateY(-50%); }
+  .pos-bottom { bottom: 10%; transform: translateY(10%); }
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 12px;
+  }
+  .content {
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  .custom-button {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  .custom-button:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Height presets */
+  .custom-height-small {
+    min-height: 300px;
+  }
+  .custom-height-medium {
+    min-height: 500px;
+  }
+  .custom-height-large {
+    min-height: 700px;
+  }
+
+  /* ✅ Responsive */
+  @media (max-width: 1024px) {
+    .custom-section {
+      flex-direction: column;
+    }
+    .custom-left,
+    .custom-right {
+      flex: 1 1 100%;
+      height: auto;
+    }
+    .custom-image {
+      height: auto;
+      max-height: 50vh;
+    }
+    .text-container {
+      padding: 12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .title { font-size: calc({{ section.settings.title_size }}px * 0.8); }
+    .content { font-size: calc({{ section.settings.content_size }}px * 0.8); }
+    .custom-button {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .custom-left,
+    .custom-right {
+      flex: 1 1 100%;
+      height: auto;
+    }
+    .custom-height-small,
+    .custom-height-medium,
+    .custom-height-large {
+      height: auto; /* let it resize on mobile */
+      min-height: 250px;
+    }
+    .custom-image {
+      height: 100%;
+      max-height: 50vh;
+    }
+  }
+</style>
+

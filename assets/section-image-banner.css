@@ -1,0 +1,812 @@
+.banner {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  z-index: auto;
+  isolation: isolate;
+}
+
+.banner__box {
+  text-align: center;
+}
+
+/* Needed for gradient continuity with or without animation, the transform scopes the gradient to its container which happens already when animation are turned on */
+.banner__box.gradient {
+  transform: perspective(0);
+}
+
+@media only screen and (max-width: 749px) {
+  .banner--content-align-mobile-right .banner__box {
+    text-align: right;
+  }
+
+  .banner--content-align-mobile-left .banner__box {
+    text-align: left;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .banner--content-align-right .banner__box {
+    text-align: right;
+  }
+
+  .banner--content-align-left .banner__box {
+    text-align: left;
+  }
+
+  .banner--content-align-left.banner--desktop-transparent .banner__box,
+  .banner--content-align-right.banner--desktop-transparent .banner__box,
+  .banner--medium.banner--desktop-transparent .banner__box {
+    max-width: 68rem;
+  }
+}
+
+.banner__media.animate--zoom-in {
+  clip-path: inset(0px);
+}
+
+.banner__media.animate--zoom-in > img:not(.zoom):not(.deferred-media__poster-button),
+.banner__media.animate--zoom-in > svg:not(.zoom):not(.deferred-media__poster-button) {
+  position: fixed;
+  height: 100vh;
+}
+
+@media screen and (max-width: 749px) {
+  .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
+  .banner--small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
+    height: 28rem;
+  }
+
+  .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media,
+  .banner--medium.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
+    height: 34rem;
+  }
+
+  .banner--large.banner--mobile-bottom:not(.banner--adapt) .banner__media,
+  .banner--large.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
+    height: 39rem;
+  }
+
+  .banner--small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
+    min-height: 28rem;
+  }
+
+  .banner--medium:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
+    min-height: 34rem;
+  }
+
+  .banner--large:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
+    min-height: 39rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .banner {
+    flex-direction: row;
+  }
+
+  .banner--small:not(.banner--adapt) {
+    min-height: 42rem;
+  }
+
+  .banner--medium:not(.banner--adapt) {
+    min-height: 56rem;
+  }
+
+  .banner--large:not(.banner--adapt) {
+    min-height: 72rem;
+  }
+
+  .banner__content.banner__content--top-left {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .banner__content.banner__content--top-center {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .banner__content.banner__content--top-right {
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .banner__content.banner__content--middle-left {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .banner__content.banner__content--middle-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .banner__content.banner__content--middle-right {
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .banner__content.banner__content--bottom-left {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .banner__content.banner__content--bottom-center {
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .banner__content.banner__content--bottom-right {
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .banner:not(.banner--stacked) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .banner--stacked {
+    height: auto;
+  }
+
+  .banner--stacked .banner__media {
+    flex-direction: column;
+  }
+}
+
+.banner__media {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.banner__media-half {
+  width: 50%;
+}
+
+.banner__media-half + .banner__media-half {
+  right: 0;
+  left: auto;
+}
+
+.banner__media-half.animate--fixed:first-child > img,
+.banner__media-half.animate--zoom-in:first-child > img {
+  width: 50%;
+}
+
+.banner__media-half.animate--fixed:nth-child(2) > img,
+.banner__media-half.animate--zoom-in:nth-child(2) > img {
+  left: 50%;
+  width: 50%;
+}
+
+@media screen and (max-width: 749px) {
+  .banner--stacked .animate--fixed:first-child > img,
+  .banner--stacked .animate--zoom-in:first-child > img {
+    width: 100%;
+  }
+
+  .banner--stacked .banner__media-half.animate--fixed:nth-child(2) > img,
+  .banner--stacked .banner__media-half.animate--zoom-in:nth-child(2) > img {
+    left: 0;
+    width: 100%;
+  }
+
+  .banner--stacked .banner__media-half {
+    width: 100%;
+  }
+
+  .banner--stacked .banner__media-half + .banner__media-half {
+    order: 1;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .banner__media {
+    height: 100%;
+  }
+}
+
+.banner--adapt,
+.banner--adapt_image.banner--mobile-bottom .banner__media:not(.placeholder) {
+  height: auto;
+}
+
+@media screen and (max-width: 749px) {
+  .banner--mobile-bottom .banner__media,
+  .banner--stacked:not(.banner--mobile-bottom) .banner__media {
+    position: relative;
+  }
+
+  .banner--stacked.banner--adapt .banner__content {
+    height: auto;
+  }
+
+  .banner:not(.banner--mobile-bottom):not(.email-signup-banner) .banner__box {
+    background: transparent;
+  }
+
+  .banner:not(.banner--mobile-bottom) .banner__box {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .banner:not(.banner--mobile-bottom) .button--secondary {
+    --alpha-button-background: 0;
+  }
+
+  .banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
+    position: absolute;
+    height: auto;
+  }
+
+  .banner--stacked.banner--adapt:not(.banner--mobile-bottom) .banner__content {
+    max-height: 100%;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .banner--stacked:not(.banner--adapt) .banner__media {
+    position: relative;
+  }
+
+  .banner::before {
+    display: none !important;
+  }
+
+  .banner--stacked .banner__media-image-half {
+    width: 100%;
+  }
+}
+
+.banner__content {
+  padding: 0;
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+@media screen and (min-width: 750px) {
+  .banner__content {
+    padding: 5rem;
+  }
+
+  .banner__content--top-left {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .banner__content--top-center {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .banner__content--top-right {
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .banner__content--middle-left {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .banner__content--middle-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .banner__content--middle-right {
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .banner__content--bottom-left {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .banner__content--bottom-center {
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .banner__content--bottom-right {
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .banner--mobile-bottom:not(.banner--stacked) .banner__content {
+    order: 2;
+  }
+
+  .banner:not(.banner--mobile-bottom) .field__input,
+  .banner--mobile-bottom:not(.banner--stacked) .banner__box.color-scheme-1 {
+    background: transparent;
+  }
+}
+
+.banner__box {
+  padding: 4rem 1.5rem;
+  position: relative;
+  height: fit-content;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  word-wrap: break-word;
+  z-index: 1;
+}
+
+.banner--mobile-bottom .banner__box {
+  padding: 4rem 3.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .banner__box {
+    padding: 4rem 3.5rem;
+  }
+
+  .banner--desktop-transparent .banner__box {
+    padding: 4rem 0;
+    background: transparent;
+    max-width: 89rem;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .banner--desktop-transparent .button--secondary {
+    --alpha-button-background: 0;
+  }
+
+  .banner--desktop-transparent .content-container:after {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .banner--mobile-bottom::after,
+  .banner--mobile-bottom .banner__media::after {
+    display: none;
+  }
+}
+
+.banner::after,
+.banner__media::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  background: #000000;
+  opacity: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.banner__box > * + .banner__text {
+  margin-top: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .banner__box > * + .banner__text {
+    margin-top: 2rem;
+  }
+}
+
+.banner__box > * + * {
+  margin-top: 1rem;
+}
+
+.banner__box > *:first-child {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .banner--stacked .banner__box {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .banner__box {
+    width: auto;
+    max-width: 71rem;
+    min-width: 45rem;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .banner__box {
+    max-width: 90rem;
+  }
+}
+
+.banner__heading {
+  margin-bottom: 0;
+}
+
+.banner__box .banner__heading + * {
+  margin-top: 1rem;
+}
+
+.banner__buttons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 45rem;
+  word-break: break-word;
+}
+
+@media screen and (max-width: 749px) {
+  .banner--content-align-mobile-right .banner__buttons--multiple {
+    justify-content: flex-end;
+  }
+
+  .banner--content-align-mobile-center .banner__buttons--multiple > * {
+    flex-grow: 1;
+    min-width: 22rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .banner--content-align-center .banner__buttons--multiple > * {
+    flex-grow: 1;
+    min-width: 22rem;
+  }
+
+  .banner--content-align-right .banner__buttons--multiple {
+    justify-content: flex-end;
+  }
+}
+
+.banner__box > * + .banner__buttons {
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 749px) {
+  .banner:not(.slideshow) .rte a,
+  .banner:not(.slideshow) .inline-richtext a:hover,
+  .banner:not(.slideshow) .rte a:hover {
+    color: currentColor;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .banner--desktop-transparent .rte a,
+  .banner--desktop-transparent .inline-richtext a:hover,
+  .banner--desktop-transparent .rte a:hover {
+    color: currentColor;
+  }
+}
+
+/* ============================================
+   Price block
+   ============================================ */
+
+.banner__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  line-height: 1;
+}
+
+.banner__price-currency {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.banner__price-amount {
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================
+   Feature item block
+   ============================================ */
+
+.banner__feature-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.banner__feature-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  font-size: 1.4rem;
+}
+
+.banner__feature-item::before {
+  content: '\2022';
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Divider block
+   ============================================ */
+
+.banner__divider {
+  border: none;
+  border-top: 1px solid currentColor;
+  opacity: 0.2;
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+/* ============================================
+   TFS Hero - 50/50 Split Layout
+   Targets: [id$="__image_banner_KbGw4i"]
+   ============================================ */
+
+/*
+  Figma reference: frame 1440 wide -> content 630px (43.75%), image starts at left:630
+  Image natural 993x1058, positioned with top:112.77 - overflows the hero downward by design.
+
+  This absolute-positioned layout assumes ~1100px+ of horizontal room. Below that, the
+  hardcoded 993px image and 630px content panel just don't fit, so we fall back to the
+  natural stacked layout at smaller viewports (handled in the max-width:1099px block below).
+*/
+@media screen and (min-width: 1100px) {
+  /* Parent shopify-section wrapper - lift above following sections so the overflow paints on top.
+     overflow-x: clip cuts the horizontal bleed (fixes horizontal scroll) without creating a scroll
+     container, so overflow-y: visible stays truly visible and the image still bleeds downward
+     into the logo bar as designed. */
+  [id^="shopify-section-"][id$="__image_banner_KbGw4i"] {
+    position: relative;
+    z-index: 2;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
+  [id$="__image_banner_KbGw4i"] {
+    display: block !important;
+    position: relative !important;
+    overflow-x: clip !important;    /* clips horizontal bleed - fixes horizontal scroll */
+    overflow-y: visible !important; /* keeps image bleeding downward into logo bar */
+    isolation: auto !important; /* don't trap z-index inside .banner's stacking context */
+  }
+
+  /* Content - normal flow on the left, fixed-width to match image's left:630px anchor */
+  [id$="__image_banner_KbGw4i"] .banner__content {
+    position: relative;
+    z-index: 2;
+    width: 630px; /* matches Figma image left:630 - content ends where image starts */
+    max-width: 630px;
+    padding: 80px 60px;
+    background-color: #EEEEEE;
+    margin: 0;
+    box-sizing: border-box; /* keep padding inside the 630px */
+  }
+
+  [id$="__image_banner_KbGw4i"] .banner__content.page-width {
+    max-width: 630px;
+    padding: 80px 60px;
+  }
+
+  /* Image - anchored to the RIGHT edge with consistent overflow, free to bleed downward.
+     Figma: image native 993x1058, sits at left:630 in 1440 frame -> right edge at 1623,
+     i.e. 183px past the frame's right edge. Anchoring to right keeps that 183px overflow
+     consistent on any viewport width (wider viewports just push the image further right).
+  */
+  [id$="__image_banner_KbGw4i"] .banner__media {
+    position: absolute !important;
+    top: 112.77px; /* Figma: image y-offset within frame */
+    right: -110px; /* Figma: image overflows 183px past frame right edge */
+    left: auto !important; /* override Dawn's default left:0 */
+    bottom: auto !important;
+    width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
+    height: auto !important;
+    max-height: calc(100vh - 200px);    /* caps growth on shorter screens (e.g. MacBooks) */
+    overflow: hidden;                   /* clips bottom of image cleanly at max-height */
+    z-index: 3; /* sits above the logo bar it overlaps */
+    pointer-events: none; /* don't block clicks on overlapped sections */
+  }
+
+  [id$="__image_banner_KbGw4i"] .banner__media img {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: unset !important;
+  }
+
+  /* Hide Dawn's overlay pseudo-element so it doesn't darken anything */
+  [id$="__image_banner_KbGw4i"]::after {
+    display: none;
+  }
+}
+
+/* Tablet & mobile (anything narrower than 1100px) - stacked, image-first natural layout */
+@media screen and (max-width: 1099px) {
+  [id$="__image_banner_KbGw4i"] {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important; /* no rogue image overflow at narrow widths */
+  }
+
+  /* Image renders inline above the content, scales with viewport */
+  [id$="__image_banner_KbGw4i"] .banner__media {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    order: 1;
+  }
+
+  [id$="__image_banner_KbGw4i"] .banner__media img {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  [id$="__image_banner_KbGw4i"] .banner__content {
+    position: relative;
+    width: 100% !important;
+    max-width: 100% !important;
+    background-color: #EEEEEE;
+    padding: 40px 24px;
+    order: 2;
+  }
+}
+
+/* ============================================
+   Pioneer card - image_banner_idbwdg
+   ============================================ */
+
+/* Card sits over the baked-in card area of the Pioneer image */
+[id$="__image_banner_idbwdg"] .banner__content {
+  position: absolute !important;
+  top: 14% !important;
+  left: 20% !important;
+  width: 31% !important;
+  bottom: 8% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  z-index: 4;
+}
+
+[id$="__image_banner_idbwdg"] .banner__box {
+  background: #2a2116 !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding: 3.2rem 2.8rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 1.4rem !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+[id$="__image_banner_idbwdg"] .banner__buttons {
+  margin-top: auto !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* Heading */
+[id$="__image_banner_idbwdg"] .banner__heading,
+[id$="__image_banner_idbwdg"] h2.banner__heading {
+  font-family: 'Glacial Indifference', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.011em !important;
+  text-align: center !important;
+}
+
+/* Price */
+[id$="__image_banner_idbwdg"] .banner__price {
+  justify-content: center !important;
+  letter-spacing: -0.011em !important;
+  line-height: 1 !important;
+}
+
+[id$="__image_banner_idbwdg"] .banner__price-currency {
+  font-family: 'Cardo', serif !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+}
+
+[id$="__image_banner_idbwdg"] .banner__price-amount {
+  font-family: 'Cardo', serif !important;
+  font-weight: 700 !important;
+  font-size: 40px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.011em !important;
+}
+
+/* Description text */
+[id$="__image_banner_idbwdg"] .banner__text,
+[id$="__image_banner_idbwdg"] .banner__text p,
+[id$="__image_banner_idbwdg"] .banner__text * {
+  font-family: 'Glacial Indifference', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  letter-spacing: -0.011em !important;
+  text-align: center !important;
+}
+
+/* Feature list */
+[id$="__image_banner_idbwdg"] .banner__feature-list {
+  align-items: center !important;
+}
+
+[id$="__image_banner_idbwdg"] .banner__feature-item {
+  font-family: 'Glacial Indifference', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  letter-spacing: -0.011em !important;
+  justify-content: flex-start !important;
+  width: fit-content !important;
+}
+
+/* Button */
+[id$="__image_banner_idbwdg"] .banner__buttons .button {
+  --color-button: 255, 255, 255;
+  --color-button-text: 255, 255, 255;
+  --alpha-button-background: 0;
+  --alpha-button-border: 1;
+  width: 90% !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  font-family: 'Proxima Nova', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  letter-spacing: -0.011em !important;
+  text-transform: uppercase !important;
+}
+
+@media screen and (max-width: 749px) {
+  [id$="__image_banner_idbwdg"] .banner__content {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    padding: 2rem !important;
+    align-items: center !important;
+  }
+
+  [id$="__image_banner_idbwdg"] .banner__box {
+    border-radius: 8px !important;
+    height: auto !important;
+    padding: 2.4rem 2rem !important;
+  }
+}
+
+/* "Become A Son" CTA - pill shape (matches other landing-page CTAs) */
+[id$="__image_banner_KbGw4i"] .banner__buttons .button {
+  --buttons-radius: 999px;
+  --buttons-radius-outset: 999px;
+}

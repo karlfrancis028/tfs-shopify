@@ -1,0 +1,311 @@
+{% schema %}
+{
+  "name": "Custom Media Card",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Image"
+    },
+    {
+      "type": "video",
+      "id": "right_video",
+      "label": "Right Video"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section Height",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "text",
+      "id": "title_text",
+      "label": "Title Text",
+      "default": "Lorem Ipsum"
+    },
+    {
+      "type": "text",
+      "id": "content_text",
+      "label": "Content Text",
+      "default": "Dolor Sit Amet"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Font Size (px)",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_size",
+      "label": "Content Font Size (px)",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text Vertical Position",
+      "default": "center",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Media Card"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-container">
+  <div class="custom-cards">
+    <div class="custom-section custom-height-{{ section.settings.section_height }}">
+        <div class="custom-left">
+            {%- if section.settings.left_image != blank -%}
+            {%- liquid
+                assign image_height = section.settings.left_image.width | divided_by: section.settings.left_image.aspect_ratio
+                assign sizes = '100vw'
+                assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+            -%}
+            {{
+                section.settings.left_image
+                | image_url: width: 3840
+                | image_tag:
+                width: section.settings.left_image.width,
+                height: image_height,
+                class: 'custom-image',
+                sizes: sizes,
+                widths: widths,
+                fetchpriority: 'high'
+            }}
+            {%- endif -%}
+
+            <div class="text-container text-{{ section.settings.text_alignment }} pos-{{ section.settings.text_position }}">
+                <div class="title" style="font-size: {{ section.settings.title_size }}px;">
+                    <p>{{ section.settings.title_text }}</p>
+                </div>
+                <div class="content" style="font-size: {{ section.settings.content_size }}px;">
+                    <h1>{{ section.settings.content_text }}</h1>
+                </div>
+                {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+                    <a href="{{ section.settings.button_link }}" class="custom-button">
+                    {{ section.settings.button_text }}
+                    </a>
+                {% endif %}
+                </div>
+        </div>
+        <div class="custom-right">
+            {% if section.settings.right_video != blank %}
+            {{
+            section.settings.right_video
+            | video_tag:
+              image_size: '1100x',
+              autoplay: true,
+              loop: section.settings.enable_video_looping,
+              controls: true,
+              muted: true
+            }}
+            {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-container {
+    width: 100%;
+  }
+  .custom-cards {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0;
+  }
+  .custom-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 400px;
+    border: none;
+    border-radius: 0;
+  }
+  .custom-left, .custom-right {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .custom-left img,
+  .custom-right video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Text overlay */
+  .text-container {
+    position: absolute;
+    width: 100%;
+    padding: 16px;
+    color: #ffff;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+  .text-left { text-align: left; }
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+
+  .pos-top { top: 10%; transform: translateY(-10%); }
+  .pos-center { top: 50%; transform: translateY(-50%); }
+  .pos-bottom { bottom: 10%; transform: translateY(10%); }
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 12px;
+  }
+  .content {
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  .custom-button {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  .custom-button:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  /* ✅ Responsive */
+  @media (max-width: 1024px) {
+    .custom-card {
+      flex-direction: column;
+      min-height: auto;
+    }
+    .custom-left,
+    .custom-right {
+      width: 100%;
+      height: auto;
+    }
+    .custom-left img,
+    .custom-right video {
+      height: auto;
+      max-height: 50vh;
+    }
+    .text-container {
+      padding: 12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .title { font-size: calc({{ section.settings.title_size }}px * 0.8); }
+    .content { font-size: calc({{ section.settings.content_size }}px * 0.8); }
+    .custom-button {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+  }
+  .custom-section {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: stretch;
+}
+
+.custom-left,
+.custom-right {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Default image + video behavior */
+.custom-image,
+.custom-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Height presets */
+.custom-height-small {
+  min-height: 300px;
+  max-height: 400px;
+}
+
+.custom-height-medium {
+  min-height: 500px;
+  max-height: 650px;
+}
+
+.custom-height-large {
+  min-height: 700px;
+  max-height: 900px;
+}
+
+@media (max-width: 768px) {
+  .custom-left,
+  .custom-right {
+    flex: 1 1 100%;
+  }
+  .custom-height-small,
+  .custom-height-medium,
+  .custom-height-large {
+    min-height: auto;
+    max-height: none;
+  }
+}
+
+</style>

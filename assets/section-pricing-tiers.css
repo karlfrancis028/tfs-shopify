@@ -1,0 +1,160 @@
+.pricing-tiers {
+  padding: 6rem 1.6rem;
+}
+
+.pricing-tiers__header {
+  text-align: center;
+  max-width: 72rem;
+  margin: 0 auto 4rem;
+}
+
+.pricing-tiers__heading {
+  font-family: var(--font-heading-family), serif;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  color: #034325;
+  margin: 0 0 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.pricing-tiers__subheading {
+  color: #034325;
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.pricing-tiers__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 386px);   /* fits as many 386px columns as the viewport allows */
+  gap: 2rem;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+@media (max-width: 420px) {
+  /* On phones narrower than the card itself, let cards fill viewport width */
+  .pricing-tiers__grid {
+    grid-template-columns: 1fr;
+    padding: 0 1.6rem;
+  }
+}
+
+.pricing-tier {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #d5dcd7;
+  border-radius: 1rem;
+  padding: 3.2rem 2.8rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.pricing-tier--popular {
+  border-color: #169C62;
+  border-width: 1.5px;
+}
+
+.pricing-tier__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #169C62;
+  color: #ffffff;
+  padding: 0.4rem 1.4rem;
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.pricing-tier__name {
+  font-family: var(--font-heading-family), serif;
+  font-size: 1.8rem;
+  color: #034325;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.pricing-tier__price {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+}
+
+.pricing-tier__amount {
+  font-family: var(--font-heading-family), serif;
+  font-size: 3rem;
+  color: #034325;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.pricing-tier__suffix {
+  font-size: 1.1rem;
+  color: #034325;
+  opacity: 0.65;
+  margin-top: 8px;
+}
+
+.pricing-tier__description {
+  color: #034325;
+  font-size: 1.3rem;
+  line-height: 1.55;
+  margin-bottom: 1.6rem;
+}
+
+.pricing-tier__divider {
+  border: none;
+  border-top: 1px solid #d5dcd7;
+  margin: 0 0 1.6rem;
+}
+
+.pricing-tier__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.4rem;
+  flex-grow: 1;
+  color: #034325;
+  font-size: 1.3rem;
+}
+
+.pricing-tier__features li {
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.pricing-tier__features li::before {
+  content: "• ";
+}
+
+.pricing-tier__button {
+  display: block;
+  padding: 1.2rem 2rem;
+  border: 1px solid #034325;
+  border-radius: 999px;
+  color: #034325;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.08em;
+  font-size: 1.2rem;
+  transition: background 0.2s, color 0.2s;
+  margin-top: auto;
+}
+
+.pricing-tier__button:hover {
+  background: #034325;
+  color: #ffffff;
+}
+
+@media (max-width: 749px) {
+  .pricing-tiers__grid {
+    grid-template-columns: 1fr;
+    max-width: 42rem;
+  }
+}

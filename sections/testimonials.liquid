@@ -1,0 +1,63 @@
+{{ 'section-testimonials.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="testimonials"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="testimonials__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  {%- if section.settings.subheading != blank -%}
+    <p class="testimonials__subheading">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="testimonials__grid">
+      {%- for block in section.blocks -%}
+        <figure class="testimonial" {{ block.shopify_attributes }}>
+          <blockquote class="testimonial__quote">{{ block.settings.quote }}</blockquote>
+          <figcaption class="testimonial__author">
+            <span class="testimonial__name">{{ block.settings.name }}</span>
+            {%- if block.settings.role != blank -%}
+              <span class="testimonial__role">{{ block.settings.role }}</span>
+            {%- endif -%}
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "In Their Words" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#EEEEEE" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"A quarterly ritual I've come to rely on — curated with an editor's eye.\"" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Full Name" },
+        { "type": "text", "id": "role", "label": "Role / location (optional)", "default": "Member since 2024" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

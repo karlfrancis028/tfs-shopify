@@ -1,0 +1,816 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign section_id = section.id
+  assign autoplay = section.settings.autoplay
+  assign pause_on_hover = section.settings.pause_on_hover
+  assign show_arrows = section.settings.show_arrows
+  assign show_controls = section.settings.show_controls
+  assign interval_ms = section.settings.autoplay_interval | times: 1000
+  assign transition_ms = section.settings.transition_duration
+-%}
+
+<div
+  id="Slider-{{ section_id }}"
+  class="simple-slider simple-slider--{{ section_id }}{% if section.blocks.size == 0 %} simple-slider--empty{% endif %}{% if section.settings.object_fit == 'contain' %} simple-slider--contain{% endif %}"
+  data-slider
+  data-autoplay="{{ autoplay }}"
+  data-interval="{{ interval_ms }}"
+  data-transition="{{ transition_ms }}"
+  data-pause-hover="{{ pause_on_hover }}"
+  data-redirect="{{ section.settings.redirect_on_end }}"
+  data-redirect-url="{{ section.settings.redirect_url }}"
+  data-redirect-delay="{{ section.settings.redirect_delay }}"
+  aria-roledescription="carousel"
+  aria-label="{{ section.settings.aria_label | escape | default: 'Image slider' }}"
+>
+  <div class="simple-slider__track" data-slider-track>
+    {%- for block in section.blocks -%}
+      {%- assign img = block.settings.image -%}
+      <div
+        class="simple-slide{% if forloop.first %} is-active{% endif %}"
+        data-slide
+        role="group"
+        aria-roledescription="slide"
+        aria-label="{{ forloop.index }} of {{ section.blocks.size }}"
+        {{ block.shopify_attributes }}
+      >
+
+        {%- if img -%}
+          {{ img
+            | image_url: width: 3000
+            | image_tag:
+              loading: 'lazy',
+              decoding: 'async',
+              sizes: '100vw',
+              class: 'simple-slide__image',
+              alt: block.settings.alt | escape
+          }}
+        {%- else -%}
+          <div class="simple-slide__placeholder">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.caption != blank -%}
+          <div class="simple-slide__caption rte">{{ block.settings.caption }}</div>
+        {%- endif -%}
+
+        {%- if block.settings.heading != blank
+        or block.settings.text != blank
+        or block.settings.button_label != blank -%}
+        <div class="simple-slide__content
+              pos-{{ block.settings.box_align | replace: 'middle','middle' }}
+              align-{{ block.settings.text_alignment }}
+              mob-align-{{ block.settings.text_alignment_mobile }}
+              color-{{ block.settings.color_scheme }} gradient
+              {% unless block.settings.show_text_box %}no-box{% endunless %}">
+    {%- if block.settings.heading != blank -%}
+      <h2 class="banner__heading inline-richtext simple-slide__heading {{ block.settings.heading_size }}">
+        {{ block.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if block.settings.subheading != blank -%}
+      <div class="banner__text rte simple-slide__subheading">
+        <p>{{ block.settings.subheading }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.text != blank -%}
+      <div class="banner__text rte simple-slide__text">
+        {{ block.settings.text }}
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.button_label != blank -%}
+      <div class="banner__buttons simple-slide__actions">
+        {%- if block.settings.button_link != blank -%}
+          <a href="{{ block.settings.button_link }}"
+             class="simple-slide__button button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}">
+            {{ block.settings.button_label | escape }}
+          </a>
+        {%- else -%}
+          <button type="button"
+                  class="simple-slide__button button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
+                  disabled>
+            {{ block.settings.button_label | escape }}
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if show_arrows -%}
+    <button
+      type="button"
+      class="simple-slider__nav simple-slider__nav--prev"
+      data-prev
+      aria-label="{{ 'general.slider.previous_slide' | t | default: 'Previous slide' }}"
+    >&lsaquo;</button>
+    <button
+      type="button"
+      class="simple-slider__nav simple-slider__nav--next"
+      data-next
+      aria-label="{{ 'general.slider.next_slide' | t | default: 'Next slide' }}"
+    >&rsaquo;</button>
+  {%- endif -%}
+
+  {%- if show_controls -%}
+    <div class="simple-slider__controls">
+      <button
+        type="button"
+        class="simple-slider__playpause"
+        data-playpause
+        aria-pressed="{{ autoplay }}"
+        aria-label="Pause autoplay"
+      >
+        <span data-state-play hidden>Play</span>
+        <span data-state-pause>Pause</span>
+      </button>
+      <div class="simple-slider__dots" data-dots></div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+.simple-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  --transition-speed: {{ transition_ms }}ms;
+  --nav-bg: rgba(0,0,0,.45);
+  --nav-color:#fff;
+  --dot-size:12px;
+  --dot-color:#d5d5d5;
+  --dot-active:#111;
+  --caption-bg: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.55) 100%);
+  isolation: isolate;
+}
+.simple-slider__track {
+  position: relative;
+  width:100%;
+  height:100%;
+  min-height: {{ section.settings.min_height }}px;
+}
+.simple-slide {
+  position: absolute;
+  inset: 0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity var(--transition-speed) ease;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#000;
+}
+.simple-slider--contain .simple-slide {
+  background:#fff;
+}
+.simple-slide.is-active {
+  opacity:1;
+  pointer-events:auto;
+  z-index:1;
+}
+.simple-slide__image {
+  width:100%;
+  height:100%;
+  object-fit: {{ section.settings.object_fit }};
+  display:block;
+  background:#fff;
+}
+.simple-slider--contain .simple-slide__caption {
+  background: linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.9) 100%);
+  color:#111;
+}
+.simple-slide__placeholder {
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f2f2f2;
+}
+.simple-slide__caption {
+  position:absolute;
+  inset:auto 0 0 0;
+  color:#fff;
+  padding:1rem 1.25rem 1.35rem;
+  font-size:clamp(14px,1.6vw,18px);
+  line-height:1.4;
+  background: var(--caption-bg);
+  max-width: 70ch;
+}
+
+.simple-slide__content {
+  position:absolute;
+  max-width: var(--content-max, 54rem);
+  width:100%;
+  pointer-events:auto;
+  padding:1.5rem 1.75rem;
+  display:flex;
+  flex-direction:column;
+  gap:.85rem;
+  user-select: text;
+  z-index: 2;
+}
+.simple-slide__heading,
+.simple-slide__subheading,
+.simple-slide__text { user-select:text; }
+
+.simple-slide__content.no-box { 
+    background: none; 
+}
+
+.simple-slider--contain .simple-slide__content { 
+    color:#111; 
+}
+
+.simple-slide__content:not(.no-box) {
+
+  border-radius:8px;
+}
+
+/* Corners / centers */
+.pos-top-left    { top:0; left:0; }
+.pos-top-center  { top:0; left:50%; transform:translateX(-50%); text-align:center; }
+.pos-top-right   { top:0; right:0; }
+.pos-middle-left { top:50%; left:0; transform:translateY(-50%); }
+.pos-middle-center { top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+.pos-middle-right { top:50%; right:0; transform:translateY(-50%); }
+.pos-bottom-left { bottom:0; left:0; }
+.pos-bottom-center { bottom:0; left:50%; transform:translateX(-50%); text-align:center; }
+.pos-bottom-right { bottom:0; right:0; }
+
+/* Horizontal text alignment desktop */
+.align-left  { text-align:left; align-items:flex-start; }
+.align-center{ text-align:center; align-items:center; }
+.align-right { text-align:right; align-items:flex-end; }
+
+/* Mobile override */
+@media (max-width:749px){
+  .mob-align-left  { text-align:left !important; align-items:flex-start !important; }
+  .mob-align-center{ text-align:center !important; align-items:center !important; }
+  .mob-align-right { text-align:right !important; align-items:flex-end !important; }
+}
+/* Ensure button clickable */
+.simple-slide__actions,
+.simple-slide__button { pointer-events:auto; }
+
+/* Optional: tighten width when aligned center to avoid edge clipping */
+.pos-top-center,
+.pos-middle-center,
+.pos-bottom-center { width: min(100%, 80ch); }
+
+.pos-top-center.align-left,
+.pos-top-center.align-right,
+.pos-middle-center.align-left,
+.pos-middle-center.align-right,
+.pos-bottom-center.align-left,
+.pos-bottom-center.align-right { text-align:inherit; }
+
+.simple-slide__content--center {
+  justify-content:center;
+  text-align:center;
+  align-items:center;
+}
+.simple-slide__heading {
+  margin:0;
+  color:#fff;
+  font-size:clamp(1.4rem,2.4vw,2.4rem);
+  line-height:1.15;
+}
+.simple-slider--contain .simple-slide__heading { color:#111; }
+.simple-slide__text {
+  color:#f5f5f5;
+  max-width:60ch;
+  font-size:clamp(.9rem,1.2vw,1.05rem);
+  line-height:1.5;
+}
+.simple-slider--contain .simple-slide__text { color:#333; }
+.simple-slide__actions { pointer-events:auto; }
+.simple-slide__button { pointer-events:auto; }
+
+.simple-slider__nav {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:var(--nav-bg);
+  color:var(--nav-color);
+  border:0;
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  line-height:1;
+  cursor:pointer;
+  z-index:5;
+  backdrop-filter:saturate(180%) blur(6px);
+  transition:background .25s;
+}
+.simple-slider__nav:hover,
+.simple-slider__nav:focus-visible {
+  background:rgba(0,0,0,.65);
+}
+.simple-slider__nav--prev { left:10px; }
+.simple-slider__nav--next { right:10px; }
+
+.simple-slider__controls {
+  position:absolute;
+  inset:auto 0 0 0;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:.5rem .75rem;
+  gap:.75rem;
+  pointer-events:none;
+}
+.simple-slide__content .button {
+  align-self:flex-start;
+}
+.simple-slider__content--center .button {
+  align-self:center;
+}
+.simple-slider__playpause {
+  pointer-events:auto;
+  border:0;
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  font-size:.8rem;
+  padding:.5rem .75rem;
+  border-radius:4px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+}
+.simple-slider__playpause:hover,
+.simple-slider__playpause:focus-visible {
+  background:rgba(0,0,0,.75);
+}
+.simple-slider__dots {
+  display:flex;
+  gap:.5rem;
+  margin-left:auto;
+  pointer-events:auto;
+}
+.simple-slider__dot {
+  width:var(--dot-size);
+  height:var(--dot-size);
+  border-radius:50%;
+  border:0;
+  background:var(--dot-color);
+  cursor:pointer;
+  padding:0;
+  position:relative;
+  transition:background .3s, transform .3s;
+}
+.simple-slider__dot.is-active {
+  background:var(--dot-active);
+  transform:scale(1.15);
+}
+.simple-slider--empty {
+  min-height:200px;
+  background:#f6f6f6;
+  border:1px dashed #ccc;
+}
+
+@media (max-width: 749px) {
+  .simple-slide__content {
+    padding:1.25rem 1.25rem 1.75rem;
+  }
+  .simple-slide__heading {
+    font-size:clamp(1.25rem,5.2vw,2rem);
+  }
+  .simple-slide__text {
+    font-size:.9rem;
+  }
+}
+
+@media (hover:hover) {
+  .simple-slider[data-pause-hover="true"]:hover .simple-slide__caption {
+    opacity:1;
+  }
+}
+</style>
+
+
+<script>
+(function() {
+  var root = document.getElementById('Slider-{{ section_id }}');
+  if (!root) return;
+
+  var slides = Array.prototype.slice.call(root.querySelectorAll('[data-slide]'));
+  if (!slides.length) return;
+
+  var prevBtn = root.querySelector('[data-prev]');
+  var nextBtn = root.querySelector('[data-next]');
+  var dotsWrap = root.querySelector('[data-dots]');
+  var playPauseBtn = root.querySelector('[data-playpause]');
+
+  var autoplay = root.dataset.autoplay === 'true';
+  var pauseOnHover = root.dataset.pauseHover === 'true';
+  var interval = parseInt(root.dataset.interval, 10) || 5000;
+
+  var redirectEnabled = root.dataset.redirect === 'true';
+  var redirectUrl = root.dataset.redirectUrl;
+  var redirectDelay = parseInt(root.dataset.redirectDelay || '0', 10);
+
+  var index = 0;
+  var timer = null;
+  var isPaused = !autoplay;
+  var redirected = false;
+
+  function setActive(i) {
+    slides.forEach(function(s, idx) {
+      s.classList.toggle('is-active', idx === i);
+    });
+    updateDots(i);
+    index = i;
+  }
+
+  function doRedirect() {
+    if (redirected || !redirectEnabled || !redirectUrl) return;
+    redirected = true;
+    stop();
+    {% if request.design_mode %}
+      console.log('[Slider] Redirect suppressed (editor):', redirectUrl);
+      return;
+    {% endif %}
+    setTimeout(function(){ window.location.href = redirectUrl; }, redirectDelay);
+  }
+
+  function next() {
+    if (index === slides.length - 1) { doRedirect(); return; }
+    setActive(index + 1);
+  }
+  function prev() {
+    if (index === 0) return;
+    setActive(index - 1);
+  }
+
+  function start() {
+    clearInterval(timer);
+    if (!autoplay) { isPaused = true; return; }
+    timer = setInterval(function() {
+      if (redirectEnabled && index === slides.length - 1) { doRedirect(); return; }
+      next();
+    }, interval);
+    isPaused = false;
+    updatePlayPauseUI(true);
+  }
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+    isPaused = true;
+    updatePlayPauseUI(false);
+  }
+  function togglePlay() { isPaused ? start() : stop(); }
+
+  function updatePlayPauseUI(playing) {
+    if (!playPauseBtn) return;
+    playPauseBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    playPauseBtn.setAttribute('aria-label', playing ? 'Pause autoplay' : 'Start autoplay');
+    var playSpan = playPauseBtn.querySelector('[data-state-play]');
+    var pauseSpan = playPauseBtn.querySelector('[data-state-pause]');
+    if (playSpan && pauseSpan) {
+      playSpan.hidden = playing;
+      pauseSpan.hidden = !playing;
+    }
+  }
+
+  function buildDots() {
+    if (!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    slides.forEach(function(_, i) {
+      var b = document.createElement('button');
+      b.type='button';
+      b.className='simple-slider__dot';
+      b.setAttribute('aria-label','Go to slide ' + (i+1));
+      b.addEventListener('click', function() {
+        setActive(i);
+        if (!isPaused && !redirected) { start(); }
+      });
+      dotsWrap.appendChild(b);
+    });
+  }
+  function updateDots(active) {
+    if (!dotsWrap) return;
+    dotsWrap.querySelectorAll('.simple-slider__dot').forEach(function(d,i){
+      d.classList.toggle('is-active', i === active);
+    });
+  }
+
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    next();
+    if (!isPaused && !redirected) start();
+  });
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    prev();
+    if (!isPaused && !redirected) start();
+  });
+  if (playPauseBtn) playPauseBtn.addEventListener('click', togglePlay);
+
+  if (pauseOnHover) {
+    root.addEventListener('mouseenter', function(){ if (!isPaused) stop(); });
+    root.addEventListener('mouseleave', function(){ if (!isPaused && !redirected) start(); });
+  }
+
+  root.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); next(); if (!isPaused && !redirected) start(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); if (!isPaused && !redirected) start(); }
+  });
+
+  // Init
+  buildDots();
+  setActive(0); // ensures first is visible even if JS loads late (fallback class also added)
+  autoplay ? start() : stop();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Auto Image Slider",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Image slider" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show previous/next arrows", "default": true },
+    { "type": "checkbox", "id": "show_controls", "label": "Show play/pause & dots", "default": true },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "label": "Autoplay interval (seconds)",
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "transition_duration",
+      "label": "Fade duration (ms)",
+      "min": 200,
+      "max": 3000,
+      "step": 100,
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum slider height (px)",
+      "min": 200,
+      "max": 900,
+      "step": 20,
+      "default": 480
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "Image fit",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "fill", "label": "Fill" }
+      ]
+    },
+    {
+    "type": "checkbox",
+    "id": "redirect_on_end",
+    "label": "Redirect after last slide",
+    "default": false
+    },
+    {
+      "type": "url",
+      "id": "redirect_url",
+      "label": "Redirect URL"
+    },
+    {
+      "type": "range",
+      "id": "redirect_delay",
+      "label": "Redirect delay (ms)",
+      "min": 0,
+      "max": 5000,
+      "step": 250,
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "t:sections.slideshow.blocks.slide.name",
+      "limit": 15,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.slideshow.blocks.slide.settings.image.label"
+        },
+        {
+          "type": "range",
+          "id": "image_overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%",
+          "label": "t:sections.slideshow.blocks.slide.settings.image_overlay_opacity.label",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "t:sections.slideshow.blocks.slide.settings.header_text.content"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "t:sections.slideshow.blocks.slide.settings.heading.default",
+          "label": "t:sections.slideshow.blocks.slide.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h0",
+              "label": "t:sections.all.heading_size.options__3.label"
+            },
+            {
+              "value": "hxl",
+              "label": "t:sections.all.heading_size.options__4.label"
+            },
+            {
+              "value": "hxxl",
+              "label": "t:sections.all.heading_size.options__5.label"
+            }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subheading",
+          "default": "t:sections.slideshow.blocks.slide.settings.subheading.default",
+          "label": "t:sections.slideshow.blocks.slide.settings.subheading.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.slideshow.blocks.slide.settings.header_button.content"
+        },        
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "t:sections.slideshow.blocks.slide.settings.button_label.default",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_label.label", 
+          "info": "t:sections.slideshow.blocks.slide.settings.button_label.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.slideshow.blocks.slide.settings.link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary",
+          "label": "t:sections.slideshow.blocks.slide.settings.secondary_style.label",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:sections.slideshow.blocks.slide.settings.header_layout.content"
+        },         
+        {
+          "type": "checkbox",
+          "id": "show_text_box",
+          "label": "t:sections.slideshow.blocks.slide.settings.show_text_box.label",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "box_align",
+          "options": [
+            {
+              "value": "top-left",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__1.label"
+            },
+            {
+              "value": "top-center",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__2.label"
+            },
+            {
+              "value": "top-right",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__3.label"
+            },
+            {
+              "value": "middle-left",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__4.label"
+            },
+            {
+              "value": "middle-center",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__5.label"
+            },
+            {
+              "value": "middle-right",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__6.label"
+            },
+            {
+              "value": "bottom-left",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__7.label"
+            },
+            {
+              "value": "bottom-center",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__8.label"
+            },
+            {
+              "value": "bottom-right",
+              "label": "t:sections.slideshow.blocks.slide.settings.box_align.options__9.label"
+            }
+          ],
+          "default": "middle-center",
+          "label": "t:sections.slideshow.blocks.slide.settings.box_align.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.option_1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.option_2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.option_3.label"
+            }
+          ],
+          "default": "center",
+          "label": "t:sections.slideshow.blocks.slide.settings.text_alignment.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment_mobile",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.options__2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.options__3.label"
+            }
+          ],
+          "default": "center",
+          "label": "t:sections.slideshow.blocks.slide.settings.text_alignment_mobile.label"
+        },        
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "t:sections.all.colors.label",
+          "default": "scheme-1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auto Image Slider",
+      "blocks": [
+        { 
+            "type": "slide" 
+        },
+        { 
+            "type": "slide" 
+        },
+        { 
+            "type": "slide" 
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

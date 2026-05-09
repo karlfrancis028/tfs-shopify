@@ -1,0 +1,69 @@
+.hero-brands {
+  padding: 6rem 1.6rem;
+}
+
+.hero-brands__header {
+  text-align: center;
+  max-width: 80rem;
+  margin: 0 auto 4rem;
+}
+
+.hero-brands__heading {
+  font-family: var(--font-heading-family), serif;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  color: #034325;
+  margin: 0 0 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.hero-brands__subheading {
+  color: #034325;
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.hero-brands__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6rem;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+.hero-brands__card {
+  flex: 0 0 auto;
+  width: 26rem;
+  height: 11rem;
+  background: #ffffff;
+  border: 1px solid #d5dcd7;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem 2.4rem;
+}
+
+.hero-brands__card img,
+.hero-brands__card svg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero-brands__card--darken img,
+.hero-brands__card--darken svg {
+  filter: brightness(0);
+}
+
+@media (max-width: 749px) {
+  .hero-brands__card {
+    width: calc(50% - 0.8rem);
+    height: 9rem;
+    padding: 1.2rem;
+  }
+}

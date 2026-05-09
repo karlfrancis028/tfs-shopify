@@ -1,0 +1,174 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "disabled": true,
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_9767JX": {
+      "type": "image-banner",
+      "blocks": {
+        "text_a7xDkV": {
+          "type": "text",
+          "settings": {
+            "text": "Subscription",
+            "text_style": "caption-with-letter-spacing"
+          }
+        },
+        "heading_k66UyA": {
+          "type": "heading",
+          "settings": {
+            "heading": "Elegance of a modern man.",
+            "heading_size": "hxxl"
+          }
+        },
+        "text_3G8eBR": {
+          "type": "text",
+          "settings": {
+            "text": "A personalized quarterly selection of pieces and the finer things in life.",
+            "text_style": "subtitle"
+          }
+        },
+        "buttons_7eXTLL": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "JOIN FOR FREE",
+            "button_link_1": "shopify://pages/subscription-page",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "shopify://pages/subscription-page",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text_a7xDkV",
+        "heading_k66UyA",
+        "text_3G8eBR",
+        "buttons_7eXTLL"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/elegance.png",
+        "image_overlay_opacity": 50,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "scheme-ffd739f6-c91a-401c-b45b-b2f21830da4a",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "custom_liquid_6PTUwx": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 4,
+        "padding_bottom": 0
+      }
+    },
+    "image_banner_JYnfxf": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_WydCTD": {
+          "type": "heading",
+          "settings": {
+            "heading": "Wardrobe? Elevated.",
+            "heading_size": "h1"
+          }
+        },
+        "heading_NkqxQt": {
+          "type": "heading",
+          "settings": {
+            "heading": "Confidence? Delivered.",
+            "heading_size": "h1"
+          }
+        },
+        "text_jMQCwV": {
+          "type": "text",
+          "settings": {
+            "text": "Head-to-toe outfits, styled just for you.  No shopping, no commitments, or hidden fees.",
+            "text_style": "subtitle"
+          }
+        },
+        "buttons_mLWbFf": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "TAKE YOUR STYLE QUIZ",
+            "button_link_1": "#quizify-pop-8df3fa2645a0d3c10128e04c4d64e0e4&size=fullsize",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_WydCTD",
+        "heading_NkqxQt",
+        "text_jMQCwV",
+        "buttons_mLWbFf"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/close-up-of-a-fashionable-rich-gentleman-wearing-suits-and-jacket-place-him-on-the-left-side-of-the-image-looking-to-the-right-and-slightly-facing-in-front-holding-a-glass-of-wine-bac.png",
+        "image_overlay_opacity": 40,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-right",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-4",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "image_banner_9767JX",
+    "custom_liquid_6PTUwx",
+    "image_banner_JYnfxf"
+  ]
+}

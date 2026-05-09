@@ -1,0 +1,136 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "disabled": true,
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_gnwGdW": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_WA46fR": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Fortunate Son",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_WA46fR"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-0abd8178-3d59-42e3-8cb8-c44c8b687be0",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 28
+      }
+    },
+    "info_trigger_QJT8Vf": {
+      "type": "info-trigger",
+      "blocks": {
+        "column_xfgG4z": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/make-it-a-whole-body-shot-with-a-background-of-a-local-market.png",
+            "heading": "The Essential Son",
+            "text": "The Essential Son subscription box delivers a curated selection of premium personalized tops, bottoms, and accessories tailored to your unique style. Each box combines high-quality materials with expert craftsmanship, ensuring every piece fits perfectly and elevates your wardrobe. Experience the convenience of exclusive, thoughtfully assembled outfits designed to enhance your look effortlessly.",
+            "icon_text": "+",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "column_cLJifb": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/a-rich-stylish-gentleman-wearing-a-suit-with-leather-shoes-street-light-background.png",
+            "heading": "The Pioneer",
+            "text": "The Essential Son subscription box delivers a curated selection of premium personalized tops, bottoms, and accessories tailored to your unique style. Each box combines high-quality materials with expert craftsmanship, ensuring every piece fits perfectly and elevates your wardrobe. Experience the convenience of exclusive, thoughtfully assembled outfits designed to enhance your look effortlessly.",
+            "icon_text": "+",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "column_U7R7E4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/a-rich-stylish-man-wearing-a-suit-an-expensive-watch-and-a-nice-boots-has-a-background-of-a-luxury-car.png",
+            "heading": "The Heirloom",
+            "text": "The Essential Son subscription box delivers a curated selection of premium personalized tops, bottoms, and accessories tailored to your unique style. Each box combines high-quality materials with expert craftsmanship, ensuring every piece fits perfectly and elevates your wardrobe. Experience the convenience of exclusive, thoughtfully assembled outfits designed to enhance your look effortlessly.",
+            "icon_text": "+",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "column_DWr7dH": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/a-rich-and-stylish-gentleman-wearing-a-luxurious-watch-and-a-nice-suit-onboarding-on-a-flight-background-will-be-an-airport-lobby.png",
+            "heading": "The Legacy",
+            "text": "The Essential Son subscription box delivers a curated selection of premium personalized tops, bottoms, and accessories tailored to your unique style. Each box combines high-quality materials with expert craftsmanship, ensuring every piece fits perfectly and elevates your wardrobe. Experience the convenience of exclusive, thoughtfully assembled outfits designed to enhance your look effortlessly.",
+            "icon_text": "+",
+            "link_label": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_xfgG4z",
+        "column_cLJifb",
+        "column_U7R7E4",
+        "column_DWr7dH"
+      ],
+      "name": "Interactive Columns",
+      "settings": {
+        "heading": "",
+        "desktop_expanded_percent": 55,
+        "mobile_collapsed_height": 120,
+        "mobile_expanded_height": 420,
+        "transition_duration": 500
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "rich_text_gnwGdW",
+    "info_trigger_QJT8Vf"
+  ]
+}

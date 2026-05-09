@@ -1,0 +1,166 @@
+{{ 'section-pricing-tiers.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="PricingTiers-{{ section.id }}"
+  class="pricing-tiers"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <div class="pricing-tiers__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pricing-tiers__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="pricing-tiers__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="pricing-tiers__grid">
+    {%- for block in section.blocks -%}
+      <div
+        class="pricing-tier{% if block.settings.is_popular %} pricing-tier--popular{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.is_popular and block.settings.popular_label != blank -%}
+          <div class="pricing-tier__badge">{{ block.settings.popular_label }}</div>
+        {%- endif -%}
+
+        <div class="pricing-tier__name">{{ block.settings.name }}</div>
+
+        <div class="pricing-tier__price">
+          <span class="pricing-tier__amount">{{ block.settings.price }}</span>
+          {%- if block.settings.price_suffix != blank -%}
+            <span class="pricing-tier__suffix">{{ block.settings.price_suffix }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if block.settings.description != blank -%}
+          <div class="pricing-tier__description">{{ block.settings.description }}</div>
+        {%- endif -%}
+
+        {%- if block.settings.features != blank -%}
+          <hr class="pricing-tier__divider">
+          <ul class="pricing-tier__features">
+            {%- assign features = block.settings.features | newline_to_br | split: '<br />' -%}
+            {%- for feature in features -%}
+              {%- assign trimmed = feature | strip -%}
+              {%- if trimmed != blank -%}
+                <li>{{ trimmed }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <a
+          href="{{ block.settings.button_link | default: '#' }}"
+          class="pricing-tier__button"
+          {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}
+        >
+          {{ block.settings.button_label | default: 'ADD TO CART' }}
+        </a>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pricing tiers",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What's Inside the Box?"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Your boxes reflects your archetype, curated from brands that share our ethos."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#DFE6E2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Tier name",
+          "default": "The Pioneer"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "P 20,000"
+        },
+        {
+          "type": "text",
+          "id": "price_suffix",
+          "label": "Price suffix",
+          "default": "/quarter"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features (one per line)"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_popular",
+          "label": "Mark as most popular",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "popular_label",
+          "label": "Popular badge text",
+          "default": "Most Popular"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "ADD TO CART"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link (ReCharge subscribe URL)"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pricing tiers",
+      "blocks": [
+        { "type": "tier" },
+        { "type": "tier" },
+        { "type": "tier" }
+      ]
+    }
+  ]
+}
+{% endschema %}

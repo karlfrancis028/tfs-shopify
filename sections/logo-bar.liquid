@@ -1,0 +1,143 @@
+{{ 'section-logo-bar.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="LogoBar-{{ section.id }}"
+  class="logo-bar"
+  style="background-color: {{ section.settings.background_color }}; --logo-bar-speed: {{ section.settings.speed }}s; --logo-bar-height: {{ section.settings.logo_height }}px; --logo-bar-gap: {{ section.settings.gap }}px;"
+>
+  {%- if section.blocks.size > 0 -%}
+    <div class="logo-bar__track">
+      {%- for block in section.blocks -%}
+        <div class="logo-bar__item{% if block.settings.darken %} logo-bar__item--darken{% endif %}" style="--item-scale: {{ block.settings.scale | default: 100 }}%;" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 400
+              | image_tag:
+                loading: 'lazy',
+                widths: '100, 200, 400',
+                sizes: '200px',
+                alt: block.settings.image.alt | default: ''
+            }}
+          {%- elsif block.settings.asset_filename != blank -%}
+            <img src="{{ block.settings.asset_filename | asset_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+      {%- for block in section.blocks -%}
+        <div class="logo-bar__item{% if block.settings.darken %} logo-bar__item--darken{% endif %}" style="--item-scale: {{ block.settings.scale | default: 100 }}%;" aria-hidden="true">
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 400
+              | image_tag:
+                loading: 'lazy',
+                widths: '100, 200, 400',
+                sizes: '200px',
+                alt: ''
+            }}
+          {%- elsif block.settings.asset_filename != blank -%}
+            <img src="{{ block.settings.asset_filename | asset_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Logo bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#DFE6E2"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll duration",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 16,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between logos",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "asset_filename",
+          "label": "Theme asset filename (fallback, e.g. spinule.svg)",
+          "info": "Used only if no Logo image is picked."
+        },
+        {
+          "type": "checkbox",
+          "id": "darken",
+          "label": "Darken logo (use for light logos on light backgrounds)",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "scale",
+          "min": 30,
+          "max": 150,
+          "step": 5,
+          "unit": "%",
+          "label": "Scale",
+          "default": 100
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo bar",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

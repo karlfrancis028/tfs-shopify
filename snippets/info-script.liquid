@@ -1,0 +1,10 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const infoTrigger = document.querySelector('.info-trigger');
+    const infoDisplay = document.querySelector('.info-display');
+
+    if (infoTrigger && infoDisplay) {
+        infoTrigger.addEventListener('click', function() {
+            infoDisplay.classList.toggle('visible');
+        });
+    }
+});

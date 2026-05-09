@@ -1,0 +1,55 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+
+{% assign current_tier = false %}
+{% assign upsell_handle = false %}
+
+{% comment %} 1. Check current product's tags to find the right upsell handle {% endcomment %}
+{% for tag in product.tags %}
+  {% if tag == 'tier-pioneer' %}
+    {% assign upsell_handle = 'heirloom-and-legacy' %}
+    {% break %}
+  {% elsif tag == 'tier-heirloom' %}
+    {% assign upsell_handle = 'legacy-only' %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} 2. If an upsell collection was found, render its products {% endcomment %}
+{% if upsell_handle and collections[upsell_handle].products.size > 0 %}
+
+  <style>
+    .upsell-container .card__inner.ratio {
+      position: relative;
+      padding-bottom: 100%; /* Forces a 1:1 aspect ratio */
+      height: 0;
+    }
+    .upsell-container .card__media {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <div class="upsell-container" style="margin-top: 40px; padding-top: 40px; border-top: 1px solid #e0e0e0;">
+    <h2 style="text-align: center; margin-bottom: 30px;">
+      You May Also Like to Upgrade
+    </h2>
+
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 600px; margin: 0 auto; padding: 0 20px;">
+      
+      {% assign upsell_products = collections[upsell_handle].products %}
+      {% for upsell_product in upsell_products %}
+        
+        {% comment %} 
+          This now correctly passes 'card_product' 
+          instead of 'product'.
+        {% endcomment %}
+        {% render 'card-product', card_product: upsell_product, show_vendor: false %}
+
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

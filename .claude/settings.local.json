@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk 'END{print NR}' assets/section-image-banner.css)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const s=fs.readFileSync\\('assets/section-image-banner.css','utf8'\\);const o=\\(s.match\\(/\\\\{/g\\)||[]\\).length;const c=\\(s.match\\(/\\\\}/g\\)||[]\\).length;console.log\\('open:',o,'close:',c\\)\")"
+    ]
+  }
+}

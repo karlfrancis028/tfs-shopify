@@ -1,0 +1,205 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "rich_text_CXPziW": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_WWBMqz": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Fortunate Son",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_WWBMqz"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-0abd8178-3d59-42e3-8cb8-c44c8b687be0",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "image_banner_rGT6ea": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_ChEJqk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Wardrobe? Elevated.",
+            "heading_size": "h1"
+          }
+        },
+        "heading_34dknK": {
+          "type": "heading",
+          "settings": {
+            "heading": "Confidence? Delivered.",
+            "heading_size": "h1"
+          }
+        },
+        "text_Vygnjb": {
+          "type": "text",
+          "settings": {
+            "text": "Head-to-toe outfits, styled just for you.  No shopping, no commitments, or hidden fees.",
+            "text_style": "subtitle"
+          }
+        },
+        "buttons_yUK8Tr": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "TAKE YOUR STYLE QUIZ",
+            "button_link_1": "#quizify-pop-8df3fa2645a0d3c10128e04c4d64e0e4&size=fullsize",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_ChEJqk",
+        "heading_34dknK",
+        "text_Vygnjb",
+        "buttons_yUK8Tr"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/close-up-of-a-fashionable-rich-gentleman-wearing-suits-and-jacket-place-him-on-the-left-side-of-the-image-looking-to-the-right-and-slightly-facing-in-front-holding-a-glass-of-wine-bac.png",
+        "image_overlay_opacity": 40,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-right",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-4",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "custom_collapse_EmC7Jd": {
+      "type": "custom-collapse",
+      "blocks": {
+        "card_hdQtGn": {
+          "type": "card",
+          "settings": {
+            "title": "The Essential Son",
+            "heading_size": "hxxl",
+            "button_label": "Select",
+            "button_link": "shopify://products/the-essential-son-1",
+            "features": "2-5 Items\nTops and Bottom\nAccessories\nBirthday Gifts",
+            "card_bg": "#034325",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_text": "#121212",
+            "button_border": "#444444",
+            "toggle_label": "THE ESSENTIAL SON",
+            "image": "shopify://shop_images/make-it-a-whole-body-shot-with-a-background-of-a-local-market.png",
+            "alt_text": "default"
+          }
+        },
+        "card_qayAR7": {
+          "type": "card",
+          "settings": {
+            "title": "The Pioneer",
+            "heading_size": "hxxl",
+            "button_label": "Select",
+            "button_link": "shopify://products/the-pioneer",
+            "features": "2-5 Items\nTops and Bottom\nAccessories\nBirthday Gifts\nShoes (not in every box)",
+            "card_bg": "#40392b",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_text": "#222222",
+            "button_border": "#444444",
+            "toggle_label": "THE PIONEER",
+            "image": "shopify://shop_images/a-rich-stylish-gentleman-wearing-a-suit-with-leather-shoes-street-light-background.png",
+            "alt_text": "The Pioneer"
+          }
+        },
+        "card_xpaCeA": {
+          "type": "card",
+          "settings": {
+            "title": "The Heirloom",
+            "heading_size": "hxxl",
+            "button_label": "Select",
+            "button_link": "https://render.jotform.com/250801671752051",
+            "features": "2-5 Items\nTops and Bottom\nAccessories\nBirthday Gifts\nShoes (not in every box)",
+            "card_bg": "#be9349",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_text": "#222222",
+            "button_border": "#444444",
+            "toggle_label": "THE HEIRLOOM",
+            "image": "shopify://shop_images/a-rich-stylish-man-wearing-a-suit-an-expensive-watch-and-a-nice-boots-has-a-background-of-a-luxury-car.png",
+            "alt_text": "The Heirloom"
+          }
+        },
+        "card_HciBTx": {
+          "type": "card",
+          "settings": {
+            "title": "The Legacy",
+            "heading_size": "hxxl",
+            "button_label": "Select",
+            "button_link": "https://render.jotform.com/250801671752051",
+            "features": "2-5 Items\nTops and Bottom\nAccessories\nBirthday Gifts\nShoes (not in every box)",
+            "card_bg": "#272522",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_text": "#222222",
+            "button_border": "#444444",
+            "toggle_label": "THE LEGACY",
+            "image": "shopify://shop_images/a-rich-and-stylish-gentleman-wearing-a-luxurious-watch-and-a-nice-suit-onboarding-on-a-flight-background-will-be-an-airport-lobby.png",
+            "alt_text": "The Legacy"
+          }
+        }
+      },
+      "block_order": [
+        "card_hdQtGn",
+        "card_qayAR7",
+        "card_xpaCeA",
+        "card_HciBTx"
+      ],
+      "name": "Cards Toggle Simple",
+      "settings": {
+        "features_heading": "What's included",
+        "border_color": "#cccccc",
+        "divider_color": "#d1d1d1",
+        "heading_color": "#111111",
+        "button_bg_hover": "#222222",
+        "button_text_hover": "#ffffff",
+        "toggle_bg": "#f5f5f5",
+        "toggle_text": "#222222",
+        "toggle_bg_active": "#222222",
+        "toggle_text_active": "#ffffff",
+        "toggle_border": "#bbbbbb"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_CXPziW",
+    "image_banner_rGT6ea",
+    "custom_collapse_EmC7Jd"
+  ]
+}

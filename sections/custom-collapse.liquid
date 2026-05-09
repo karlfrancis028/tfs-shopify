@@ -1,0 +1,380 @@
+<section id="cards-toggle-{{ section.id }}">
+  <style>
+    #cards-toggle-{{ section.id }} .container {
+      display:flex;flex-direction:column;width:100%;align-items:center;justify-content:center;
+      padding:20px 0;
+    }
+    #cards-toggle-{{ section.id }} .cards {
+      display:flex;flex-direction:column;align-items:center;gap:28px;width:100%;
+    }
+    /* Card base */
+    #cards-toggle-{{ section.id }} .card {
+      display:none;
+      width:100%;
+      max-width:1200px;
+      box-sizing:border-box;
+      flex-direction:row;
+      justify-content:space-between;
+      align-items:stretch;
+      padding:32px 48px;
+      border:1px solid {{ section.settings.border_color }};
+      border-radius:12px;
+      background:var(--card-bg, #fff);
+      color:var(--card-text, #333);
+      position:relative;
+      gap:40px;
+    }
+    #cards-toggle-{{ section.id }} .card.active { display:flex; }
+
+    /* Left / Right columns */
+    #cards-toggle-{{ section.id }} .left,
+    #cards-toggle-{{ section.id }} .right {
+      display:flex;flex-direction:column;
+    }
+    #cards-toggle-{{ section.id }} .left {
+      flex:1;
+      max-width:560px;
+      border-right:1px solid {{ section.settings.divider_color }};
+      padding-right:40px;
+      margin-right:40px;
+      gap:16px;
+    }
+    #cards-toggle-{{ section.id }} .right {
+      flex:1;
+      min-width:0;
+      justify-content:center;
+      align-items:center;
+      gap:20px;
+    }
+
+    /* Typography */
+    #cards-toggle-{{ section.id }} .left h1 {
+      margin:0 0 4px 0;
+      font-size:clamp(1.65rem,1.2rem + 1vw,2.15rem);
+      line-height:1.15;
+      color:{{ section.settings.heading_color }};
+      font-family: 'Linux Libertine', 'Times New Roman', serif;
+    }
+
+    #cards-toggle-{{ section.id }} .left h1.heading-h2 { font-size: clamp(1.2rem, 1.05rem + 1vw, 1.6rem); }
+    #cards-toggle-{{ section.id }} .left h1.heading-h1 { font-size: clamp(1.65rem, 1.2rem + 1vw, 2.15rem); }
+    #cards-toggle-{{ section.id }} .left h1.heading-h0 { font-size: clamp(2.2rem, 1.8rem + 2vw, 2.8rem); }
+    #cards-toggle-{{ section.id }} .left h1.heading-hxl { font-size: clamp(2.8rem, 2.2rem + 3vw, 3.6rem); }
+    #cards-toggle-{{ section.id }} .left h1.heading-hxxl { font-size: clamp(3.4rem, 2.8rem + 4vw, 4.5rem); }
+
+
+    #cards-toggle-{{ section.id }} .left p {
+      margin:0;
+      font-weight:600;
+      font-size:clamp(1.65rem,1.2rem + 1vw,2.15rem);
+      letter-spacing:.55px;
+      font-family: 'Glacial Indifference', Arial, sans-serif;
+      opacity:.85;
+    }
+    #cards-toggle-{{ section.id }} .left ul {
+      margin:0;
+      padding-left:20px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      font-size:clamp(1.65rem,1.2rem + 1vw,2.15rem);
+      font-family: 'Glacial Indifference', Arial, sans-serif;
+      line-height:1.35;
+    }
+
+    /* Inner action button (per-card) */
+    #cards-toggle-{{ section.id }} .left button[data-url] {
+      align-self:flex-start;
+      padding:10px 18px;
+      border:1px solid var(--card-button-border, #444);
+      background:var(--card-button-bg, #fff);
+      color:var(--card-button-color, #222);
+      cursor:pointer;
+      border-radius:6px;
+      font-size:.8rem;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      transition:.25s;
+    }
+    #cards-toggle-{{ section.id }} .left button[data-url]:hover,
+    #cards-toggle-{{ section.id }} .left button[data-url]:focus-visible {
+      background:{{ section.settings.button_bg_hover }};
+      color:{{ section.settings.button_text_hover }};
+      outline:none;
+    }
+
+    #cards-toggle-{{ section.id }} .right img {
+      max-width:100%;
+      height:auto;
+      display:block;
+      border-radius:8px;
+    }
+    #cards-toggle-{{ section.id }} .footer {
+      margin-top:20px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      justify-content:center;
+      width:100%;
+    }
+    #cards-toggle-{{ section.id }} .footer button {
+      padding:10px 18px;
+      border:1px solid {{ section.settings.toggle_border }};
+      background:{{ section.settings.toggle_bg }};
+      color:{{ section.settings.toggle_text }};
+      cursor:pointer;
+      border-radius:30px;
+      font-size:.68rem;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      font-weight:600;
+      transition:.25s;
+    }
+    #cards-toggle-{{ section.id }} .footer button.is-active {
+      background:{{ section.settings.toggle_bg_active }};
+      color:{{ section.settings.toggle_text_active }};
+      border-color:{{ section.settings.toggle_bg_active }};
+    }
+    #cards-toggle-{{ section.id }} .footer button:hover,
+    #cards-toggle-{{ section.id }} .footer button:focus-visible {
+      background:{{ section.settings.toggle_bg_active }};
+      color:{{ section.settings.toggle_text_active }};
+      outline:none;
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      #cards-toggle-{{ section.id }} .card {
+        padding:28px 32px;
+        gap:32px;
+      }
+      #cards-toggle-{{ section.id }} .left {
+        padding-right:32px;
+        margin-right:32px;
+      }
+    }
+    @media (max-width:780px){
+      #cards-toggle-{{ section.id }} .card {
+        flex-direction:column;
+      }
+      #cards-toggle-{{ section.id }} .left {
+        border-right:0;
+        margin-right:0;
+        padding-right:0;
+        max-width:100%;
+      }
+      #cards-toggle-{{ section.id }} .right {
+        width:100%;
+      }
+    }
+    @media (max-width:520px){
+      #cards-toggle-{{ section.id }} .card {
+        padding:24px 22px;
+        gap:26px;
+      }
+     
+      #cards-toggle-{{ section.id }} .left h1 { font-size: clamp(1.25rem, 1rem + 1vw, 1.55rem); }
+      #cards-toggle-{{ section.id }} .left h1.heading-h0 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.9rem); }
+      #cards-toggle-{{ section.id }} .left h1.heading-hxl { font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.15rem); }
+      #cards-toggle-{{ section.id }} .left h1.heading-hxxl { font-size: clamp(1.75rem, 1.4rem + 1.8vw, 2.6rem); }
+    }
+  </style>
+
+  <div class="container">
+    <div class="cards">
+      {% for block in section.blocks %}
+        {% assign features_array = block.settings.features | newline_to_br | split: '<br />' %}
+        <div
+          class="card {% if forloop.first %}active{% endif %}"
+          id="card-{{ forloop.index }}"
+          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+          style="
+            --card-bg: {{ block.settings.card_bg }};
+            --card-text: {{ block.settings.text_color }};
+            --card-button-bg: {{ block.settings.button_bg }};
+            --card-button-color: {{ block.settings.button_text }};
+            --card-button-border: {{ block.settings.button_border }};
+          "
+          {{ block.shopify_attributes }}
+        >
+          <div class="left">
+            {% if block.settings.title != blank %}
+              <h1 class="heading-{{ block.settings.heading_size | default: 'h1' }}">{{ block.settings.title | escape }}</h1>
+            {% endif %}
+
+            {% if block.settings.button_label != blank %}
+              <button
+                type="button"
+                data-url="{{ block.settings.button_link }}"
+                aria-label="{{ block.settings.button_label | escape }}"
+              >{{ block.settings.button_label | escape }}</button>
+            {% endif %}
+
+            {% if block.settings.features != blank %}
+              <p>{{ section.settings.features_heading | escape }}</p>
+              <ul>
+                {% for feat in features_array %}
+                  {% assign line = feat | strip %}
+                  {% if line != blank %}
+                    <li>{{ line | escape }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+          <div class="right">
+            {% if block.settings.image %}
+              {% assign img = block.settings.image %}
+              <img
+                src="{{ img | image_url: width: 700 }}"
+                srcset="
+                  {{ img | image_url: width: 420 }} 420w,
+                  {{ img | image_url: width: 560 }} 560w,
+                  {{ img | image_url: width: 700 }} 700w,
+                  {{ img | image_url: width: 840 }} 840w
+                "
+                sizes="(max-width: 780px) 90vw, 40vw"
+                alt="{{ block.settings.alt_text | default: block.settings.title | escape }}"
+                width="{{ img.width }}"
+                height="{{ img.height }}"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="footer">
+      {% for block in section.blocks %}
+        <button
+          id="footer-button-{{ forloop.index }}"
+          data-target="card-{{ forloop.index }}"
+          class="{% if forloop.first %}is-active{% endif %}"
+          aria-controls="card-{{ forloop.index }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        >{{ block.settings.toggle_label | default: block.settings.title | escape }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const root = document.getElementById('cards-toggle-{{ section.id }}');
+      if(!root) return;
+      const cards = root.querySelectorAll('.card');
+      const toggles = root.querySelectorAll('.footer button[data-target]');
+
+      function showCard(id){
+        cards.forEach(c=>{
+          const active = c.id === id;
+          c.classList.toggle('active', active);
+          c.setAttribute('aria-hidden', active ? 'false':'true');
+        });
+        toggles.forEach(b=>{
+          const active = b.dataset.target === id;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-selected', active ? 'true':'false');
+        });
+      }
+
+      toggles.forEach(btn=>{
+        btn.addEventListener('click', ()=>showCard(btn.dataset.target));
+        btn.addEventListener('keydown', e=>{
+          if(!['ArrowLeft','ArrowRight'].includes(e.key)) return;
+          e.preventDefault();
+          const list = Array.from(toggles);
+          let i = list.indexOf(btn);
+          i = e.key === 'ArrowRight' ? (i+1)%list.length : (i-1+list.length)%list.length;
+          list[i].focus();
+          showCard(list[i].dataset.target);
+        });
+      });
+
+      root.querySelectorAll('.left button[data-url]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const u = b.getAttribute('data-url');
+          if(u) window.location.href = u;
+        });
+      });
+      if(cards.length) showCard(cards[0].id);
+    });
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Cards Toggle Simple",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "features_heading", "label": "Features heading", "default": "What's included" },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#CCCCCC" },
+    { "type": "color", "id": "divider_color", "label": "Divider color", "default": "#D1D1D1" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111111" },
+    { "type": "color", "id": "button_bg_hover", "label": "Inner button background hover", "default": "#222222" },
+    { "type": "color", "id": "button_text_hover", "label": "Inner button text hover", "default": "#FFFFFF" },
+    { "type": "color", "id": "toggle_bg", "label": "Toggle button background", "default": "#F5F5F5" },
+    { "type": "color", "id": "toggle_text", "label": "Toggle button text", "default": "#222222" },
+    { "type": "color", "id": "toggle_bg_active", "label": "Active toggle background", "default": "#222222" },
+    { "type": "color", "id": "toggle_text_active", "label": "Active toggle text", "default": "#FFFFFF" },
+    { "type": "color", "id": "toggle_border", "label": "Toggle button border", "default": "#BBBBBB" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "text", 
+          "id": "title", 
+          "label": "Title", 
+          "default": "Card Title"
+        },
+        { "type": "select", 
+          "id": "heading_size", 
+          "label": "Heading size", 
+          "default": "h1", 
+          "options": [
+          { "value": "h2", 
+            "label": "Medium (h2)" 
+          },
+          { "value": "h1", 
+            "label": "Large (h1)" 
+          },
+          { "value": "h0", 
+            "label": "X-Large (h0)" 
+          },
+          { "value": "hxl", 
+            "label": "XX-Large (hxl)" 
+          },
+          { "value": "hxxl", 
+            "label": "XXX-Large (hxxl)" 
+          }
+       ]
+      },
+        { "type": "text", "id": "button_label", "label": "Inner button label", "default": "Click Me" },
+        { "type": "url", "id": "button_link", "label": "Inner button link" },
+        { "type": "textarea", "id": "features", "label": "Features (one per line)", "default": "Feature 1\nFeature 2\nFeature 3" },
+        { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+        { "type": "color", "id": "text_color", "label": "Text color (unused fallback)", "default": "#333333" },
+        { "type": "color", "id": "button_bg", "label": "Inner button background", "default": "#FFFFFF" },
+        { "type": "color", "id": "button_text", "label": "Inner button text", "default": "#222222" },
+        { "type": "color", "id": "button_border", "label": "Inner button border", "default": "#444444" },
+        { "type": "text", "id": "toggle_label", "label": "Footer toggle label", "default": "Show Card" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "alt_text", "label": "Image alt text", "default": "default" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Cards Toggle Simple",
+      "blocks": [
+        { "type": "card", "settings": { "title": "The Essential Son", "toggle_label": "Show Card 1" } },
+        { "type": "card", "settings": { "title": "The Pioneer", "toggle_label": "Show Card 2" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

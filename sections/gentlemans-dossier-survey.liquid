@@ -1,0 +1,1114 @@
+{% comment %}
+  SECTION: The Gentleman's Dossier (Final Complete Version)
+  - All 30 Questions from PDF.
+  - Full PDF Design (Typography, Layout).
+  - Background color for immersive feel.
+{% endcomment %}
+
+<style>
+  /* --- SECTION BACKGROUND --- */
+  #shopify-section-{{ section.id }} {
+    background-color: #fcfcf8; /* Subtle off-white 'paper' color */
+    padding: 60px 0;
+  }
+
+  /* --- GLOBAL & TYPOGRAPHY --- */
+  #shopify-section-{{ section.id }} .dossier-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px;
+    color: #173f2f;
+    font-family: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+    background-color: #ffffff;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+    border-radius: 2px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .dossier-page {
+      padding: 20px 20px 100px;
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+  /* Utility for form fields */
+  #shopify-section-{{ section.id }} .sans-serif {
+    font-family: 'Glacial Indifference', 'Helvetica', 'Arial', sans-serif;
+  }
+
+  /* --- IMAGES --- */
+  #shopify-section-{{ section.id }} .dossier-slide-img {
+    display: block;
+    max-width: 180px;
+    max-height: 180px;
+    margin: 0 auto 25px;
+    height: auto;
+  }
+  #shopify-section-{{ section.id }} .dossier-header-img {
+    max-width: 120px;
+    margin-bottom: 30px;
+  }
+
+  /* --- TEXT STYLES --- */
+  #shopify-section-{{ section.id }} .dossier-title {
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    color: #173f2f;
+    font-weight: normal;
+  }
+  #shopify-section-{{ section.id }} .dossier-subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 35px;
+    font-family: 'Glacial Indifference', sans-serif;
+    line-height: 1.5;
+  }
+  #shopify-section-{{ section.id }} .dossier-section-header {
+    text-align: center;
+    padding: 100px 0;
+  }
+  #shopify-section-{{ section.id }} .dossier-section-kicker {
+     text-transform: uppercase;
+     letter-spacing: 4px;
+     opacity: 0.7;
+     font-size: 0.9rem;
+     margin-bottom: 20px;
+     font-family: sans-serif;
+  }
+
+  /* --- PROGRESS BAR --- */
+  #shopify-section-{{ section.id }} .dossier-progress {
+    height: 4px;
+    background-color: #e0e0e0;
+    margin-bottom: 40px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .dossier-progress-bar {
+    height: 100%;
+    background-color: #173f2f;
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+
+  /* --- SLIDES --- */
+  #shopify-section-{{ section.id }} .dossier-slide {
+    display: none;
+    animation: fadeIn 0.6s ease;
+  }
+  #shopify-section-{{ section.id }} .dossier-slide.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- FORM FIELDS --- */
+  #shopify-section-{{ section.id }} .dossier-field {
+    margin-bottom: 25px;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .dossier-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #173f2f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  #shopify-section-{{ section.id }} .dossier-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fcfcf8;
+    font-family: sans-serif;
+    transition: border-color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .dossier-input:focus {
+    outline: none;
+    border-color: #173f2f;
+    background-color: #fff;
+  }
+
+  /* --- COMPLEX INPUTS (Units) --- */
+  #shopify-section-{{ section.id }} .input-with-unit {
+    display: flex;
+    gap: 10px;
+  }
+  #shopify-section-{{ section.id }} .input-with-unit .dossier-input {
+    flex: 2;
+  }
+  #shopify-section-{{ section.id }} .input-unit-select {
+    flex: 1;
+    padding: 14px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #eee;
+    cursor: pointer;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .dual-input-container {
+    display: flex;
+    gap: 10px;
+    flex: 2;
+  }
+  #shopify-section-{{ section.id }} .dual-input-container .dossier-input {
+    flex: 1;
+  }
+
+  /* --- RADIO & CHECKBOX LISTS --- */
+  #shopify-section-{{ section.id }} .option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 100%;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .option-label {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.05rem;
+    background-color: #fff;
+    font-weight: 500;
+  }
+  #shopify-section-{{ section.id }} .option-label:hover {
+    border-color: #173f2f;
+  }
+  #shopify-section-{{ section.id }} .option-label:has(input:checked) {
+    background-color: #173f2f;
+    border-color: #173f2f;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .option-label input {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    accent-color: #173f2f;
+  }
+  #shopify-section-{{ section.id }} .option-label:has(input:checked) input {
+     accent-color: #fff; 
+  }
+
+  /* --- RATING SCALE STYLES --- */
+  #shopify-section-{{ section.id }} .rating-scale {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 30px auto;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .rating-option {
+    position: relative;
+    width: 60px;
+    height: 60px;
+  }
+  #shopify-section-{{ section.id }} .rating-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+  }
+  #shopify-section-{{ section.id }} .rating-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #173f2f;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #173f2f;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  #shopify-section-{{ section.id }} .rating-option input:checked + .rating-box {
+    background-color: #173f2f;
+    color: white;
+  }
+  #shopify-section-{{ section.id }} .rating-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: -20px auto 30px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    font-family: sans-serif;
+  }
+
+  /* --- OATH BOX --- */
+  #shopify-section-{{ section.id }} .oath-agreement-box {
+    margin: 30px 0;
+    padding: 25px;
+    background-color: #f4f7f5;
+    border-left: 6px solid #173f2f;
+    border-radius: 8px;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .oath-agreement-box label {
+    display: flex;
+    align-items: flex-start;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .oath-agreement-box input {
+    margin-right: 15px;
+    width: 24px;
+    height: 24px;
+    margin-top: 3px;
+    accent-color: #173f2f;
+  }
+
+  /* --- NAVIGATION --- */
+  #shopify-section-{{ section.id }} .dossier-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn {
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-next {
+    background-color: #173f2f;
+    color: white;
+    margin-left: auto;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-next:hover:not(:disabled) {
+    background-color: #0e281e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 63, 47, 0.2);
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-prev {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-prev:hover:not(:disabled) {
+    background-color: #d0d0d0;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* --- STATUS MESSAGES --- */
+  #shopify-section-{{ section.id }} .dossier-status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-align: center;
+    display: none;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .dossier-status.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+</style>
+
+<div class="dossier-page">
+  
+  <div class="dossier-progress">
+    <div class="dossier-progress-bar" id="progress-bar-{{ section.id }}"></div>
+  </div>
+
+  <form id="dossier-form-{{ section.id }}">
+    
+    <!-- SLIDE 1: WELCOME (PDF 25) -->
+    <div class="dossier-slide active" data-step="1">
+      <img src="{{ 'The Fortunate Son Icon v1.png' | asset_url }}" class="dossier-header-img dossier-slide-img" alt="TFS Logo">
+      <h1 class="dossier-title">Every man carries a signature.<br>Allow us to learn yours.</h1>
+      <p class="dossier-subtitle">Think of this less as a questionnaire, and more as your private valet asking the right questions to understand how you move, think, and live.</p>
+    </div>
+
+    <!-- SLIDE 2: THE OATH (PDF 23/62) -->
+    <div class="dossier-slide" data-step="2">
+      <h1 class="dossier-title">The Oath of Discretion</h1>
+      <p class="dossier-subtitle">"What you share here becomes the blueprint of your world. Your answers remain confidential, used solely to ensure a thoughtfully assembled box that feels as if it were chosen by your personal valet."</p>
+      <div class="oath-agreement-box">
+        <label>
+          <input type="checkbox" id="oath-agreement-checkbox-{{ section.id }}" required>
+          <span><b>I agree</b> to the collection and use of my personal information for order processing and personalization. I have read the Privacy Notice.</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: PERSONAL DOSSIER (PDF 7-10) -->
+    <div class="dossier-slide" data-step="3">
+      <img src="https://cdn.shopify.com/s/files/1/0705/2158/5829/files/7_5d859341-2780-47dd-82ce-1c6a39854dea.png?v=1763961811" class="dossier-slide-img" alt="Arrow">
+      <h1 class="dossier-title">Personal Dossier</h1>
+      <p class="dossier-subtitle">We'd love to know who we're preparing this for.</p>
+      <div class="dossier-field"><label class="dossier-label">Full Name</label><input type="text" class="dossier-input" name="attributes[Dossier_FullName]" placeholder="First, Middle, Last Name" required></div>
+      <div class="dossier-field"><label class="dossier-label">Date of Birth</label><input type="date" class="dossier-input" name="attributes[Dossier_DOB]" required></div>
+      <div class="dossier-grid">
+        <div class="dossier-field"><label class="dossier-label">Contact Number</label><input type="tel" class="dossier-input" name="attributes[Dossier_Phone]" pattern="^(09|\+639|9)\d{9}$" title="Format: 09... or +639..." required></div>
+        <div class="dossier-field"><label class="dossier-label">Email Address</label><input type="email" class="dossier-input" name="attributes[Dossier_Email]" required></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SECTION 1 HEADER (PDF 26) -->
+    <div class="dossier-slide" data-step="4">
+      <div class="dossier-section-header">
+        <div class="dossier-section-kicker">Section 1</div>
+        <h1 class="dossier-title">Your Precise Details<br>for Form & Fit</h1>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Q1 HEIGHT (PDF 27) - DUAL INPUT -->
+    <div class="dossier-slide" data-step="5">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Tower+(PDF+p.27)" class="dossier-slide-img" alt="Tower">
+      <h1 class="dossier-title">How tall do you stand?</h1>
+      <div class="dossier-field input-with-unit height-unit-toggle">
+        <!-- Single input for CM -->
+        <input type="number" class="dossier-input height-cm" name="attributes[Q1_Height_CM]" placeholder="Height in cm" required>
+        <!-- Dual inputs for FT/IN (Initially hidden by JS) -->
+        <div class="dual-input-container height-ft-in" style="display:none;">
+           <input type="number" class="dossier-input" name="attributes[Q1_Height_FT]" placeholder="Feet">
+           <input type="number" class="dossier-input" name="attributes[Q1_Height_IN]" placeholder="Inches">
+        </div>
+        <select class="input-unit-select" id="height-unit-select-{{ section.id }}" name="attributes[Q1_Height_Unit]">
+          <option value="cm">cm</option>
+          <option value="ft/in">ft/in</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Q2 WEIGHT (PDF 28) -->
+    <div class="dossier-slide" data-step="6">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Scale+(PDF+p.28)" class="dossier-slide-img" alt="Scale">
+      <h1 class="dossier-title">How much do you weigh?</h1>
+      <div class="dossier-field input-with-unit">
+        <input type="number" class="dossier-input" name="attributes[Q2_Weight_Value]" placeholder="Weight" required>
+        <select class="input-unit-select" name="attributes[Q2_Weight_Unit]"><option value="kg">kg</option><option value="lbs">lbs</option></select>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Q3 FRAME (PDF 29) -->
+    <div class="dossier-slide" data-step="7">
+      <h1 class="dossier-title">Which best reflects your frame?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q3_Frame]" value="Slim" required> Slim</label>
+        <label class="option-label"><input type="radio" name="attributes[Q3_Frame]" value="Average"> Average</label>
+        <label class="option-label"><input type="radio" name="attributes[Q3_Frame]" value="Broad"> Broad</label>
+        <label class="option-label"><input type="radio" name="attributes[Q3_Frame]" value="Athletic"> Athletic</label>
+        <label class="option-label"><input type="radio" name="attributes[Q3_Frame]" value="Other" id="q3-other-radio-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q3-other-text-{{ section.id }}" name="attributes[Q3_Frame_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- SLIDE 8: Q4 MEASUREMENTS (PDF 30) -->
+    <div class="dossier-slide" data-step="8">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Tape+(PDF+p.30)" class="dossier-slide-img" alt="Tape Measure">
+      <h1 class="dossier-title">Kindly provide your measurements.</h1>
+      <div class="dossier-field"><label class="dossier-label">Chest</label><div class="input-with-unit"><input type="number" class="dossier-input" name="attributes[Q4_Chest_Value]" required><select class="input-unit-select" name="attributes[Q4_Chest_Unit]"><option>cm</option><option>in</option></select></div></div>
+      <div class="dossier-field"><label class="dossier-label">Waist</label><div class="input-with-unit"><input type="number" class="dossier-input" name="attributes[Q4_Waist_Value]" required><select class="input-unit-select" name="attributes[Q4_Waist_Unit]"><option>cm</option><option>in</option></select></div></div>
+      <div class="dossier-field"><label class="dossier-label">Inseam</label><div class="input-with-unit"><input type="number" class="dossier-input" name="attributes[Q4_Inseam_Value]" required><select class="input-unit-select" name="attributes[Q4_Inseam_Unit]"><option>cm</option><option>in</option></select></div></div>
+    </div>
+
+    <!-- SLIDE 9: Q5 SHOE SIZE (PDF 31) -->
+    <div class="dossier-slide" data-step="9">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Shoe+(PDF+p.31)" class="dossier-slide-img" alt="Shoe">
+      <h1 class="dossier-title">What is your shoe size?</h1>
+      <div class="dossier-field input-with-unit">
+        <input type="text" class="dossier-input" name="attributes[Q5_ShoeSize_Value]" required>
+        <select class="input-unit-select" name="attributes[Q5_ShoeSize_Unit]"><option>EU</option><option>US</option><option>UK</option></select>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Q6 SKIN TONE (PDF 32) -->
+    <div class="dossier-slide" data-step="10">
+      <img src="https://placehold.co/200x300/e0e0e0/173f2f?text=IMG:+Painter+(PDF+p.32)" class="dossier-slide-img" alt="Painter">
+      <h1 class="dossier-title">What is your skin tone?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q6_SkinTone]" value="Fair" required> Fair</label>
+        <label class="option-label"><input type="radio" name="attributes[Q6_SkinTone]" value="Medium"> Medium</label>
+        <label class="option-label"><input type="radio" name="attributes[Q6_SkinTone]" value="Olive"> Olive</label>
+        <label class="option-label"><input type="radio" name="attributes[Q6_SkinTone]" value="Tan"> Tan</label>
+        <label class="option-label"><input type="radio" name="attributes[Q6_SkinTone]" value="Dark"> Dark</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: Q7 HAIR COLOR (PDF 33) -->
+    <div class="dossier-slide" data-step="11">
+      <img src="https://placehold.co/250x300/e0e0e0/173f2f?text=IMG:+Hair+(PDF+p.33)" class="dossier-slide-img" alt="Hair">
+      <h1 class="dossier-title">What is your hair color?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q7_HairColor]" value="Black" required> Black</label>
+        <label class="option-label"><input type="radio" name="attributes[Q7_HairColor]" value="Brown"> Brown</label>
+        <label class="option-label"><input type="radio" name="attributes[Q7_HairColor]" value="Blonde"> Blonde</label>
+        <label class="option-label"><input type="radio" name="attributes[Q7_HairColor]" value="Red"> Red</label>
+        <label class="option-label"><input type="radio" name="attributes[Q7_HairColor]" value="Gray"> Gray</label>
+        <label class="option-label"><input type="radio" name="attributes[Q7_HairColor]" value="Other" id="q7-other-radio-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q7-other-text-{{ section.id }}" name="attributes[Q7_HairColor_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- SLIDE 12: Q8 EYE COLOR (PDF 34) -->
+    <div class="dossier-slide" data-step="12">
+      <img src="https://placehold.co/250x300/e0e0e0/173f2f?text=IMG:+Goggles+(PDF+p.34)" class="dossier-slide-img" alt="Eyes">
+      <h1 class="dossier-title">What is your eye color?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q8_EyeColor]" value="Brown" required> Brown</label>
+        <label class="option-label"><input type="radio" name="attributes[Q8_EyeColor]" value="Blue"> Blue</label>
+        <label class="option-label"><input type="radio" name="attributes[Q8_EyeColor]" value="Green"> Green</label>
+        <label class="option-label"><input type="radio" name="attributes[Q8_EyeColor]" value="Hazel"> Hazel</label>
+        <label class="option-label"><input type="radio" name="attributes[Q8_EyeColor]" value="Gray"> Gray</label>
+        <label class="option-label"><input type="radio" name="attributes[Q8_EyeColor]" value="Dark Brown"> Dark Brown</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 13: Q9 FACE SHAPE (PDF 35) -->
+    <div class="dossier-slide" data-step="13">
+      <img src="https://placehold.co/250x300/e0e0e0/173f2f?text=IMG:+Thinking+(PDF+p.35)" class="dossier-slide-img" alt="Face Shape">
+      <h1 class="dossier-title">What is the shape of your face?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q9_FaceShape]" value="Oval" required> Oval</label>
+        <label class="option-label"><input type="radio" name="attributes[Q9_FaceShape]" value="Square"> Square</label>
+        <label class="option-label"><input type="radio" name="attributes[Q9_FaceShape]" value="Round"> Round</label>
+        <label class="option-label"><input type="radio" name="attributes[Q9_FaceShape]" value="Heart"> Heart</label>
+        <label class="option-label"><input type="radio" name="attributes[Q9_FaceShape]" value="Diamond"> Diamond</label>
+        <label class="option-label"><input type="radio" name="attributes[Q9_FaceShape]" value="Not sure"> Not sure</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 14: Q10 ETHNICITY (PDF 36) -->
+    <div class="dossier-slide" data-step="14">
+      <h1 class="dossier-title">Which best describes your ethnic or cultural identity?</h1>
+      <p class="dossier-subtitle">We honor heritage as much as individuality.</p>
+      <div class="dossier-field">
+         <select class="dossier-input" name="attributes[Q10_Ethnicity]" required>
+            <option value="" disabled selected>Select an option...</option>
+            <option value="East Asian">East Asian</option>
+            <option value="South Asian">South Asian</option>
+            <option value="Southeast Asian">Southeast Asian</option>
+            <option value="Middle Eastern">Middle Eastern</option>
+            <option value="Black / African descent">Black / African descent</option>
+            <option value="White / Caucasian">White / Caucasian</option>
+            <option value="Hispanic / Latino">Hispanic / Latino</option>
+            <option value="Native / Indigenous">Native / Indigenous</option>
+            <option value="Mixed / Multi-ethnic">Mixed / Multi-ethnic</option>
+            <option value="Prefer to self-describe">Prefer to self-describe</option>
+            <option value="Prefer not to answer">Prefer not to answer</option>
+         </select>
+      </div>
+      <input type="text" class="dossier-input" id="q10-self-describe-{{ section.id }}" name="attributes[Q10_Ethnicity_SelfDescribe]" placeholder="Please describe..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- ================= SECTION 2 ================= -->
+
+    <!-- SLIDE 15: SECTION 2 HEADER (PDF 37) -->
+    <div class="dossier-slide" data-step="15">
+      <div class="dossier-section-header">
+        <div class="dossier-section-kicker">Section 2</div>
+        <h1 class="dossier-title">Your Rhythm of Life</h1>
+      </div>
+    </div>
+
+    <!-- SLIDE 16: Q11 DAILY WORLD (PDF 38) -->
+    <div class="dossier-slide" data-step="16">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Desk+(PDF+p.38)" class="dossier-slide-img" alt="Daily World">
+      <h1 class="dossier-title">Which describes your daily world best?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q11_DailyWorld]" value="Boardroom & business" required> Boardroom & business</label>
+        <label class="option-label"><input type="radio" name="attributes[Q11_DailyWorld]" value="Creative & flexible"> Creative & flexible</label>
+        <label class="option-label"><input type="radio" name="attributes[Q11_DailyWorld]" value="Casual & relaxed"> Casual & relaxed</label>
+        <label class="option-label"><input type="radio" name="attributes[Q11_DailyWorld]" value="A mix of all three"> A mix of all three</label>
+        <label class="option-label"><input type="radio" name="attributes[Q11_DailyWorld]" value="Other" id="q11-other-radio-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q11-other-text-{{ section.id }}" name="attributes[Q11_DailyWorld_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- SLIDE 17: Q12 WEEKEND (PDF 39) -->
+    <div class="dossier-slide" data-step="17">
+      <img src="https://placehold.co/300x250/e0e0e0/173f2f?text=IMG:+Luggage+(PDF+p.39)" class="dossier-slide-img" alt="Weekend">
+      <h1 class="dossier-title">Your perfect weekend is...</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q12_Weekend]" value="Conquering the outdoors" required> Conquering the outdoors</label>
+        <label class="option-label"><input type="radio" name="attributes[Q12_Weekend]" value="Entertaining friends"> Entertaining friends</label>
+        <label class="option-label"><input type="radio" name="attributes[Q12_Weekend]" value="Retreating into books and hobbies"> Retreating into books and hobbies</label>
+        <label class="option-label"><input type="radio" name="attributes[Q12_Weekend]" value="Traveling and exploring"> Traveling and exploring</label>
+        <label class="option-label"><input type="radio" name="attributes[Q12_Weekend]" value="Other" id="q12-other-radio-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q12-other-text-{{ section.id }}" name="attributes[Q12_Weekend_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- SLIDE 18: Q13 GLASS (PDF 40) - MULTI SELECT -->
+    <div class="dossier-slide" data-step="18">
+      <img src="https://placehold.co/200x300/e0e0e0/173f2f?text=IMG:+Glass+(PDF+p.40)" class="dossier-slide-img" alt="Glass">
+      <h1 class="dossier-title">When the day is done, what's in your glass?</h1>
+      <p class="dossier-subtitle">Select all that apply.</p>
+      <div class="option-list">
+        <label class="option-label"><input type="checkbox" name="attributes[Q13_Glass_Whiskey]" value="Yes"> Whiskey</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q13_Glass_Wine]" value="Yes"> Wine</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q13_Glass_Beer]" value="Yes"> Beer</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q13_Glass_Cocktail]" value="Yes"> Cocktail</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q13_Glass_CoffeeTea]" value="Yes"> Coffee / tea</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q13_Glass_Wellness]" value="Yes"> Wellness drink</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 19: Q14 INTERESTS (PDF 41) - PICK UP TO 3 -->
+    <div class="dossier-slide" data-step="19">
+      <img src="https://placehold.co/200x350/e0e0e0/173f2f?text=IMG:+Golfer+(PDF+p.41)" class="dossier-slide-img" alt="Interests">
+      <h1 class="dossier-title">Which of the following call to you the most?</h1>
+      <p class="dossier-subtitle">Pick up to 3.</p>
+      <div class="option-list limit-checkboxes" data-limit="3">
+        <label class="option-label"><input type="checkbox" name="attributes[Q14_Interest_Sports]" value="Yes"> Sports & fitness</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q14_Interest_Travel]" value="Yes"> Travel & exploration</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q14_Interest_Culture]" value="Yes"> Culture & arts</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q14_Interest_Collecting]" value="Yes"> Collecting (watches, art, etc.)</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q14_Interest_Tech]" value="Yes"> Tech & innovation</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q14_Interest_Cooking]" value="Yes"> Cooking & hosting</label>
+      </div>
+    </div>
+
+    <!-- ================= SECTION 3 ================= -->
+
+    <!-- SLIDE 20: SECTION 3 HEADER (PDF 42) -->
+    <div class="dossier-slide" data-step="20">
+      <div class="dossier-section-header">
+        <div class="dossier-section-kicker">Section 3</div>
+        <h1 class="dossier-title">Your Signature Look</h1>
+      </div>
+    </div>
+
+    <!-- SLIDE 21: Q15 WARDROBE IDENTITY (PDF 43) - PICK UP TO 2 -->
+    <div class="dossier-slide" data-step="21">
+      <img src="https://placehold.co/200x400/e0e0e0/173f2f?text=IMG:+Leaning+Man+(PDF+p.43)" class="dossier-slide-img" alt="Wardrobe Identity">
+      <h1 class="dossier-title">Which feel closest to your wardrobe identity?</h1>
+      <p class="dossier-subtitle">Pick up to 2.</p>
+      <div class="option-list limit-checkboxes" data-limit="2">
+        <label class="option-label"><input type="checkbox" name="attributes[Q15_Identity_Classic]" value="Yes"> The Classic Gentleman</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q15_Identity_Minimalist]" value="Yes"> The Modern Minimalist</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q15_Identity_Bold]" value="Yes"> The Bold Statement</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q15_Identity_Relaxed]" value="Yes"> The Relaxed Elegance</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q15_Identity_Urban]" value="Yes"> The Urban Athlete</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q15_Identity_Rugged]" value="Yes"> The Rugged Outdoorsman</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 22: Q16 FOOTWEAR (PDF 44) -->
+    <div class="dossier-slide" data-step="22">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Feet+(PDF+p.44)" class="dossier-slide-img" alt="Footwear">
+      <h1 class="dossier-title">What is your footwear of choice?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q16_Footwear]" value="Sneakers" required> Sneakers</label>
+        <label class="option-label"><input type="radio" name="attributes[Q16_Footwear]" value="Loafers"> Loafers</label>
+        <label class="option-label"><input type="radio" name="attributes[Q16_Footwear]" value="Boots"> Boots</label>
+        <label class="option-label"><input type="radio" name="attributes[Q16_Footwear]" value="Oxfords"> Oxfords</label>
+        <label class="option-label"><input type="radio" name="attributes[Q16_Footwear]" value="Sandals"> Sandals</label>
+        <label class="option-label"><input type="radio" name="attributes[Q16_Footwear]" value="Depends on the occasion"> Depends on the occasion</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 23: Q17 ACCESSORIES (PDF 45) - MULTI SELECT -->
+    <div class="dossier-slide" data-step="23">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Accessories+(PDF+p.45)" class="dossier-slide-img" alt="Accessories">
+      <h1 class="dossier-title">What are the accessories you favor?</h1>
+      <p class="dossier-subtitle">Choose all that apply.</p>
+      <div class="option-list">
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Watches]" value="Yes"> Watches</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Jewelry]" value="Yes"> Bracelets & rings</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Belts]" value="Yes"> Belts or suspenders</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Eyewear]" value="Yes"> Eyewear</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Ties]" value="Yes"> Ties</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Scarves]" value="Yes"> Scarves & pocket squares</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q17_Accessory_Socks]" value="Yes"> Socks</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 24: Q18 FRAGRANCE (PDF 46) - PICK UP TO 2 -->
+    <div class="dossier-slide" data-step="24">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Perfume+(PDF+p.46)" class="dossier-slide-img" alt="Fragrance">
+      <h1 class="dossier-title">Which notes of fragrance favour your senses?</h1>
+      <p class="dossier-subtitle">Choose up to 2.</p>
+      <div class="option-list limit-checkboxes" data-limit="2">
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Woody]" value="Yes"> Woody</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Fresh]" value="Yes"> Fresh & Citrus</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Spicy]" value="Yes"> Spicy</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Musky]" value="Yes"> Musky</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Floral]" value="Yes"> Floral</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Aquatic]" value="Yes"> Aquatic</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q18_Scent_Explore]" value="Yes"> I tend to explore on scents</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 25: Q19 GROOMING (PDF 47) -->
+    <div class="dossier-slide" data-step="25">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Grooming+(PDF+p.47)" class="dossier-slide-img" alt="Grooming">
+      <h1 class="dossier-title">Which grooming preference best describes your recent routine?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q19_Grooming]" value="Clean shave daily" required> Clean shave daily</label>
+        <label class="option-label"><input type="radio" name="attributes[Q19_Grooming]" value="Maintained beard / mustache"> Maintained beard / mustache</label>
+        <label class="option-label"><input type="radio" name="attributes[Q19_Grooming]" value="Natural/low-maintenance"> Natural/low-maintenance</label>
+        <label class="option-label"><input type="radio" name="attributes[Q19_Grooming]" value="Skincare-focused"> Skincare-focused</label>
+        <label class="option-label"><input type="radio" name="attributes[Q19_Grooming]" value="Depends on barber"> Depends, but I let my barber do the job.</label>
+      </div>
+    </div>
+
+    <!-- ================= SECTION 4 ================= -->
+
+    <!-- SLIDE 26: SECTION 4 HEADER (PDF 48) -->
+    <div class="dossier-slide" data-step="26">
+      <div class="dossier-section-header">
+        <div class="dossier-section-kicker">Section 4</div>
+        <h1 class="dossier-title">The Gentleman Within</h1>
+      </div>
+    </div>
+
+    <!-- SLIDE 27: Q20 SOCIAL ROLE (PDF 49) -->
+    <div class="dossier-slide" data-step="27">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Dancing+(PDF+p.49)" class="dossier-slide-img" alt="Social Role">
+      <h1 class="dossier-title">What's your usual role in a social group?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q20_SocialRole]" value="Life of the party" required> Life of the party</label>
+        <label class="option-label"><input type="radio" name="attributes[Q20_SocialRole]" value="The selective host"> The selective host</label>
+        <label class="option-label"><input type="radio" name="attributes[Q20_SocialRole]" value="The quiet observer"> The quiet observer</label>
+        <label class="option-label"><input type="radio" name="attributes[Q20_SocialRole]" value="The lone explorer"> The lone explorer</label>
+        <label class="option-label"><input type="radio" name="attributes[Q20_SocialRole]" value="Mostly private"> I am mostly private & prefer not to socialize</label>
+        <label class="option-label"><input type="radio" name="attributes[Q20_SocialRole]" value="Other" id="q20-other-radio-{{ section.id }}"> Allow me to explain...</label>
+      </div>
+      <textarea class="dossier-input" id="q20-other-text-{{ section.id }}" name="attributes[Q20_SocialRole_Other]" rows="3" placeholder="Please explain..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- SLIDE 28: Q21 STATEMENT (PDF 50) -->
+    <div class="dossier-slide" data-step="28">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Pointing+(PDF+p.50)" class="dossier-slide-img" alt="Statement">
+      <h1 class="dossier-title">Which statement feels like you?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q21_Statement]" value="Blending in" required> I like blending in with understated confidence.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q21_Statement]" value="Remembered"> I want to be remembered the moment I enter the room.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q21_Statement]" value="Comfort first"> Comfort and function come first.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q21_Statement]" value="Adapts"> My style adapts to my mood and setting.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q21_Statement]" value="Other" id="q21-other-radio-{{ section.id }}"> Allow me to explain...</label>
+      </div>
+      <textarea class="dossier-input" id="q21-other-text-{{ section.id }}" name="attributes[Q21_Statement_Other]" rows="3" placeholder="Please explain..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- SLIDE 29: Q22 EXCITEMENT (PDF 51) -->
+    <div class="dossier-slide" data-step="29">
+      <img src="https://placehold.co/200x350/e0e0e0/173f2f?text=IMG:+Clarinet+(PDF+p.51)" class="dossier-slide-img" alt="Excitement">
+      <h1 class="dossier-title">Which of the following excites you the most?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q22_Excitement]" value="Fitness & Prep" required> Participating in a fitness class, then meal prepping.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q22_Excitement]" value="Polo & Dinner"> Attending a polo match or yacht club event, followed by dinner.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q22_Excitement]" value="Art & Nightclub"> Exploring an art installation then hitting a popular nightclub.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q22_Excitement]" value="Underground Music"> Going to an underground music venue to see an up-and-coming band.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q22_Excitement]" value="Community & Vintage"> Joining a community drum circle, then visiting a vintage market.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q22_Excitement]" value="Other" id="q22-other-radio-{{ section.id }}"> I have something else in mind...</label>
+      </div>
+      <textarea class="dossier-input" id="q22-other-text-{{ section.id }}" name="attributes[Q22_Excitement_Other]" rows="3" placeholder="Please explain..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- SLIDE 30: Q23 MOTIVATION (PDF 52) -->
+    <div class="dossier-slide" data-step="30">
+      <h1 class="dossier-title">What motivates most of your choices?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q23_Motivation]" value="Success & recognition" required> Success & recognition.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q23_Motivation]" value="Freedom & adventure"> Freedom & adventure.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q23_Motivation]" value="Balance and well-being"> Balance and well-being.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q23_Motivation]" value="Growth & discovery"> Growth & discovery.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q23_Motivation]" value="Family & relationships"> Family & relationships.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q23_Motivation]" value="Prefer not to answer"> I prefer not to answer.</label>
+      </div>
+    </div>
+
+    <!-- ================= SECTION 5 ================= -->
+
+    <!-- SLIDE 31: SECTION 5 HEADER (PDF 53) -->
+    <div class="dossier-slide" data-step="31">
+      <div class="dossier-section-header">
+        <div class="dossier-section-kicker">Section 5</div>
+        <h1 class="dossier-title">Your Taste & Indulgence</h1>
+      </div>
+    </div>
+
+    <!-- SLIDE 32: Q24 COLOR (PDF 54) -->
+    <div class="dossier-slide" data-step="32">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Binoculars+(PDF+p.54)" class="dossier-slide-img" alt="Color">
+      <h1 class="dossier-title">What colors do you mostly gravitate towards?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q24_Color]" value="Neutral tones" required> Neutral tones (black, grey, navy, beige)</label>
+        <label class="option-label"><input type="radio" name="attributes[Q24_Color]" value="Earthy tones"> Earthy tones (brown, olive, khaki, cream)</label>
+        <label class="option-label"><input type="radio" name="attributes[Q24_Color]" value="Bold tones"> Bold tones (red, cobalt, burgundy, emerald)</label>
+        <label class="option-label"><input type="radio" name="attributes[Q24_Color]" value="Pastels"> Pastels (soft blues, pinks, lavenders)</label>
+        <label class="option-label"><input type="radio" name="attributes[Q24_Color]" value="Not sure"> Not sure. I think I can go with anything.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q24_Color]" value="Other" id="q24-other-radio-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q24-other-text-{{ section.id }}" name="attributes[Q24_Color_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- SLIDE 33: Q25 FULFILLMENT (PDF 55) - MULTI SELECT -->
+    <div class="dossier-slide" data-step="33">
+      <img src="https://placehold.co/300x350/e0e0e0/173f2f?text=IMG:+Bicycle+(PDF+p.55)" class="dossier-slide-img" alt="Fulfillment">
+      <h1 class="dossier-title">Which activities capture your sense of fulfillment?</h1>
+      <p class="dossier-subtitle">Choose all that apply.</p>
+      <div class="option-list">
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Writing]" value="Yes"> Writing, journaling, or correspondence</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Photo]" value="Yes"> Photography & visual storytelling</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Coffee]" value="Yes"> Coffee crafting & mixology</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Polo]" value="Yes"> Polo, golf or sailing traditions</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Outdoor]" value="Yes"> Outdoor adventure & exploration</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Training]" value="Yes"> Training, wellness, and athletic refinement</label>
+        <label class="option-label"><input type="checkbox" name="attributes[Q25_Activity_Other_Check]" value="Yes" id="q25-other-check-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q25-other-text-{{ section.id }}" name="attributes[Q25_Activity_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- SLIDE 34: Q26 IDEAL SPACE (PDF 56) -->
+    <div class="dossier-slide" data-step="34">
+      <h1 class="dossier-title">What is the ideal expression of your space?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Minimalist" required> Minimalist, clean-lined interiors</label>
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Heritage study"> A heritage study with leather and wood</label>
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Bold art"> Bold art and statement décor</label>
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Weekend home"> A weekend home by sea or mountain</label>
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Lodge"> A lodge with rugged textures and warmth</label>
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Sleek loft"> A sleek, modern loft</label>
+        <label class="option-label"><input type="radio" name="attributes[Q26_Space]" value="Other" id="q26-other-radio-{{ section.id }}"> Other</label>
+      </div>
+      <input type="text" class="dossier-input" id="q26-other-text-{{ section.id }}" name="attributes[Q26_Space_Other]" placeholder="Please specify..." style="margin-top: 15px; display: none;">
+    </div>
+
+    <!-- ================= FINAL SECTION ================= -->
+
+    <!-- SLIDE 35: FINAL HEADER (PDF 57) -->
+    <div class="dossier-slide" data-step="35">
+      <div class="dossier-section-header">
+        <div class="dossier-section-kicker">Final Section</div>
+        <h1 class="dossier-title">A box with only you in mind.</h1>
+      </div>
+    </div>
+
+    <!-- SLIDE 36: Q27 FASHION ATTITUDE (PDF 58) -->
+    <div class="dossier-slide" data-step="36">
+      <h1 class="dossier-title">Which best describes your attitude toward fashion and lifestyle?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q27_Attitude]" value="Signature" required> Style is my signature-it speaks before I do</label>
+        <label class="option-label"><input type="radio" name="attributes[Q27_Attitude]" value="Understated"> I prefer understated, functional elegance</label>
+        <label class="option-label"><input type="radio" name="attributes[Q27_Attitude]" value="Experimenting"> I enjoy experimenting to refresh my look</label>
+        <label class="option-label"><input type="radio" name="attributes[Q27_Attitude]" value="Effortless"> I like effortless style without overthinking</label>
+        <label class="option-label"><input type="radio" name="attributes[Q27_Attitude]" value="Unsure"> I am still generally unsure of my style.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q27_Attitude]" value="Other" id="q27-other-radio-{{ section.id }}"> Allow me to explain...</label>
+      </div>
+      <textarea class="dossier-input" id="q27-other-text-{{ section.id }}" name="attributes[Q27_Attitude_Other]" rows="3" placeholder="Please explain..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- SLIDE 37: Q28 RECOLLECTION (PDF 59) -->
+    <div class="dossier-slide" data-step="37">
+      <img src="https://placehold.co/200x300/e0e0e0/173f2f?text=IMG:+Boy+on+Bike+(PDF+p.59)" class="dossier-slide-img" alt="Recollection">
+      <h1 class="dossier-title">Do you have a cherished recollection from your early years?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q28_Recollection_Status]" value="Yes" id="q28-yes-radio-{{ section.id }}" required> Yes. When I was young...</label>
+        <label class="option-label"><input type="radio" name="attributes[Q28_Recollection_Status]" value="Cannot recall"> I can't recall any as of the moment.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q28_Recollection_Status]" value="Prefer not to answer"> I prefer not to answer.</label>
+      </div>
+      <textarea class="dossier-input" id="q28-yes-text-{{ section.id }}" name="attributes[Q28_Recollection_Text]" rows="4" placeholder="Please share..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- SLIDE 38: Q29 ROLE MODEL (PDF 60) -->
+    <div class="dossier-slide" data-step="38">
+      <img src="https://placehold.co/200x400/e0e0e0/173f2f?text=IMG:+Balloon+(PDF+p.60)" class="dossier-slide-img" alt="Role Model">
+      <h1 class="dossier-title">Is there a person whose character you've long looked up to?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q29_RoleModel_Status]" value="Yes" id="q29-yes-radio-{{ section.id }}" required> Actually, there is someone...</label>
+        <label class="option-label"><input type="radio" name="attributes[Q29_RoleModel_Status]" value="None"> None in mind.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q29_RoleModel_Status]" value="Prefer not to answer"> I prefer not to answer.</label>
+      </div>
+      <textarea class="dossier-input" id="q29-yes-text-{{ section.id }}" name="attributes[Q29_RoleModel_Text]" rows="4" placeholder="Please share..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- SLIDE 39: Q30 EXPECTATION (PDF 61) -->
+    <div class="dossier-slide" data-step="39">
+      <img src="https://placehold.co/300x300/e0e0e0/173f2f?text=IMG:+Travel+Gear+(PDF+p.61)" class="dossier-slide-img" alt="Expectations">
+      <h1 class="dossier-title">What do you expect on your first box?</h1>
+      <div class="option-list">
+        <label class="option-label"><input type="radio" name="attributes[Q30_Expectation]" value="Discovering new" required> Discovering new brands/products I wouldn't pick myself.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q30_Expectation]" value="Trusted classics"> Having trusted classics and essentials delivered.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q30_Expectation]" value="Surprise & exclusivity"> The element of surprise & the level of exclusivity.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q30_Expectation]" value="Enhance lifestyle"> Items that enhance my lifestyle (coffee, spirits, barware, etc.)</label>
+        <label class="option-label"><input type="radio" name="attributes[Q30_Expectation]" value="Curiosity & learning"> A collection of items that supports my natural curiosity and love for learning.</label>
+        <label class="option-label"><input type="radio" name="attributes[Q30_Expectation]" value="Other" id="q30-other-radio-{{ section.id }}"> I have something else in mind...</label>
+      </div>
+      <textarea class="dossier-input" id="q30-other-text-{{ section.id }}" name="attributes[Q30_Expectation_Other]" rows="3" placeholder="Please explain..." style="margin-top: 15px; display: none;"></textarea>
+    </div>
+
+    <!-- ================= FINAL SLIDE: OUTRO (PDF 62) ================= -->
+    <div class="dossier-slide" data-step="40">
+      <div style="text-align: center; padding: 40px 0;">
+        <h1 class="dossier-title" style="margin-bottom: 30px;">Thank you,<br><span id="final-name-placeholder">[Name]</span>.</h1>
+        <p class="dossier-subtitle" style="max-width: 500px; margin: 0 auto 30px;">With your permission, we will now translate your answers into a subscription experience tailored exclusively to your lifestyle, taste, and ambition.</p>
+        <p style="font-style: italic;">The Fortunate Son ensures that when your box arrives, it does not merely contain - it confirms who you are.</p>
+      </div>
+    </div>
+
+    <!-- REQUIRED HIDDEN INPUTS -->
+    <input type="hidden" name="attributes[survey_gentlemans-dossier_completed]" value="true">
+    <input type="hidden" name="attributes[Survey_Type]" value="The Gentleman's Dossier">
+
+  </form>
+
+  <!-- NAVIGATION -->
+  <div class="dossier-nav">
+    <button id="prevBtn-{{ section.id }}" class="dossier-btn dossier-btn-prev">Previous</button>
+    <button id="nextBtn-{{ section.id }}" class="dossier-btn dossier-btn-next">Next</button>
+  </div>
+  <div id="dossier-status-message-{{ section.id }}" class="dossier-status"></div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // --- CONFIGURATION ---
+  let currentStep = 1;
+  const sectionId = "{{ section.id }}";
+  const container = document.getElementById(`shopify-section-${sectionId}`);
+  const slides = container.querySelectorAll('.dossier-slide');
+  const totalSteps = slides.length;
+  
+  // --- ELEMENTS ---
+  const nextBtn = document.getElementById(`nextBtn-${sectionId}`);
+  const prevBtn = document.getElementById(`prevBtn-${sectionId}`);
+  const form = document.getElementById(`dossier-form-${sectionId}`);
+  const progressBar = document.getElementById(`progress-bar-${sectionId}`);
+  const statusMessage = document.getElementById(`dossier-status-message-${sectionId}`);
+  const oathCheckbox = document.getElementById(`oath-agreement-checkbox-${sectionId}`);
+  const finalNamePlaceholder = document.getElementById('final-name-placeholder');
+  const nameInput = container.querySelector('input[name="attributes[Dossier_FullName]"]');
+
+  // --- UI UPDATE FUNCTION ---
+  function updateUI() {
+    // Show current slide, hide others
+    slides.forEach(slide => {
+      if (parseInt(slide.dataset.step) === currentStep) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    // Update Progress Bar
+    const progress = (currentStep / totalSteps) * 100;
+    progressBar.style.width = `${progress}%`;
+
+    // Update Buttons Visibility/Text
+    prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+    
+    if (currentStep === totalSteps) {
+        nextBtn.innerText = 'Submit Dossier';
+        if (nameInput && finalNamePlaceholder) {
+           // Extract first name for personalization
+           const firstName = nameInput.value.split(' ')[0];
+           finalNamePlaceholder.innerText = firstName || 'Sir';
+        }
+    } else if (currentStep === 2) {
+        nextBtn.innerText = 'I Agree & Continue';
+        // Enforce Oath Checkbox on Step 2
+        nextBtn.disabled = !oathCheckbox.checked;
+    } else {
+        nextBtn.innerText = 'Next';
+        nextBtn.disabled = false;
+    }
+    
+    // Hide status message when moving between slides
+    statusMessage.style.display = 'none';
+  }
+
+  // --- EVENT LISTENERS ---
+
+  // Oath Checkbox Toggle
+  if (oathCheckbox) {
+    oathCheckbox.addEventListener('change', function() {
+      if (currentStep === 2) {
+        nextBtn.disabled = !this.checked;
+      }
+    });
+  }
+
+  // "Other" Radio/Text Area Logic
+  // Supports both single-line inputs and multi-line textareas for "Other"
+  function setupToggle(triggerSelector, targetId, triggerValue = 'Other') {
+      const triggers = container.querySelectorAll(triggerSelector);
+      const target = document.getElementById(targetId);
+      if (triggers.length && target) {
+          triggers.forEach(t => {
+              t.addEventListener('change', () => {
+                  if (t.type === 'radio') {
+                      const checked = container.querySelector(`${triggerSelector}:checked`);
+                      // Check specifically for value OR label content if needed, standardizing on value here.
+                      target.style.display = (checked && checked.value === triggerValue) ? 'block' : 'none';
+                      // Make required if visible
+                      target.required = (target.style.display === 'block');
+                  } else if (t.type === 'checkbox') {
+                       target.style.display = t.checked ? 'block' : 'none';
+                       target.required = t.checked;
+                  }
+              });
+          });
+      }
+  }
+
+  // Apply toggles to all relevant questions
+  setupToggle('input[name="attributes[Q3_Frame]"]', `q3-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q7_HairColor]"]', `q7-other-text-${sectionId}`);
+  setupToggle('select[name="attributes[Q10_Ethnicity]"]', `q10-self-describe-${sectionId}`, 'Prefer to self-describe');
+  setupToggle('input[name="attributes[Q11_DailyWorld]"]', `q11-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q12_Weekend]"]', `q12-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q20_SocialRole]"]', `q20-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q21_Statement]"]', `q21-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q22_Excitement]"]', `q22-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q24_Color]"]', `q24-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q25_Activity_Other_Check]"]', `q25-other-text-${sectionId}`, 'Yes');
+  setupToggle('input[name="attributes[Q26_Space]"]', `q26-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q27_Attitude]"]', `q27-other-text-${sectionId}`);
+  setupToggle('input[name="attributes[Q28_Recollection_Status]"]', `q28-yes-text-${sectionId}`, 'Yes');
+  setupToggle('input[name="attributes[Q29_RoleModel_Status]"]', `q29-yes-text-${sectionId}`, 'Yes');
+  setupToggle('input[name="attributes[Q30_Expectation]"]', `q30-other-text-${sectionId}`);
+
+  // --- HEIGHT UNIT TOGGLE ---
+  const heightUnitSelect = document.getElementById(`height-unit-select-${sectionId}`);
+  const heightCmInput = container.querySelector('.height-cm');
+  const heightFtInContainer = container.querySelector('.height-ft-in');
+
+  if (heightUnitSelect) {
+    heightUnitSelect.addEventListener('change', function() {
+       if (this.value === 'ft/in') {
+           heightCmInput.style.display = 'none';
+           heightCmInput.required = false;
+           heightFtInContainer.style.display = 'flex';
+           heightFtInContainer.querySelectorAll('input').forEach(i => i.required = true);
+       } else {
+           heightCmInput.style.display = 'block';
+           heightCmInput.required = true;
+           heightFtInContainer.style.display = 'none';
+           heightFtInContainer.querySelectorAll('input').forEach(i => i.required = false);
+       }
+    });
+  }
+
+  // --- LIMIT CHECKBOXES ---
+  container.querySelectorAll('.limit-checkboxes').forEach(list => {
+      const limit = parseInt(list.dataset.limit);
+      const boxes = list.querySelectorAll('input[type="checkbox"]');
+      boxes.forEach(box => box.addEventListener('change', () => {
+          if (list.querySelectorAll('input:checked').length >= limit) {
+              boxes.forEach(b => { if (!b.checked) b.disabled = true; });
+          } else {
+              boxes.forEach(b => b.disabled = false);
+          }
+      }));
+  });
+
+  // --- NAVIGATION & SUBMIT ---
+  function isStepValid() {
+    const currentSlide = container.querySelector(`.dossier-slide[data-step="${currentStep}"]`);
+    // Select all inputs that have the 'required' attribute AND are currently visible
+    const requiredInputs = Array.from(currentSlide.querySelectorAll('[required]')).filter(input => {
+        // Check if element is visible (offsetParent is null if hidden)
+        return input.offsetParent !== null;
+    });
+    
+    let valid = true;
+    for (let input of requiredInputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity(); // Shows the browser's built-in error bubble
+        valid = false;
+        break; // Stop at the first invalid field
+      }
+    }
+    return valid;
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (!isStepValid()) return;
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateUI();
+      window.scrollTo(0, 0);
+    } else {
+      submitDossier(); // Final step reached
+    }
+  });
+
+  prevBtn.addEventListener('click', function() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateUI();
+      window.scrollTo(0, 0);
+    }
+  });
+
+  // --- AJAX SUBMIT FUNCTION ---
+  function submitDossier() {
+    // 1. Lock UI
+    nextBtn.innerText = 'Submitting...';
+    nextBtn.disabled = true;
+    prevBtn.disabled = true;
+    statusMessage.style.display = 'none';
+
+    // 2. Send Data to Shopify Cart API
+    fetch('/cart/update.js', {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // 3. Success! Redirect to cart.
+      window.location.href = '/cart';
+    })
+    .catch(error => {
+      // 4. Handle Errors
+      console.error('Error saving dossier:', error);
+      statusMessage.className = 'dossier-status error';
+      statusMessage.innerText = 'There was an issue saving your dossier. Please try again.';
+      statusMessage.style.display = 'block';
+      
+      // Unlock UI
+      nextBtn.innerText = 'Submit Dossier';
+      nextBtn.disabled = false;
+      prevBtn.disabled = false;
+    });
+  }
+
+  // --- INITIALIZE ---
+  updateUI();
+});
+</script>
+
+{% schema %}
+  {
+    "name": "Dossier Survey",
+    "settings": [],
+    "presets": [{ "name": "Dossier Survey" }]
+  }
+{% endschema %}

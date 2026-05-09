@@ -1,0 +1,699 @@
+{% comment %}
+  SECTION: The Swift Induction (Path 1)
+  - 12 Questions from PDF (Slides 11-22).
+  - Personal Info (Slides 7-10).
+  - Oath (Slide 6).
+{% endcomment %}
+
+<style>
+  /* --- SECTION BACKGROUND --- */
+  #shopify-section-{{ section.id }} {
+    background-color: #fcfcf8; /* Subtle off-white 'paper' color */
+    padding: 60px 0;
+  }
+
+  /* --- GLOBAL & TYPOGRAPHY --- */
+  #shopify-section-{{ section.id }} .dossier-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px;
+    color: #173f2f;
+    font-family: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+    background-color: #ffffff;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+    border-radius: 2px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .dossier-page {
+      padding: 20px 20px 100px;
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+  /* Utility for form fields */
+  #shopify-section-{{ section.id }} .sans-serif {
+    font-family: 'Glacial Indifference', 'Helvetica', 'Arial', sans-serif;
+  }
+
+  /* --- IMAGES --- */
+  #shopify-section-{{ section.id }} .dossier-slide-img {
+    display: block;
+    max-width: 180px;
+    max-height: 180px;
+    margin: 0 auto 25px;
+    height: auto;
+  }
+  #shopify-section-{{ section.id }} .dossier-header-img {
+    max-width: 120px;
+    margin-bottom: 30px;
+  }
+
+  /* --- TEXT STYLES --- */
+  #shopify-section-{{ section.id }} .dossier-title {
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    color: #173f2f;
+    font-weight: normal;
+  }
+  #shopify-section-{{ section.id }} .dossier-subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 35px;
+    font-family: 'Glacial Indifference', sans-serif;
+    line-height: 1.5;
+  }
+
+  /* --- PROGRESS BAR --- */
+  #shopify-section-{{ section.id }} .dossier-progress {
+    height: 4px;
+    background-color: #e0e0e0;
+    margin-bottom: 40px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .dossier-progress-bar {
+    height: 100%;
+    background-color: #173f2f;
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+
+  /* --- SLIDES --- */
+  #shopify-section-{{ section.id }} .dossier-slide {
+    display: none;
+    animation: fadeIn 0.6s ease;
+  }
+  #shopify-section-{{ section.id }} .dossier-slide.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- FORM FIELDS --- */
+  #shopify-section-{{ section.id }} .dossier-field {
+    margin-bottom: 25px;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .dossier-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #173f2f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  #shopify-section-{{ section.id }} .dossier-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fcfcf8;
+    font-family: sans-serif;
+    transition: border-color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .dossier-input:focus {
+    outline: none;
+    border-color: #173f2f;
+    background-color: #fff;
+  }
+  #shopify-section-{{ section.id }} .dossier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .dossier-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  /* --- COMPLEX INPUTS (Units) --- */
+  #shopify-section-{{ section.id }} .input-with-unit {
+    display: flex;
+    gap: 10px;
+  }
+  #shopify-section-{{ section.id }} .input-with-unit .dossier-input {
+    flex: 2;
+  }
+  #shopify-section-{{ section.id }} .input-unit-select {
+    flex: 1;
+    padding: 14px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #eee;
+    cursor: pointer;
+    font-family: sans-serif;
+  }
+
+  /* --- RADIO & CHECKBOX LISTS --- */
+  #shopify-section-{{ section.id }} .option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 100%;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .option-label {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.05rem;
+    background-color: #fff;
+    font-weight: 500;
+  }
+  #shopify-section-{{ section.id }} .option-label:hover {
+    border-color: #173f2f;
+  }
+  #shopify-section-{{ section.id }} .option-label:has(input:checked) {
+    background-color: #173f2f;
+    border-color: #173f2f;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .option-label input {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    accent-color: #173f2f;
+  }
+  #shopify-section-{{ section.id }} .option-label:has(input:checked) input {
+     accent-color: #fff; 
+  }
+
+  /* --- RATING SCALE STYLES --- */
+  #shopify-section-{{ section.id }} .rating-scale {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 30px auto;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .rating-option {
+    position: relative;
+    width: 60px;
+    height: 60px;
+  }
+  #shopify-section-{{ section.id }} .rating-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+  }
+  #shopify-section-{{ section.id }} .rating-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #173f2f;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #173f2f;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  #shopify-section-{{ section.id }} .rating-option input:checked + .rating-box {
+    background-color: #173f2f;
+    color: white;
+  }
+  #shopify-section-{{ section.id }} .rating-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: -20px auto 30px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    font-family: sans-serif;
+  }
+
+  /* --- OATH BOX --- */
+  #shopify-section-{{ section.id }} .oath-agreement-box {
+    margin: 30px 0;
+    padding: 25px;
+    background-color: #f4f7f5;
+    border-left: 6px solid #173f2f;
+    border-radius: 8px;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .oath-agreement-box label {
+    display: flex;
+    align-items: flex-start;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .oath-agreement-box input {
+    margin-right: 15px;
+    width: 24px;
+    height: 24px;
+    margin-top: 3px;
+    accent-color: #173f2f;
+  }
+
+  /* --- NAVIGATION --- */
+  #shopify-section-{{ section.id }} .dossier-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn {
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-next {
+    background-color: #173f2f;
+    color: white;
+    margin-left: auto;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-next:hover:not(:disabled) {
+    background-color: #0e281e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 63, 47, 0.2);
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-prev {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn-prev:hover:not(:disabled) {
+    background-color: #d0d0d0;
+  }
+  #shopify-section-{{ section.id }} .dossier-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* --- STATUS MESSAGES --- */
+  #shopify-section-{{ section.id }} .dossier-status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-align: center;
+    display: none;
+    font-family: sans-serif;
+  }
+  #shopify-section-{{ section.id }} .dossier-status.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+</style>
+
+<div class="dossier-page">
+  
+  <div class="dossier-progress">
+    <div class="dossier-progress-bar" id="progress-bar-{{ section.id }}"></div>
+  </div>
+
+  <form id="dossier-form-{{ section.id }}">
+    
+    <!-- SLIDE 1: WELCOME (PDF 5) -->
+    <div class="dossier-slide active" data-step="1">
+      <img src="{{ 'The Fortunate Son Icon v1.png' | asset_url }}" class="dossier-header-img dossier-slide-img" alt="TFS Logo">
+      <h1 class="dossier-title">The Swift Initiation</h1>
+      <p class="dossier-subtitle">For the gentleman of discretion, consider this a handshake. A swift yet deliberate introduction, where fewer words still carry weight.</p>
+    </div>
+
+    <!-- SLIDE 2: THE OATH (PDF 6) -->
+    <div class="dossier-slide" data-step="2">
+      <h1 class="dossier-title">The Oath of Discretion</h1>
+      <p class="dossier-subtitle">Your answers remain confidential, used solely to ensure a thoughtfully assembled box that feels as if it were chosen by your personal valet.</p>
+      <div class="oath-agreement-box">
+        <label>
+          <input type="checkbox" id="oath-agreement-checkbox-{{ section.id }}" required>
+          <span><b>I agree</b> to the collection and use of my personal information for order processing and personalization. I have read the Privacy Notice.</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: PERSONAL DOSSIER (PDF 7-10) -->
+    <div class="dossier-slide" data-step="3">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Arrow+(PDF+p.7)" class="dossier-slide-img" alt="Arrow">
+      <h1 class="dossier-title">Personal Dossier</h1>
+      <p class="dossier-subtitle">We'd love to know who we're preparing this for.</p>
+      <div class="dossier-field"><label class="dossier-label">Full Name</label><input type="text" class="dossier-input" name="attributes[Dossier_FullName]" placeholder="First, Middle, Last Name" required></div>
+      <div class="dossier-field"><label class="dossier-label">Date of Birth</label><input type="date" class="dossier-input" name="attributes[Dossier_DOB]" required></div>
+      <div class="dossier-grid">
+        <div class="dossier-field"><label class="dossier-label">Contact Number</label><input type="tel" class="dossier-input" name="attributes[Dossier_Phone]" required></div>
+        <div class="dossier-field"><label class="dossier-label">Email Address</label><input type="email" class="dossier-input" name="attributes[Dossier_Email]" required></div>
+      </div>
+    </div>
+
+    <!-- RATING SLIDE TEMPLATE -->
+    {%- capture rating_slide -%}
+      <h1 class="dossier-title">Please rate your level of interest.</h1>
+      <p class="dossier-subtitle sans-serif">{{ slide_subtitle }}</p>
+      <div class="rating-labels"><span>Not Interested</span><span>Very Interested</span></div>
+      <div class="rating-scale">
+        <label class="rating-option"><input type="radio" name="attributes[SI_{{ slide_name }}]" value="1" required><div class="rating-box">1</div></label>
+        <label class="rating-option"><input type="radio" name="attributes[SI_{{ slide_name }}]" value="2"><div class="rating-box">2</div></label>
+        <label class="rating-option"><input type="radio" name="attributes[SI_{{ slide_name }}]" value="3"><div class="rating-box">3</div></label>
+        <label class="rating-option"><input type="radio" name="attributes[SI_{{ slide_name }}]" value="4"><div class="rating-box">4</div></label>
+        <label class="rating-option"><input type="radio" name="attributes[SI_{{ slide_name }}]" value="5"><div class="rating-box">5</div></label>
+      </div>
+    {%- endcapture -%}
+
+    <!-- SLIDE 4: Q1 BARWARE (PDF 11) -->
+    <div class="dossier-slide" data-step="4">
+      {%- assign slide_subtitle = "Barware & Mixology: Whiskey glasses, cocktail shakers, wine decanters, bitters..." -%}
+      {%- assign slide_name = "Q1_Barware" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 5: Q2 HOME DECOR (PDF 12) -->
+    <div class="dossier-slide" data-step="5">
+      {%- assign slide_subtitle = "Home Decor & Accessories: Blankets, lighting, towels, candles, linen spray, plants..." -%}
+      {%- assign slide_name = "Q2_HomeDecor" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 6: Q3 STYLE ACCESSORIES (PDF 13) -->
+    <div class="dossier-slide" data-step="6">
+      {%- assign slide_subtitle = "Style Accessories: EDC, watches, wallets, sunglasses, ties, socks, scents..." -%}
+      {%- assign slide_name = "Q3_Style" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 7: Q4 MEN'S APPAREL (PDF 14) -->
+    <div class="dossier-slide" data-step="7">
+      {%- assign slide_subtitle = "Men's Apparel: Oxfords, jackets, tee shirts, shoes, weekend clothes, hats, activewear..." -%}
+      {%- assign slide_name = "Q4_Apparel" -%}
+      {{ rating_slide }}
+    </div>
+    
+    <!-- SLIDE 8: Q5 WARDROBE IDENTITY (PDF 15) - PICK UP TO 2 -->
+    <div class="dossier-slide" data-step="8">
+      <img src="https://placehold.co/200x400/e0e0e0/173f2f?text=IMG:+Leaning+Man+(PDF+p.15)" class="dossier-slide-img" alt="Wardrobe Identity">
+      <h1 class="dossier-title">Which feel closest to your wardrobe identity?</h1>
+      <p class="dossier-subtitle">Pick up to 2.</p>
+      <div class="option-list limit-checkboxes" data-limit="2">
+        <label class="option-label"><input type="checkbox" name="attributes[SI_Q5_Identity_Classic]" value="Yes"> The Classic Gentleman</label>
+        <label class="option-label"><input type="checkbox" name="attributes[SI_Q5_Identity_Minimalist]" value="Yes"> The Modern Minimalist</label>
+        <label class="option-label"><input type="checkbox" name="attributes[SI_Q5_Identity_Bold]" value="Yes"> The Bold Statement</label>
+        <label class="option-label"><input type="checkbox" name="attributes[SI_Q5_Identity_Relaxed]" value="Yes"> The Relaxed Elegance</label>
+        <label class="option-label"><input type="checkbox" name="attributes[SI_Q5_Identity_Urban]" value="Yes"> The Urban Athlete</label>
+        <label class="option-label"><input type="checkbox" name="attributes[SI_Q5_Identity_Rugged]" value="Yes"> The Rugged Outdoorsman</label>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: Q6 MEASUREMENTS (PDF 16) -->
+    <div class="dossier-slide" data-step="9">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Tape+(PDF+p.16)" class="dossier-slide-img" alt="Tape Measure">
+      <h1 class="dossier-title">Kindly provide your measurements.</h1>
+      <div class="dossier-field"><label class="dossier-label">Chest</label><div class="input-with-unit"><input type="number" class="dossier-input" name="attributes[SI_Q6_Chest_Value]" required><select class="input-unit-select" name="attributes[SI_Q6_Chest_Unit]"><option>cm</option><option>in</option></select></div></div>
+      <div class="dossier-field"><label class="dossier-label">Waist</label><div class="input-with-unit"><input type="number" class="dossier-input" name="attributes[SI_Q6_Waist_Value]" required><select class="input-unit-select" name="attributes[SI_Q6_Waist_Unit]"><option>cm</option><option>in</option></select></div></div>
+      <div class="dossier-field"><label class="dossier-label">Inseam</label><div class="input-with-unit"><input type="number" class="dossier-input" name="attributes[SI_Q6_Inseam_Value]" required><select class="input-unit-select" name="attributes[SI_Q6_Inseam_Unit]"><option>cm</option><option>in</option></select></div></div>
+    </div>
+
+    <!-- SLIDE 10: Q7 SHOE SIZE (PDF 17) -->
+    <div class="dossier-slide" data-step="10">
+      <img src="https://placehold.co/300x200/e0e0e0/173f2f?text=IMG:+Shoe+(PDF+p.17)" class="dossier-slide-img" alt="Shoe">
+      <h1 class="dossier-title">What is your shoe size?</h1>
+      <div class="dossier-field input-with-unit">
+        <input type="text" class="dossier-input" name="attributes[SI_Q7_ShoeSize_Value]" required>
+        <select class="input-unit-select" name="attributes[SI_Q7_ShoeSize_Unit]"><option>EU</option><option>US</option><option>UK</option></select>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: Q8 CIGARS (PDF 18) -->
+    <div class="dossier-slide" data-step="11">
+      {%- assign slide_subtitle = "Cigars & Tobacco: Pipes, cigars, tobacco products, torch, ashtrays, humidor..." -%}
+      {%- assign slide_name = "Q8_Cigars" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 12: Q9 KITCHEN (PDF 19) -->
+    <div class="dossier-slide" data-step="12">
+      {%- assign slide_subtitle = "Kitchen & Cooking: Cast iron, aprons, artisanal seasonings and oils, shears..." -%}
+      {%- assign slide_name = "Q9_Kitchen" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 13: Q10 GROOMING (PDF 20) -->
+    <div class="dossier-slide" data-step="13">
+      {%- assign slide_subtitle = "Grooming & Hygiene: Shaving supplies, beard and hair care, dopp kits..." -%}
+      {%- assign slide_name = "Q10_Grooming" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 14: Q11 CAMPING (PDF 21) -->
+    <div class="dossier-slide" data-step="14">
+      {%- assign slide_subtitle = "Camping & Outdoors: Camp supplies, outdoor gears, weatherproof apparel..." -%}
+      {%- assign slide_name = "Q11_Camping" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- SLIDE 15: Q12 TRAVEL (PDF 22) -->
+    <div class="dossier-slide" data-step="15">
+      {%- assign slide_subtitle = "Travel & Bags: Weekend duffels, messenger bags, gym bags, backpacks..." -%}
+      {%- assign slide_name = "Q12_Travel" -%}
+      {{ rating_slide }}
+    </div>
+
+    <!-- ================= FINAL SLIDE: OUTRO (PDF 23) ================= -->
+    <div class="dossier-slide" data-step="16">
+      <div style="text-align: center; padding: 40px 0;">
+        <h1 class="dossier-title" style="margin-bottom: 30px;">Thank you,<br><span id="final-name-placeholder">[Name]</span>.</h1>
+        <p class="dossier-subtitle" style="max-width: 500px; margin: 0 auto 30px;">What you share here becomes the blueprint of your world. Your answers remain confidential, used solely to ensure a thoughtfully assembled box.</p>
+        <p style="font-style: italic;">A box refined with efficiency and precision.</p>
+      </div>
+    </div>
+
+    <!-- REQUIRED HIDDEN INPUTS -->
+    <input type="hidden" name="attributes[survey_swift-induction_completed]" value="true">
+    <input type="hidden" name="attributes[Survey_Type]" value="The Swift Induction">
+
+  </form>
+
+  <!-- NAVIGATION -->
+  <div class="dossier-nav">
+    <button id="prevBtn-{{ section.id }}" class="dossier-btn dossier-btn-prev">Previous</button>
+    <button id="nextBtn-{{ section.id }}" class="dossier-btn dossier-btn-next">Next</button>
+  </div>
+  <div id="dossier-status-message-{{ section.id }}" class="dossier-status"></div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // --- CONFIGURATION ---
+  let currentStep = 1;
+  const sectionId = "{{ section.id }}";
+  const container = document.getElementById(`shopify-section-${sectionId}`);
+  const slides = container.querySelectorAll('.dossier-slide');
+  const totalSteps = slides.length;
+  
+  // --- ELEMENTS ---
+  const nextBtn = document.getElementById(`nextBtn-${sectionId}`);
+  const prevBtn = document.getElementById(`prevBtn-${sectionId}`);
+  const form = document.getElementById(`dossier-form-${sectionId}`);
+  const progressBar = document.getElementById(`progress-bar-${sectionId}`);
+  const statusMessage = document.getElementById(`dossier-status-message-${sectionId}`);
+  const oathCheckbox = document.getElementById(`oath-agreement-checkbox-${sectionId}`);
+  const finalNamePlaceholder = document.getElementById('final-name-placeholder');
+  const nameInput = container.querySelector('input[name="attributes[Dossier_FullName]"]');
+
+  // --- UI UPDATE FUNCTION ---
+  function updateUI() {
+    // Show current slide, hide others
+    slides.forEach(slide => {
+      if (parseInt(slide.dataset.step) === currentStep) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    // Update Progress Bar
+    const progress = (currentStep / totalSteps) * 100;
+    progressBar.style.width = `${progress}%`;
+
+    // Update Buttons Visibility/Text
+    prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+    
+    if (currentStep === totalSteps) {
+        nextBtn.innerText = 'Submit';
+        if (nameInput && finalNamePlaceholder) {
+           // Extract first name for personalization
+           const firstName = nameInput.value.split(' ')[0];
+           finalNamePlaceholder.innerText = firstName || 'Sir';
+        }
+    } else if (currentStep === 2) {
+        nextBtn.innerText = 'I Agree & Continue';
+        // Enforce Oath Checkbox on Step 2
+        nextBtn.disabled = !oathCheckbox.checked;
+    } else {
+        nextBtn.innerText = 'Next';
+        nextBtn.disabled = false;
+    }
+    
+    // Hide status message when moving between slides
+    statusMessage.style.display = 'none';
+  }
+
+  // --- EVENT LISTENERS ---
+
+  // Oath Checkbox Toggle
+  if (oathCheckbox) {
+    oathCheckbox.addEventListener('change', function() {
+      if (currentStep === 2) {
+        nextBtn.disabled = !this.checked;
+      }
+    });
+  }
+
+  // --- LIMIT CHECKBOXES ---
+  container.querySelectorAll('.limit-checkboxes').forEach(list => {
+      const limit = parseInt(list.dataset.limit);
+      const boxes = list.querySelectorAll('input[type="checkbox"]');
+      boxes.forEach(box => box.addEventListener('change', () => {
+          // Check if the current box being changed is getting checked
+          if (box.checked) {
+              // If we are at or over the limit, uncheck the first checked box
+              const checkedBoxes = list.querySelectorAll('input:checked');
+              if (checkedBoxes.length > limit) {
+                  checkedBoxes[0].checked = false;
+              }
+          }
+          
+          // Re-evaluate disabled state
+          const currentCheckedCount = list.querySelectorAll('input:checked').length;
+          if (currentCheckedCount >= limit) {
+              boxes.forEach(b => { if (!b.checked) b.disabled = true; });
+          } else {
+              boxes.forEach(b => b.disabled = false);
+          }
+      }));
+  });
+ 
+  // --- NAVIGATION & SUBMIT ---
+  function isStepValid() {
+    const currentSlide = container.querySelector(`.dossier-slide[data-step="${currentStep}"]`);
+    // Select all inputs that have the 'required' attribute AND are currently visible
+    const requiredInputs = Array.from(currentSlide.querySelectorAll('[required]')).filter(input => {
+        // Check if element is visible (offsetParent is null if hidden)
+        return input.offsetParent !== null;
+    });
+    
+    let valid = true;
+    for (let input of requiredInputs) {
+      
+      if (input.type === 'radio') {
+        // --- Handle Radio Groups ---
+        const groupName = input.name;
+        if (!container.querySelector(`input[name="${groupName}"]:checked`)) {
+            // Find the first element in the group to report validity
+            const firstInGroup = container.querySelector(`input[name="${groupName}"]`);
+            
+            if (firstInGroup) { // Check if it exists before calling reportValidity
+              firstInGroup.reportValidity();
+            } else {
+              // Fallback for safety, though this shouldn't be hit
+              input.reportValidity();
+            }
+            valid = false;
+            break;
+        }
+      } else {
+        // --- Handle Text, Email, Date, Tel, and Checkboxes ---
+        if (!input.checkValidity()) {
+          input.reportValidity(); // Shows the browser's built-in error bubble
+          valid = false;
+          break; // Stop at the first invalid field
+        }
+      }
+    }
+    return valid;
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (!isStepValid()) return;
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateUI();
+      window.scrollTo(0, 0);
+    } else {
+      submitDossier(); // Final step reached
+    }
+  });
+
+  prevBtn.addEventListener('click', function() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateUI();
+      window.scrollTo(0, 0);
+    }
+  });
+
+  // --- AJAX SUBMIT FUNCTION ---
+  function submitDossier() {
+    // 1. Lock UI
+    nextBtn.innerText = 'Submitting...';
+    nextBtn.disabled = true;
+    prevBtn.disabled = true;
+    statusMessage.style.display = 'none';
+
+    // 2. Send Data to Shopify Cart API
+    fetch('/cart/update.js', {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // 3. Success! Redirect to cart.
+      window.location.href = '/cart';
+    })
+    .catch(error => {
+      // 4. Handle Errors
+      console.error('Error saving dossier:', error);
+      statusMessage.className = 'dossier-status error';
+      statusMessage.innerText = 'There was an issue saving your dossier. Please try again.';
+      statusMessage.style.display = 'block';
+      
+      // Unlock UI
+      nextBtn.innerText = 'Submit';
+      nextBtn.disabled = false;
+      prevBtn.disabled = false;
+    });
+  }
+
+  // --- INITIALIZE ---
+  updateUI();
+});
+</script>
+
+{% schema %}
+  {
+    "name": "Swift Induction Survey",
+    "settings": [],
+    "presets": [{ "name": "Swift Induction Survey" }]
+  }
+{% endschema %}
