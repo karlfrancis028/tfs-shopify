@@ -104,11 +104,12 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
   overflow: visible;
 }
 
-/* The .banner — block layout, allow overflow, no stacking-context trap */
+/* The .banner — block layout, plain visible overflow, full-width on typical desktops.
+   Ultra-wide centering is in a separate media query below. */
 [id$="__image_banner_KbGw4i"] {
   display: block !important;
   position: relative !important;
-  overflow: visible !important;
+  overflow: visible !important;        /* plain visible — see § Why plain overflow:visible */
   isolation: auto !important;
 }
 
@@ -126,14 +127,16 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
 /* Image — absolutely positioned, right-anchored, overflows downward.
    z-index: 1 places it ABOVE the pricing-tiers section background (z:0 on ::before)
    but BELOW the logo bar (z:2) and pricing-tiers content (z:2). Net effect: the image
-   is fully hidden behind the logo bar, then bleeds through the pricing-tiers bg. */
+   is fully hidden behind the logo bar, then bleeds through the pricing-tiers bg.
+   Wrapper max-width + img max-height cap the rendered image at a 1000×1000 bounding box. */
 [id$="__image_banner_KbGw4i"] .banner__media {
   position: absolute !important;
   top: 112.77px;            /* Figma y-offset within frame */
   right: -110px;            /* image right edge sits 110px past viewport-right (overflow) */
   left: auto !important;    /* override Dawn's default left:0 */
   bottom: auto !important;
-  width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
+  width: calc(100% - 630px + 110px); /* fills from content edge to 110px past .banner's right edge */
+  max-width: 1000px;        /* hard cap — wrapper never exceeds 1000px wide */
   height: auto !important;
   z-index: 1;
   pointer-events: none;
@@ -141,25 +144,76 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
 
 [id$="__image_banner_KbGw4i"] .banner__media img {
   position: relative !important;
-  width: 100% !important;
+  width: auto !important;            /* let intrinsic + max-* drive sizing so aspect is preserved */
   height: auto !important;
+  max-width: 100% !important;        /* don't exceed wrapper width */
+  max-height: 1000px !important;     /* hard cap — image never exceeds 1000px tall */
+  margin-left: auto !important;      /* right-align if narrower than wrapper */
   display: block !important;
 }
 ```
 
-### Why fluid width + right-anchoring
+### Maximum image size (1000 × 1000 bounding box)
 
-`width: calc(100vw - 630px + 110px)` combined with `right: -110px` pins the image left edge to **exactly 630px at every desktop viewport width** — no overlap with the content column ever.
+The wrapper has `max-width: 1000px` and the `<img>` has `max-height: 1000px`. With the image's natural aspect ratio of **993 : 1058** (slightly taller than wide), the height is the binding constraint at the cap — so the image will render at **~938 × 1000** when both maxes are active.
 
-Math: image right edge = viewport + 110px (fixed overflow). Image left = right − width = (vw + 110) − (vw − 630 + 110) = **630px**.
+| Constraint | Value | Element |
+|---|---|---|
+| max width | `1000px` | `.banner__media` (wrapper) |
+| max height | `1000px` | `.banner__media img` |
+| Effective rendered cap | `~938 × 1000px` | (height-bound by natural aspect) |
 
-| Viewport | Image width | Image left | Right overflow |
-|---|---|---|---|
-| 1100px | 580px | 630px | 110px |
-| 1440px | 920px | 630px | 110px |
-| 1920px | 1400px | 630px | 110px |
+When the image is narrower than the wrapper, `margin-left: auto` on the `<img>` keeps it right-aligned within the wrapper so the boats stay anchored to the right edge.
 
-The image scales with the viewport (height auto, proportional), so on wider screens it fills the right half more generously. The 110px right overflow is constant.
+### Hero centering — only on ultra-wide screens (≥ 2000px)
+
+At typical desktop widths (1100–1999px), the hero stretches **full viewport width** to match Figma's reference design. Centering only kicks in on **ultra-wide monitors (≥ 2000px)** via a dedicated media query, so common laptop and desktop displays don't get awkward margins:
+
+```css
+@media screen and (min-width: 2000px) {
+  [id$="__image_banner_KbGw4i"] {
+    max-width: 1900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  /* Image switches to .banner-relative width once the cap activates */
+  [id$="__image_banner_KbGw4i"] .banner__media {
+    width: calc(100% - 630px + 110px) !important;
+  }
+}
+```
+
+The image's `width` is `calc(100vw - 630px + 110px)` at typical desktop widths (image right edge anchored to viewport-right minus 110px overflow). At ultra-wide, we override with `calc(100% - 630px + 110px)` so it tracks the centered `.banner` instead.
+
+### Sizing math at common viewports
+
+| Viewport | `.banner` width | Image wrapper width | Image rendered | Layout |
+|---|---|---|---|---|
+| 1100px | 1100px (full) | 580px | 580 × 618 | Full-width hero, no cap |
+| 1440px (Figma) | 1440px (full) | 920px | 920 × 980 | Full-width hero, matches Figma |
+| 1520px | 1520px (full) | 1000px (capped) | ~938 × 1000 | Full-width, image hits cap |
+| 1920px | 1920px (full) | 1400px → **capped 1000** | ~938 × 1000 | Full-width hero, no margin |
+| 2000px | 1900px (centered) | 1380px → **capped 1000** | ~938 × 1000 | Just-activated cap; ~50px each side |
+| 2560px | 1900px (centered) | 1380px → **capped 1000** | ~938 × 1000 | Hero centered with 330px on each side |
+| 3840px (4K) | 1900px (centered) | 1380px → **capped 1000** | ~938 × 1000 | Hero centered with 970px on each side |
+
+The 110px right overflow is constant at every width — past viewport-right under 2000px, past `.banner`-right at ≥ 2000px.
+
+### Why plain `overflow: visible`
+
+A previous version used `overflow-x: clip; overflow-y: visible` to clip the 110px horizontal bleed without affecting the vertical bleed-through. **That combination is a trap**: per CSS spec, when `overflow-x` is non-`visible` and `overflow-y` is `visible`, the visible axis silently coerces to `auto`, turning the element into a scroll container. Scroll containers grow to contain their absolutely-positioned descendants — which made `.banner` disproportionately tall (the "lots of empty space below content" issue).
+
+Plain `overflow: visible` keeps `.banner` content-driven. Horizontal scroll prevention is handled at the body level via `overflow-x: clip` in [`assets/base.css`](../../assets/base.css), which doesn't trigger the same coercion.
+
+### Removed: stale "Hero — 50/50 Split Layout" block in `base.css`
+
+[`assets/base.css`](../../assets/base.css) previously had a block (around line 3596) that was applying a 50/50 grid layout AND `min-height: 90vh` to **every** `.banner.banner--content-align-left` at viewports ≥ 990px. That block:
+
+- Set `min-height: 90vh` → made the hero ~810px tall on a 900px viewport regardless of content
+- Set `display: grid; grid-template-columns: 1fr 3fr` → conflicted with the homepage hero's absolute-positioning approach
+- Set `.banner__media { position: relative }` and `img { position: absolute; object-fit: contain }` → fought our `.banner__media { position: absolute }` rules
+
+It was a leftover from an earlier iteration of the design. The current homepage hero layout is fully scoped via `[id$="__image_banner_KbGw4i"]` attribute selectors in [`section-image-banner.css`](../../assets/section-image-banner.css), so it only targets the homepage hero — without affecting other sections that use `image-banner` with left content alignment (e.g. the Pioneer Card on the subscription page).
 
 ### Selective bleed-through (covered by logo bar, visible through pricing tiers)
 

@@ -570,8 +570,7 @@
      into the logo bar as designed. */
   [id^="shopify-section-"][id$="__image_banner_KbGw4i"] {
     position: relative;
-    overflow-x: clip;
-    overflow-y: visible;
+    overflow: visible;
     /* No z-index here — we don't want a stacking context that traps the bleed image
        inside the hero. Image gets z-index:1 directly on .banner__media so it can
        paint between subsequent sections' bg (z:0) and content (z:2). */
@@ -580,9 +579,15 @@
   [id$="__image_banner_KbGw4i"] {
     display: block !important;
     position: relative !important;
-    overflow-x: clip !important;    /* clips horizontal bleed - fixes horizontal scroll */
-    overflow-y: visible !important; /* keeps image bleeding downward into logo bar */
+    overflow: visible !important;
+    /* Plain overflow:visible — mixing `overflow-x: clip + overflow-y: visible` silently
+       coerces overflow-y to `auto` (per CSS spec), turning .banner into a scroll container
+       that grows to contain the absolutely-positioned image. Horizontal scroll is prevented
+       at the body level via `overflow-x: clip` in base.css. */
     isolation: auto !important; /* don't trap z-index inside .banner's stacking context */
+    /* No max-width here — at typical desktop widths (1100–1999px) the hero is full-width
+       so the layout matches Figma reference and feels right. Centering for ultra-wide
+       monitors (2000px+) is handled in a separate media query below. */
   }
 
   /* Content - normal flow on the left, fixed-width to match image's left:630px anchor */
@@ -610,10 +615,11 @@
   [id$="__image_banner_KbGw4i"] .banner__media {
     position: absolute !important;
     top: 112.77px; /* Figma: image y-offset within frame */
-    right: -110px; /* Figma: image overflows 183px past frame right edge */
+    right: -110px; /* image overflows .banner's right edge by 110px */
     left: auto !important; /* override Dawn's default left:0 */
     bottom: auto !important;
     width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
+    max-width: 1000px; /* hard cap — image wrapper never exceeds 1000px wide */
     height: auto !important;
     z-index: 1;
     /* z-index 1 = above pricing-tiers bg (z:0 on ::before), but below the logo bar (z:2)
@@ -624,8 +630,11 @@
   [id$="__image_banner_KbGw4i"] .banner__media img {
     position: relative !important;
     inset: auto !important;
-    width: 100% !important;
+    width: auto !important;            /* let intrinsic + max-* drive sizing so aspect is preserved */
     height: auto !important;
+    max-width: 100% !important;        /* don't exceed wrapper width */
+    max-height: 1000px !important;     /* hard cap — image never exceeds 1000px tall */
+    margin-left: auto !important;      /* right-align if narrower than wrapper */
     display: block !important;
     object-fit: unset !important;
   }
@@ -633,6 +642,21 @@
   /* Hide Dawn's overlay pseudo-element so it doesn't darken anything */
   [id$="__image_banner_KbGw4i"]::after {
     display: none;
+  }
+}
+
+/* Ultra-wide screens (≥ 2000px) — center the hero block so it doesn't stretch infinitely
+   across 4K monitors. At typical desktop widths (1100–1999px) the hero stays full-width. */
+@media screen and (min-width: 2000px) {
+  [id$="__image_banner_KbGw4i"] {
+    max-width: 1900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Image position needs to switch to .banner-relative once .banner is capped */
+  [id$="__image_banner_KbGw4i"] .banner__media {
+    width: calc(100% - 630px + 110px) !important;
   }
 }
 

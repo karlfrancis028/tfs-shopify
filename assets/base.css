@@ -10,6 +10,7 @@
 
 body {
   background-color: #EEEEEE;
+  overflow-x: clip;          /* prevents horizontal scrollbar when sections (e.g. hero image) bleed past viewport edge */
 }
 
 .product-card-wrapper .card,
@@ -3592,39 +3593,10 @@ details-disclosure > details {
   }
 }
 
-/* ============================================
-   Hero — 50/50 Split Layout
-   ============================================ */
-
-@media screen and (min-width: 990px) {
-  .banner.banner--content-align-left {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    min-height: 90vh;
-  }
-
-  .banner.banner--content-align-left .banner__media {
-    position: relative;
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .banner.banner--content-align-left .banner__content {
-    grid-column: 1;
-    grid-row: 1;
-    background-color: #EEEEEE;
-    padding: 80px 60px;
-    display: flex;
-    align-items: center;
-    z-index: 1;
-  }
-
-  .banner.banner--content-align-left .banner__media img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: right center;
-  }
-}
+/* The "Hero — 50/50 Split Layout" block previously here was removed in favor of the
+   homepage hero's absolute-positioning approach in `assets/section-image-banner.css`.
+   That block was setting `min-height: 90vh` on `.banner.banner--content-align-left`,
+   which inflated the hero by ~810px on a 900-tall viewport (the visual "empty space below
+   content" issue). Any image-banner section with `desktop_content_alignment: left` would
+   be affected — including the homepage hero. The replacement layout is scoped via
+   attribute selectors `[id$="__image_banner_KbGw4i"]` so it only targets the homepage hero. */
