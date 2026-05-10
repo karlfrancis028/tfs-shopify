@@ -1,11 +1,27 @@
 .pricing-tiers {
   padding: 6rem 1.6rem;
+  position: relative;
+  /* No z-index here — must NOT create a stacking context, or the hero image's z-index:1
+     would be trapped behind this entire section. Background lives on ::before instead. */
+}
+
+/* Section bg painted on a pseudo-element at z-index 0 so the hero bleed image (z-index 1)
+   shows on top of the bg, while content (z-index 2) stays above the image. */
+.pricing-tiers::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--pricing-tiers-bg, #EEEEEE);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .pricing-tiers__header {
   text-align: center;
   max-width: 72rem;
   margin: 0 auto 4rem;
+  position: relative;
+  z-index: 2;
 }
 
 .pricing-tiers__heading {
@@ -31,6 +47,8 @@
   justify-content: center;
   margin: 0 auto;
   align-items: stretch;
+  position: relative;
+  z-index: 2;                                       /* above hero bleed image (z:1) */
 }
 
 @media (max-width: 420px) {

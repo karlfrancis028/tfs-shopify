@@ -570,9 +570,11 @@
      into the logo bar as designed. */
   [id^="shopify-section-"][id$="__image_banner_KbGw4i"] {
     position: relative;
-    z-index: 2;
     overflow-x: clip;
     overflow-y: visible;
+    /* No z-index here — we don't want a stacking context that traps the bleed image
+       inside the hero. Image gets z-index:1 directly on .banner__media so it can
+       paint between subsequent sections' bg (z:0) and content (z:2). */
   }
 
   [id$="__image_banner_KbGw4i"] {
@@ -613,10 +615,10 @@
     bottom: auto !important;
     width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
     height: auto !important;
-    max-height: calc(100vh - 200px);    /* caps growth on shorter screens (e.g. MacBooks) */
-    overflow: hidden;                   /* clips bottom of image cleanly at max-height */
-    z-index: 3; /* sits above the logo bar it overlaps */
-    pointer-events: none; /* don't block clicks on overlapped sections */
+    z-index: 1;
+    /* z-index 1 = above pricing-tiers bg (z:0 on ::before), but below the logo bar (z:2)
+       and below pricing-tiers content (z:2). Image bleeds through pricing-tiers only. */
+    pointer-events: none;
   }
 
   [id$="__image_banner_KbGw4i"] .banner__media img {

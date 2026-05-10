@@ -61,6 +61,20 @@ div#PricingTiers-{id}  (.pricing-tiers)
 | The Heirloom | P 30,000 /quarter | Yes ("Most Popular") | 5+ premium items, premium garments, shoes, exclusive events, birthday gift |
 | The Legacy | P 50,000 /quarter | No | 5+ premium items, premium garments, shoes, VIP + private experience access |
 
+## Hero bleed-through layering
+
+The hero banner image extends downward past the logo bar and reaches into this section. Unlike the logo bar (which fully covers the image), pricing tiers lets the image **bleed through its background but stay hidden behind its content**:
+
+| Element | z-index | Why |
+|---|---|---|
+| `.pricing-tiers::before` | `0` | Background painted on a pseudo-element so the hero image at `z-index: 1` can render on top of it |
+| Hero `.banner__media` (from `image_banner_KbGw4i`) | `1` | Sandwiched between the bg and the content of this section |
+| `.pricing-tiers__header`, `.pricing-tiers__grid` | `2` | Heading, subheading, and the tier cards always paint on top of the hero overflow |
+
+The `--pricing-tiers-bg` CSS variable is set inline on `.pricing-tiers` from the section's `background_color` setting, then read by the `::before` pseudo-element. The `.pricing-tiers` element itself has `position: relative` but **no `z-index`** — it must NOT create a stacking context, or the hero image at z:1 would be trapped behind the entire section.
+
+> Cards have their own opaque white background, so even where the hero image overlaps with a card area, the image is visually hidden by the card's bg. Image only "bleeds through" in the gaps between cards or above the heading area.
+
 ## Card sizing
 
 Cards are **fixed at 386px wide** each. The grid uses `grid-template-columns: repeat(auto-fit, 386px)` (not `repeat(3, …)`) and `justify-content: center`. `auto-fit` lets the grid lay down as many 386px columns as the viewport actually has room for, so cards wrap gracefully on narrower viewports instead of overflowing horizontally.

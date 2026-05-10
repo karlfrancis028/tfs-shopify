@@ -123,7 +123,10 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
   box-sizing: border-box;
 }
 
-/* Image — absolutely positioned, right-anchored, overflows downward */
+/* Image — absolutely positioned, right-anchored, overflows downward.
+   z-index: 1 places it ABOVE the pricing-tiers section background (z:0 on ::before)
+   but BELOW the logo bar (z:2) and pricing-tiers content (z:2). Net effect: the image
+   is fully hidden behind the logo bar, then bleeds through the pricing-tiers bg. */
 [id$="__image_banner_KbGw4i"] .banner__media {
   position: absolute !important;
   top: 112.77px;            /* Figma y-offset within frame */
@@ -132,8 +135,8 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
   bottom: auto !important;
   width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
   height: auto !important;
-  z-index: 3;
-  pointer-events: none;     /* don't block clicks on logos underneath */
+  z-index: 1;
+  pointer-events: none;
 }
 
 [id$="__image_banner_KbGw4i"] .banner__media img {
@@ -158,9 +161,18 @@ Math: image right edge = viewport + 110px (fixed overflow). Image left = right �
 
 The image scales with the viewport (height auto, proportional), so on wider screens it fills the right half more generously. The 110px right overflow is constant.
 
-### Why the image overflows
+### Selective bleed-through (covered by logo bar, visible through pricing tiers)
 
-Per Figma, the image extends past both the right edge of the frame **and** the bottom of the hero section, bleeding into the logo bar below. `pointer-events: none` keeps the underlying logos clickable; the parent's `z-index: 2` keeps the image painted above the logo bar's solid `#DFE6E2` background.
+The image is allowed to extend past the bottom of the hero section without any `max-height` or `overflow: hidden` clipping. What happens to the overflow depends on which section it falls into:
+
+| Section | Image visible? | How |
+|---|---|---|
+| **Logo Bar** (immediately below hero) | ❌ Hidden | `.logo-bar` has `z-index: 2` painted directly on the element with its solid background, fully covering the image (which is at z:1) |
+| **Pricing Tiers** (after logo bar) | ✅ Visible behind content | `.pricing-tiers` background is moved to a `::before` pseudo-element at `z-index: 0`, while content (`.pricing-tiers__header` + `__grid`) sits at `z-index: 2`. Image at z:1 sandwiches between, peeking through bg gaps but covered by cards/heading |
+
+The hero section wrapper has **no `z-index`** and creates no stacking context — that's required so the image's `z-index: 1` participates in the page-level stacking context alongside layered children of subsequent sections.
+
+For details on the pricing-tiers bg/content split, see [03-pricing-tiers.md](03-pricing-tiers.md).
 
 ## Tablet & mobile (< 1100px)
 
