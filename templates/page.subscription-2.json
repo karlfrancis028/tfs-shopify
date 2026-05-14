@@ -288,11 +288,12 @@
             "overlay_opacity": 0,
             "min_height": 840,
             "mobile_bg_height": 400,
-            "card_position": 10,
-            "card_position_y": 50,
+            "card_position": 30,
+            "card_position_y": 70,
             "card_bg_color": "#40392b",
             "card_text_color": "#ffffff",
             "card_max_width": 520,
+            "card_min_height": 700,
             "card_padding": 32,
             "card_border_radius": 10,
             "card_text_alignment": "center",
@@ -321,6 +322,7 @@
             "card_bg_color": "#2a2116",
             "card_text_color": "#ffffff",
             "card_max_width": 460,
+            "card_min_height": 0,
             "card_padding": 32,
             "card_border_radius": 10,
             "card_text_alignment": "center",
@@ -349,7 +351,7 @@
         "heading_color": "#034325",
         "subheading_color": "#034325",
         "header_alignment": "center",
-        "background_color": "#EEEEEE"
+        "background_color": "#eeeeee"
       }
     }
   },

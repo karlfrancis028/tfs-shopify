@@ -146,14 +146,15 @@ For per-instance overrides (e.g. "this specific Pioneer card should sit at exact
 }
 ```
 
-### Mobile (< 749px) — card overlaps image bottom
+### Mobile (< 749px) — same layout as desktop
 
-On phones, the layout switches to vertical stacking with a deliberate **overlap effect**:
+The mobile layout uses the **same image-as-full-background + card-overlaid pattern** as desktop — the image is never stacked separately above or below the card. On mobile we only:
 
-- `.tier-showcase__bg` becomes `position: relative` with `aspect-ratio: 4/3` (image at top, sensible height)
-- `.tier-showcase__card` gets `margin-top: -8rem`, pulling it up to overlap the image bottom by ~80px
+- Force the card to `margin-left: auto; margin-right: auto` so it's always centered regardless of `card_position`
+- Cap card `max-width: 460px` with `width: calc(100% - 3.2rem)` so it has comfortable side gutters
+- Set `margin-top` and `margin-bottom` to `4rem` for vertical breathing room above and below
 
-This creates a more dramatic "card peeks over the illustration" feel than a clean stack.
+Image stays `position: absolute; inset: 0` underneath the card, exactly like desktop. The `.tier-showcase__item`'s height is determined by the card's content, and the image fills that height via `object-fit: cover`.
 
 ### Button styles
 

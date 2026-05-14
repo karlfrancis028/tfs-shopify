@@ -251,35 +251,19 @@
 }
 
 /* ============================================
-   Mobile (< 749px) — card overlaps the image bottom
+   Mobile (< 749px)
+   Image stays as a full-bleed background underneath the card — same layout
+   as desktop, never stacked separately. We only adjust the card so it sits
+   centered with sensible side gutters and a fully-visible image behind it.
    ============================================ */
 
 @media (max-width: 749px) {
-  .tier-showcase__item {
-    flex-direction: column;
-    align-items: center;
-    overflow: visible;
-    min-height: 0;
-  }
-
-  /* Disable desktop vertical-position spacers on mobile */
-  .tier-showcase__item::before,
-  .tier-showcase__item::after {
-    display: none;
-  }
-
-  /* Image becomes a top-anchored block with merchant-controlled height */
-  .tier-showcase__bg {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: var(--tier-mobile-bg-height, 400px);
-  }
-
   .tier-showcase__card {
-    /* Negative top margin = card overlaps image bottom for that "peek" effect.
-       Override desktop slider — card is always centered on mobile. */
-    margin: -8rem auto 3rem;
+    /* Card always centered on mobile regardless of card_position setting */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
     max-width: 460px;
     width: calc(100% - 3.2rem);
   }
