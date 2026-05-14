@@ -58,6 +58,21 @@ Every section with multiple cards/items in a row uses **Flexbox** with `justify-
 
 **Width formula for N columns at gap G:** `calc((100% - (N − 1) × G) / N)`. For 3 columns at 2rem gap → `calc((100% − 4rem) / 3)`.
 
+### Hero image — selective bleed-through
+
+The hero banner image extends past the bottom of the hero section by design (no `max-height`, no `overflow: hidden`). Different sections handle the overflow differently:
+
+| Section | Behavior | Mechanism |
+|---|---|---|
+| [Logo Bar](02-logo-bar.md) | Image fully hidden | `.logo-bar` paints solid bg directly on element with `z-index: 2`, covering the image at `z-index: 1` |
+| [Pricing Tiers](03-pricing-tiers.md) | Image bleeds through bg, hidden behind content | Bg moved to `::before` at `z-index: 0`; content at `z-index: 2`; hero image at `z:1` sandwiches between |
+
+Three ground rules for the layering across the page:
+- Hero section wrapper has **no `z-index`** (otherwise the image gets trapped inside it).
+- Hero `.banner__media` has **`z-index: 1`** (page-level — above any z:0 backgrounds, below any z:2 content).
+- Sections that should fully hide the image: `z-index: 2` directly on the section element with its bg.
+- Sections that should let the image bleed through their bg: bg goes to a `::before` at `z-index: 0`; content lifts to `z-index: 2`; the section element itself takes `position: relative` but **no z-index**.
+
 ### Marquee / infinite-scroll pattern
 
 Two homepage sections use the same CSS-only infinite-scroll trick:

@@ -25,6 +25,15 @@ CSS variables set inline on the wrapper:
 - `--logo-bar-height` — logo height in px
 - `--logo-bar-gap` — gap between logos in px
 
+## Stacking — fully covers hero overflow
+
+The hero banner immediately above this section overflows downward (boat painting extends past the hero's bottom edge by design). The logo bar **fully hides** that overflow:
+
+- `.logo-bar` has `position: relative; z-index: 2`, with the solid background painted directly on the element.
+- Hero `.banner__media` has `z-index: 1`, so it sits below the logo bar everywhere they overlap.
+
+No `::before` background trick is needed here — by design the hero image should be invisible across the entire logo bar, including its bg. The next section ([Pricing Tiers](03-pricing-tiers.md)) takes a different approach (image bleeds through the bg, hidden only by content).
+
 ## Settings
 
 | Setting | Type | Current value |
