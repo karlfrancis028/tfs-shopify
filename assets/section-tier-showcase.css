@@ -40,21 +40,30 @@
 .tier-showcase__item {
   position: relative;
   width: 100%;
+  min-height: var(--tier-min-height, 600px);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   overflow: hidden;
 }
 
-.tier-showcase__item--left {
-  justify-content: flex-start;
+/* Proportional spacers above/below the card — their flex-grow ratio is the
+   vertical position slider, so the card slides up/down within --tier-min-height.
+   min-height: 1.6rem reserves edge breathing room at positions 0 and 100.
+   The bg layer is position:absolute, so it's not part of this column flow. */
+.tier-showcase__item::before,
+.tier-showcase__item::after {
+  content: '';
+  display: block;
+  min-height: 1.6rem;
+  flex-shrink: 0;
 }
 
-.tier-showcase__item--center {
-  justify-content: center;
+.tier-showcase__item::before {
+  flex-grow: var(--tier-card-position-y, 50);
 }
 
-.tier-showcase__item--right {
-  justify-content: flex-end;
+.tier-showcase__item::after {
+  flex-grow: calc(100 - var(--tier-card-position-y, 50));
 }
 
 /* ------- Background image (fills item, scales naturally) ------- */
@@ -85,22 +94,20 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  margin: 8rem 1.6rem;
+  max-width: var(--tier-card-max-width, 460px);
+  /* Horizontal slide via --tier-card-position (0-100). Vertical handled by the
+     ::before/::after spacers on the parent. 1.6rem reserved on each side.
+     At pos=0   → margin-left = 1.6rem
+     At pos=100 → margin-left = 100% - max-width - 1.6rem
+     At pos=50  → margin-left = (100% - max-width) / 2 (centered) */
+  margin-left: calc(1.6rem + (100% - var(--tier-card-max-width, 460px) - 3.2rem) * var(--tier-card-position, 50) / 100);
+  margin-right: 1.6rem;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  /* max-width / padding / border-radius / background-color / color / text-align
+  /* padding / border-radius / background-color / color / text-align
      are set inline per-block from schema settings */
-}
-
-/* Horizontal margin offsets for left/right positions
-   (so card doesn't kiss the viewport edge) */
-.tier-showcase__item--left .tier-showcase__card {
-  margin-left: clamp(1.6rem, 8%, 8rem);
-}
-
-.tier-showcase__item--right .tier-showcase__card {
-  margin-right: clamp(1.6rem, 8%, 8rem);
 }
 
 /* ============================================
@@ -236,27 +243,28 @@
     flex-direction: column;
     align-items: center;
     overflow: visible;
+    min-height: 0;
   }
 
-  /* Image becomes a top-anchored block with natural aspect */
+  /* Disable desktop vertical-position spacers on mobile */
+  .tier-showcase__item::before,
+  .tier-showcase__item::after {
+    display: none;
+  }
+
+  /* Image becomes a top-anchored block with merchant-controlled height */
   .tier-showcase__bg {
     position: relative;
     inset: auto;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: var(--tier-mobile-bg-height, 400px);
   }
 
   .tier-showcase__card {
-    /* Negative top margin = card overlaps image bottom for that "peek" effect */
-    margin: -8rem 1.6rem 3rem;
+    /* Negative top margin = card overlaps image bottom for that "peek" effect.
+       Override desktop slider — card is always centered on mobile. */
+    margin: -8rem auto 3rem;
     max-width: 460px;
     width: calc(100% - 3.2rem);
-  }
-
-  /* Reset position-specific margins on mobile — card always centered */
-  .tier-showcase__item--left .tier-showcase__card,
-  .tier-showcase__item--right .tier-showcase__card {
-    margin-left: auto;
-    margin-right: auto;
   }
 }

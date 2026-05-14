@@ -31,7 +31,8 @@
   {%- for block in section.blocks -%}
     <div
       id="TierShowcase-{{ block.id }}"
-      class="tier-showcase__item tier-showcase__item--{{ block.settings.card_position }}"
+      class="tier-showcase__item"
+      style="--tier-min-height: {{ block.settings.min_height }}px; --tier-mobile-bg-height: {{ block.settings.mobile_bg_height }}px; --tier-card-max-width: {{ block.settings.card_max_width }}px; --tier-card-position: {{ block.settings.card_position }}; --tier-card-position-y: {{ block.settings.card_position_y }};"
       {{ block.shopify_attributes }}
     >
       {%- if block.settings.background_image != blank -%}
@@ -59,10 +60,10 @@
         style="
           background-color: {{ block.settings.card_bg_color }};
           color: {{ block.settings.card_text_color }};
-          max-width: {{ block.settings.card_max_width }}px;
           padding: {{ block.settings.card_padding }}px;
           border-radius: {{ block.settings.card_border_radius }}px;
           text-align: {{ block.settings.card_text_alignment }};
+          min-height: {{ block.settings.card_min_height }}px;
         "
       >
         {%- if block.settings.tier_name != blank -%}
@@ -202,18 +203,53 @@
         },
         {
           "type": "header",
+          "content": "Section height"
+        },
+        {
+          "type": "range",
+          "id": "min_height",
+          "label": "Desktop minimum height",
+          "min": 300,
+          "max": 1000,
+          "step": 20,
+          "unit": "px",
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "mobile_bg_height",
+          "label": "Mobile image height",
+          "min": 200,
+          "max": 700,
+          "step": 20,
+          "unit": "px",
+          "default": 400
+        },
+        {
+          "type": "header",
           "content": "Card position"
         },
         {
-          "type": "select",
+          "type": "range",
           "id": "card_position",
-          "label": "Card position",
-          "options": [
-            { "value": "left", "label": "Left" },
-            { "value": "center", "label": "Center" },
-            { "value": "right", "label": "Right" }
-          ],
-          "default": "center"
+          "label": "Card horizontal position",
+          "info": "0 = left edge, 50 = center, 100 = right edge. Slider basis is the card max width.",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "card_position_y",
+          "label": "Card vertical position",
+          "info": "0 = top, 50 = middle, 100 = bottom. Slider basis is the section height.",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 50
         },
         {
           "type": "header",
@@ -240,6 +276,17 @@
           "step": 20,
           "unit": "px",
           "default": 460
+        },
+        {
+          "type": "range",
+          "id": "card_min_height",
+          "label": "Card minimum height",
+          "info": "0 = auto (sizes to content). Use to keep tiers visually consistent.",
+          "min": 0,
+          "max": 800,
+          "step": 20,
+          "unit": "px",
+          "default": 0
         },
         {
           "type": "range",

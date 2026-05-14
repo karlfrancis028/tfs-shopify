@@ -276,6 +276,81 @@
         "mobile_content_alignment": "center",
         "show_text_below": true
       }
+    },
+    "tier_showcase_A8jr6d": {
+      "type": "tier-showcase",
+      "blocks": {
+        "tier_hxgNyj": {
+          "type": "tier",
+          "settings": {
+            "background_image": "shopify://shop_images/45_de6a85e9-ed30-4f5b-8689-1e8f521ef32a.png",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "min_height": 840,
+            "mobile_bg_height": 400,
+            "card_position": 10,
+            "card_position_y": 50,
+            "card_bg_color": "#40392b",
+            "card_text_color": "#ffffff",
+            "card_max_width": 520,
+            "card_padding": 32,
+            "card_border_radius": 10,
+            "card_text_alignment": "center",
+            "tier_name": "The Pioneer",
+            "currency": "P",
+            "amount": "20,000",
+            "price_suffix": "",
+            "description": "<p>For the man beginning his journey into refinement. A quiet yet deliberate entrance into The Fortunate Son circle — where pursuit meets purpose.</p>",
+            "show_divider": true,
+            "features": "4 to 5 Items inside the box\nTop & Bottom Garments\nComplimentary Accessories\nVIP access t The Fortunate Son events",
+            "button_label": "ADD TO CART",
+            "button_link": "",
+            "button_style": "outline",
+            "open_new_tab": false
+          }
+        },
+        "tier_6NFhYP": {
+          "type": "tier",
+          "settings": {
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "min_height": 600,
+            "mobile_bg_height": 400,
+            "card_position": 50,
+            "card_position_y": 50,
+            "card_bg_color": "#2a2116",
+            "card_text_color": "#ffffff",
+            "card_max_width": 460,
+            "card_padding": 32,
+            "card_border_radius": 10,
+            "card_text_alignment": "center",
+            "tier_name": "The Pioneer",
+            "currency": "P",
+            "amount": "20,000",
+            "price_suffix": "",
+            "description": "",
+            "show_divider": true,
+            "features": "",
+            "button_label": "ADD TO CART",
+            "button_link": "",
+            "button_style": "outline",
+            "open_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "tier_hxgNyj",
+        "tier_6NFhYP"
+      ],
+      "name": "Tier Showcase",
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "heading_color": "#034325",
+        "subheading_color": "#034325",
+        "header_alignment": "center",
+        "background_color": "#EEEEEE"
+      }
     }
   },
   "order": [
@@ -285,6 +360,7 @@
     "custom_liquid_PhCniU",
     "image_banner_C7DzYw",
     "custom_liquid_zzG6Cq",
-    "image_banner_6YHmxi"
+    "image_banner_6YHmxi",
+    "tier_showcase_A8jr6d"
   ]
 }
