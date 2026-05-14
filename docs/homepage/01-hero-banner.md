@@ -128,15 +128,15 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
    z-index: 1 places it ABOVE the pricing-tiers section background (z:0 on ::before)
    but BELOW the logo bar (z:2) and pricing-tiers content (z:2). Net effect: the image
    is fully hidden behind the logo bar, then bleeds through the pricing-tiers bg.
-   Wrapper max-width + img max-height cap the rendered image at a 1000×1000 bounding box. */
+   Wrapper max-width + img max-height cap the rendered image at a 1100×1100 bounding box. */
 [id$="__image_banner_KbGw4i"] .banner__media {
   position: absolute !important;
   top: 112.77px;            /* Figma y-offset within frame */
   right: -110px;            /* image right edge sits 110px past viewport-right (overflow) */
   left: auto !important;    /* override Dawn's default left:0 */
   bottom: auto !important;
-  width: calc(100% - 630px + 110px); /* fills from content edge to 110px past .banner's right edge */
-  max-width: 1000px;        /* hard cap — wrapper never exceeds 1000px wide */
+  width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
+  max-width: 1100px;        /* hard cap — wrapper never exceeds 1100px wide */
   height: auto !important;
   z-index: 1;
   pointer-events: none;
@@ -144,26 +144,28 @@ The breakpoint is **1100px**, not 750px — the design's hardcoded pixel values 
 
 [id$="__image_banner_KbGw4i"] .banner__media img {
   position: relative !important;
-  width: auto !important;            /* let intrinsic + max-* drive sizing so aspect is preserved */
+  width: 100% !important;            /* fill the wrapper, ignore intrinsic 993px width */
   height: auto !important;
-  max-width: 100% !important;        /* don't exceed wrapper width */
-  max-height: 1000px !important;     /* hard cap — image never exceeds 1000px tall */
-  margin-left: auto !important;      /* right-align if narrower than wrapper */
+  max-height: 1100px !important;     /* hard cap — image never exceeds 1100px tall */
   display: block !important;
 }
 ```
 
-### Maximum image size (1000 × 1000 bounding box)
+> **Why `width: 100%` instead of `width: auto`:** Dawn renders the `<img>` with an HTML `width="993"` attribute (the image's intrinsic width). With CSS `width: auto`, the browser treats `993` as the preferred width and may render smaller than the wrapper even with `max-width: 100%`. Explicit `width: 100%` makes the image always fill the wrapper's full width regardless of the HTML attribute.
 
-The wrapper has `max-width: 1000px` and the `<img>` has `max-height: 1000px`. With the image's natural aspect ratio of **993 : 1058** (slightly taller than wide), the height is the binding constraint at the cap — so the image will render at **~938 × 1000** when both maxes are active.
+### Maximum image size (1100 × 1100 bounding box)
+
+The wrapper has `max-width: 1100px` and the `<img>` has `max-height: 1100px`. With the image's natural aspect ratio of **993 : 1058** (slightly taller than wide), the height is the binding constraint at the cap — so the image will render at **~1033 × 1100** when both maxes are active.
 
 | Constraint | Value | Element |
 |---|---|---|
-| max width | `1000px` | `.banner__media` (wrapper) |
-| max height | `1000px` | `.banner__media img` |
-| Effective rendered cap | `~938 × 1000px` | (height-bound by natural aspect) |
+| max width | `1100px` | `.banner__media` (wrapper) |
+| max height | `1100px` | `.banner__media img` |
+| Effective rendered cap | `~1033 × 1100px` | (height-bound by natural aspect) |
 
-When the image is narrower than the wrapper, `margin-left: auto` on the `<img>` keeps it right-aligned within the wrapper so the boats stay anchored to the right edge.
+The 1100px cap kicks in at viewports ≥ **1620px**. Below that the image fills the right column naturally (calc-based width). The 1100 cap was chosen iteratively between "too small at 1980" (1000) and "too dominant" (1400) — at 1100 the image feels prominent at typical desktop widths without overwhelming the layout.
+
+> The image's downward bleed at 1100 height is intentionally allowed to pass behind the logo bar and into the pricing-tiers section — they're at higher z-indexes (`z-index: 2`) so they paint on top of the image cleanly.
 
 ### Hero centering — only on ultra-wide screens (≥ 2000px)
 
@@ -190,12 +192,12 @@ The image's `width` is `calc(100vw - 630px + 110px)` at typical desktop widths (
 | Viewport | `.banner` width | Image wrapper width | Image rendered | Layout |
 |---|---|---|---|---|
 | 1100px | 1100px (full) | 580px | 580 × 618 | Full-width hero, no cap |
-| 1440px (Figma) | 1440px (full) | 920px | 920 × 980 | Full-width hero, matches Figma |
-| 1520px | 1520px (full) | 1000px (capped) | ~938 × 1000 | Full-width, image hits cap |
-| 1920px | 1920px (full) | 1400px → **capped 1000** | ~938 × 1000 | Full-width hero, no margin |
-| 2000px | 1900px (centered) | 1380px → **capped 1000** | ~938 × 1000 | Just-activated cap; ~50px each side |
-| 2560px | 1900px (centered) | 1380px → **capped 1000** | ~938 × 1000 | Hero centered with 330px on each side |
-| 3840px (4K) | 1900px (centered) | 1380px → **capped 1000** | ~938 × 1000 | Hero centered with 970px on each side |
+| 1440px (Figma) | 1440px (full) | 920px | 920 × 980 | Full-width hero, image fills column |
+| 1620px | 1620px (full) | 1100px (capped) | ~1033 × 1100 | First viewport where cap activates |
+| 1920px | 1920px (full) | 1400px → **capped 1100** | ~1033 × 1100 | Full-width hero, image at cap |
+| 2000px | 1900px (centered) | 1380px → **capped 1100** | ~1033 × 1100 | Hero centered with ~50px each side |
+| 2560px | 1900px (centered) | 1380px → **capped 1100** | ~1033 × 1100 | Hero centered with 330px on each side |
+| 3840px (4K) | 1900px (centered) | 1380px → **capped 1100** | ~1033 × 1100 | Hero centered with 970px on each side |
 
 The 110px right overflow is constant at every width — past viewport-right under 2000px, past `.banner`-right at ≥ 2000px.
 

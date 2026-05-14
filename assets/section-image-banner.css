@@ -619,7 +619,7 @@
     left: auto !important; /* override Dawn's default left:0 */
     bottom: auto !important;
     width: calc(100vw - 630px + 110px); /* fills from content edge to 110px past viewport right */
-    max-width: 1000px; /* hard cap — image wrapper never exceeds 1000px wide */
+    max-width: 1100px; /* hard cap — image wrapper never exceeds 1100px wide */
     height: auto !important;
     z-index: 1;
     /* z-index 1 = above pricing-tiers bg (z:0 on ::before), but below the logo bar (z:2)
@@ -630,11 +630,9 @@
   [id$="__image_banner_KbGw4i"] .banner__media img {
     position: relative !important;
     inset: auto !important;
-    width: auto !important;            /* let intrinsic + max-* drive sizing so aspect is preserved */
+    width: 100% !important;            /* fill wrapper width (was `auto` which respected intrinsic 993px) */
     height: auto !important;
-    max-width: 100% !important;        /* don't exceed wrapper width */
-    max-height: 1000px !important;     /* hard cap — image never exceeds 1000px tall */
-    margin-left: auto !important;      /* right-align if narrower than wrapper */
+    max-height: 1100px !important;     /* hard cap — image never exceeds 1100px tall */
     display: block !important;
     object-fit: unset !important;
   }
