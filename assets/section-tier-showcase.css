@@ -111,16 +111,20 @@
 }
 
 /* ============================================
-   Card content
+   Card content — typography per Figma spec.
+   `letter-spacing: -1.1%` from Figma is expressed as -0.011em (CSS doesn't accept %).
+   `line-height: 100%` from Figma is line-height: 1.
    ============================================ */
 
 .tier-showcase__name {
-  font-family: var(--font-heading-family), serif;
-  font-size: 1.8rem;
-  margin: 0 0 1rem;
+  font-family: 'Glacial Indifference', sans-serif;
   font-weight: 400;
-  color: inherit;
+  font-size: 24px;
+  line-height: 1;
   letter-spacing: -0.011em;
+  text-align: center;
+  margin: 0 0 1.6rem;
+  color: inherit;
 }
 
 .tier-showcase__price {
@@ -132,34 +136,40 @@
   color: inherit;
 }
 
-.tier-showcase__currency {
-  font-family: var(--font-heading-family), serif;
-  font-size: 1.4rem;
-  font-weight: 500;
-}
-
+.tier-showcase__currency,
 .tier-showcase__amount {
-  font-family: var(--font-heading-family), serif;
-  font-size: 2.8rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: 'Cardo', serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.011em;
+  text-align: center;
 }
 
 .tier-showcase__suffix {
-  font-size: 1.1rem;
+  font-family: 'Cardo', serif;
+  font-weight: 400;
+  font-size: 16px;
   opacity: 0.65;
   margin-left: 0.4rem;
+  align-self: flex-end;
+  padding-bottom: 4px;
 }
 
 .tier-showcase__description {
-  font-size: 1.3rem;
-  line-height: 1.55;
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.011em;
+  text-align: center;
   margin: 0 0 1.6rem;
   color: inherit;
 }
 
 .tier-showcase__description p {
   margin: 0 0 0.8rem;
+  line-height: inherit;
 }
 
 .tier-showcase__description p:last-child {
@@ -178,12 +188,17 @@
   list-style: none;
   padding: 0;
   margin: 0 0 2.4rem;
-  font-size: 1.3rem;
-  line-height: 1.6;
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.011em;
+  text-align: center;
 }
 
 .tier-showcase__features li {
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;       /* line-height:1 means tighter rows — add explicit gap */
+  line-height: inherit;
 }
 
 .tier-showcase__features li::before {
@@ -206,6 +221,7 @@
   transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   cursor: pointer;
   font-family: inherit;
+  margin-top: auto;          /* pushes button to bottom of the flex-column card */
 }
 
 .tier-showcase__button--outline {

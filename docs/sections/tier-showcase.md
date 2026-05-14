@@ -98,6 +98,23 @@ section.tier-showcase
 | `button_style` | select | `outline` | outline / filled / ghost |
 | `open_new_tab` | checkbox | `false` | |
 
+## Typography spec
+
+Card content typography matches the Figma design tokens. `letter-spacing: -1.1%` from Figma is expressed as `-0.011em` (CSS doesn't accept percentages for `letter-spacing`); `line-height: 100%` is expressed as `line-height: 1`.
+
+| Element | Font | Weight | Size | Line-height | Letter-spacing | Align |
+|---|---|---|---|---|---|---|
+| `.tier-showcase__name` | Glacial Indifference | 400 | 24px | 1 | −0.011em | center |
+| `.tier-showcase__currency`, `.tier-showcase__amount` | Cardo | 700 | 40px | 1 | −0.011em | center |
+| `.tier-showcase__description` | Glacial Indifference | 400 | 20px | 1 | −0.011em | center |
+| `.tier-showcase__features` | Glacial Indifference | 400 | 20px | 1 | −0.011em | center |
+
+Because `line-height: 1` makes feature list rows touch each other, `.tier-showcase__features li` adds `margin-bottom: 1rem` for breathing room between items.
+
+## Button position — pinned to card bottom
+
+The card uses `display: flex; flex-direction: column`, and the button gets `margin-top: auto`. That auto-margin consumes any remaining vertical space inside the card, **pushing the button to the bottom regardless of how short or long the description / features content is**. Every tier's CTA button stays vertically aligned to the bottom edge of its card, even when card heights differ.
+
 ## Behaviour
 
 ### Image height — scales with natural aspect ratio
