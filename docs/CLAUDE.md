@@ -117,3 +117,5 @@ Integrated via `"type": "apps"` blocks in section schemas:
 |---|---|
 | `header.md` | Header section — HTML, CSS, JS |
 | `homepage/` | All sections on the homepage |
+| `sections/` | Reusable section docs (not page-specific) |
+| `subscription/` | Subscription page sections |
