@@ -852,3 +852,24 @@
     padding-top: calc(var(--header-height, 6rem) + 1.2rem);
   }
 }
+
+/* ============================================
+   Resizable image block
+   Width/height/object-fit/alignment are driven by schema settings
+   applied inline. These rules just provide safe defaults so the block
+   behaves predictably regardless of editor input.
+   ============================================ */
+
+.banner__image-block {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.banner__image-block-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+

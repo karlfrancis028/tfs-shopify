@@ -217,6 +217,45 @@
             </ul>
           {%- when 'divider' -%}
             <hr class="banner__divider" {{ block.shopify_attributes }}>
+          {%- when 'image' -%}
+            {%- liquid
+              assign img_styles = ''
+              if block.settings.width != blank
+                assign img_styles = img_styles | append: 'width:' | append: block.settings.width | append: ';'
+              endif
+              if block.settings.height != blank
+                assign img_styles = img_styles | append: 'height:' | append: block.settings.height | append: ';'
+              endif
+              if block.settings.fit != blank
+                assign img_styles = img_styles | append: 'object-fit:' | append: block.settings.fit | append: ';'
+              endif
+
+              assign wrapper_styles = ''
+              if block.settings.alignment != blank
+                assign wrapper_styles = 'justify-content:' | append: block.settings.alignment | append: ';'
+              endif
+            -%}
+            <div
+              class="banner__image-block"
+              {% if wrapper_styles != blank %}style="{{ wrapper_styles }}"{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1500
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '200, 400, 600, 800, 1000, 1200, 1500',
+                    sizes: '(min-width: 750px) 600px, 100vw',
+                    style: img_styles,
+                    class: 'banner__image-block-img',
+                    alt: block.settings.image.alt | default: ''
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'banner__image-block-img placeholder-svg' }}
+              {%- endif -%}
+            </div>
         {%- endcase -%}
       {%- endfor -%}
     </div>
@@ -663,6 +702,63 @@
       "name": "Divider",
       "limit": 3,
       "settings": []
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Size"
+        },
+        {
+          "type": "text",
+          "id": "width",
+          "label": "Width",
+          "info": "e.g. 200px, 50%, auto",
+          "default": "300px"
+        },
+        {
+          "type": "text",
+          "id": "height",
+          "label": "Height",
+          "info": "e.g. 200px, leave blank for auto"
+        },
+        {
+          "type": "select",
+          "id": "fit",
+          "label": "Image fit",
+          "info": "How the image fills the box when both width and height are set.",
+          "options": [
+            { "value": "contain", "label": "Contain (entire image visible)" },
+            { "value": "cover", "label": "Cover (crops to fill)" },
+            { "value": "fill", "label": "Fill (stretch)" },
+            { "value": "scale-down", "label": "Scale down" },
+            { "value": "none", "label": "None (original size)" }
+          ],
+          "default": "contain"
+        },
+        {
+          "type": "header",
+          "content": "Alignment"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Horizontal alignment",
+          "options": [
+            { "value": "flex-start", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Right" }
+          ],
+          "default": "center"
+        }
+      ]
     }
   ],
   "presets": [
