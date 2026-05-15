@@ -866,6 +866,46 @@
   }
 }
 
+/* Reset Dawn's stacked-child margins inside this card — per-element margin-bottom
+   is the only thing driving spacing now. Covers `> * + *` (1rem default),
+   `.banner__heading + *` (1rem), and `> * + .banner__text` (1.5rem / 2rem). */
+[id$="__image_banner_XypHhk"] .banner__box > *,
+[id$="__image_banner_XypHhk"] .banner__box > * + * {
+  margin-top: 0;
+}
+
+[id$="__image_banner_XypHhk"] .banner__heading {
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+  color: #024325;
+  margin: 0 0 8px;
+}
+
+/* Wins over .banner__heading via source order — same specificity, defined later. */
+[id$="__image_banner_XypHhk"] .banner__subheading {
+  font-family: 'Cardo', serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+  text-align: center;
+  color: #024325;
+  margin: 0 0 32px;
+}
+
+[id$="__image_banner_XypHhk"] .banner__text,
+[id$="__image_banner_XypHhk"] .banner__text p {
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
+  color: #024325;
+  margin: 0 0 32px;
+}
+
 /* ============================================
    Resizable image block
    Width/height/object-fit/alignment are driven by schema settings

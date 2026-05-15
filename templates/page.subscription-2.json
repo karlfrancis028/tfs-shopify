@@ -34,14 +34,16 @@
           "type": "heading",
           "settings": {
             "heading": "Quarterly Subscription",
-            "heading_size": "h1"
+            "heading_size": "h1",
+            "heading_style": "heading"
           }
         },
         "heading_DAaxmN": {
           "type": "heading",
           "settings": {
             "heading": "The Gentleman’s Dossier",
-            "heading_size": "h1"
+            "heading_size": "h1",
+            "heading_style": "subheading"
           }
         },
         "text_cLpmJe": {
@@ -97,7 +99,8 @@
           "disabled": true,
           "settings": {
             "heading": "",
-            "heading_size": "h1"
+            "heading_size": "h1",
+            "heading_style": "heading"
           }
         },
         "text_KWKWLF": {
