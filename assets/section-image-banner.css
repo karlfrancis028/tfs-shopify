@@ -867,9 +867,29 @@
   margin: 1rem 0;
 }
 
-.banner__image-block-img {
-  max-width: 100%;
-  height: auto;
+/* Sized wrapper — width/height come from the schema setting as inline style. */
+.banner__image-block-frame {
   display: block;
+  max-width: 100%;
+  line-height: 0; /* kill the inline-image baseline gap */
 }
+
+.banner__image-block-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/* When the frame has an explicit height (inline style), let the img fill it
+   so the `object-fit` modifier below has something to fit against. */
+.banner__image-block-frame[style*="height"] .banner__image-block-img {
+  height: 100%;
+}
+
+.banner__image-block-frame--fit-contain .banner__image-block-img { object-fit: contain; }
+.banner__image-block-frame--fit-cover .banner__image-block-img { object-fit: cover; }
+.banner__image-block-frame--fit-fill .banner__image-block-img { object-fit: fill; }
+.banner__image-block-frame--fit-scale-down .banner__image-block-img { object-fit: scale-down; }
+.banner__image-block-frame--fit-none .banner__image-block-img { object-fit: none; }
 

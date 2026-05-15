@@ -24,8 +24,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/The_Fortunate_Son_Icon_v2_4d54079e-c5a7-488a-b6db-f1f5c7fc211f.png",
-            "width": "300px",
-            "height": "",
+            "width": "104px",
+            "height": "116px",
             "fit": "contain",
             "alignment": "center"
           }

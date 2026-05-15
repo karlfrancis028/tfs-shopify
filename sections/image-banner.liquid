@@ -219,42 +219,47 @@
             <hr class="banner__divider" {{ block.shopify_attributes }}>
           {%- when 'image' -%}
             {%- liquid
-              assign img_styles = ''
+              # Shopify's `image_tag` filter ignores unknown named args (including `style:`),
+              # so size/object-fit have to live on a wrapper element, not the <img>.
+              assign frame_styles = ''
               if block.settings.width != blank
-                assign img_styles = img_styles | append: 'width:' | append: block.settings.width | append: ';'
+                assign frame_styles = frame_styles | append: 'width:' | append: block.settings.width | append: ';'
               endif
               if block.settings.height != blank
-                assign img_styles = img_styles | append: 'height:' | append: block.settings.height | append: ';'
-              endif
-              if block.settings.fit != blank
-                assign img_styles = img_styles | append: 'object-fit:' | append: block.settings.fit | append: ';'
+                assign frame_styles = frame_styles | append: 'height:' | append: block.settings.height | append: ';'
               endif
 
               assign wrapper_styles = ''
               if block.settings.alignment != blank
                 assign wrapper_styles = 'justify-content:' | append: block.settings.alignment | append: ';'
               endif
+
+              assign fit_modifier = block.settings.fit | default: 'contain'
             -%}
             <div
               class="banner__image-block"
               {% if wrapper_styles != blank %}style="{{ wrapper_styles }}"{% endif %}
               {{ block.shopify_attributes }}
             >
-              {%- if block.settings.image != blank -%}
-                {{
-                  block.settings.image
-                  | image_url: width: 1500
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '200, 400, 600, 800, 1000, 1200, 1500',
-                    sizes: '(min-width: 750px) 600px, 100vw',
-                    style: img_styles,
-                    class: 'banner__image-block-img',
-                    alt: block.settings.image.alt | default: ''
-                }}
-              {%- else -%}
-                {{ 'image' | placeholder_svg_tag: 'banner__image-block-img placeholder-svg' }}
-              {%- endif -%}
+              <div
+                class="banner__image-block-frame banner__image-block-frame--fit-{{ fit_modifier }}"
+                {% if frame_styles != blank %}style="{{ frame_styles }}"{% endif %}
+              >
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1500
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '200, 400, 600, 800, 1000, 1200, 1500',
+                      sizes: '(min-width: 750px) 600px, 100vw',
+                      class: 'banner__image-block-img',
+                      alt: block.settings.image.alt | default: ''
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'banner__image-block-img placeholder-svg' }}
+                {%- endif -%}
+              </div>
             </div>
         {%- endcase -%}
       {%- endfor -%}
