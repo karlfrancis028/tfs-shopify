@@ -176,10 +176,72 @@
         "header_alignment": "center",
         "background_color": "#eeeeee"
       }
+    },
+    "image_banner_XypHhk": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_nGjefA": {
+          "type": "heading",
+          "settings": {
+            "heading": "Quarterly Subscription",
+            "heading_size": "h1"
+          }
+        },
+        "heading_DAaxmN": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Gentleman’s Dossier",
+            "heading_size": "h1"
+          }
+        },
+        "text_cLpmJe": {
+          "type": "text",
+          "settings": {
+            "text": "Lorem ipsum dolor sit amet consectetur. Sed vitae sem id risus. Pretium enim leo varius elit laoreet aliquam in, a porttitor vitae.",
+            "text_style": "body"
+          }
+        },
+        "button_R8ddEG": {
+          "type": "button",
+          "settings": {
+            "button_label": "Take your oath of discretion",
+            "button_link": "",
+            "button_style_secondary": false,
+            "bg_color": "#024325",
+            "text_color": "#ffffff",
+            "border_style": "none",
+            "border_width": 1,
+            "border_color": "",
+            "btn_width": "309px",
+            "btn_height": "48px"
+          }
+        }
+      },
+      "block_order": [
+        "heading_nGjefA",
+        "heading_DAaxmN",
+        "text_cLpmJe",
+        "button_R8ddEG"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/TFS_Thank_you_Mailer_Boxes_Postcard_Card_2_1.png",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
     }
   },
   "order": [
     "main",
+    "image_banner_XypHhk",
     "image_banner_FeqadY",
     "tier_showcase_A8jr6d"
   ]
