@@ -6,7 +6,9 @@
 
 ## Purpose
 
-Stack of full-bleed illustration backgrounds with overlaid pricing-tier cards. Each tier block renders as a full-width row containing an illustration that scales to its natural aspect ratio, with a tinted card overlaid on top showing tier name, price, description, features, and a CTA button.
+Stack of full-bleed illustration backgrounds with overlaid pricing-tier cards. Each tier block renders as a fixed-size row (1512 × 850, responsive cap at `100%` of viewport) containing an illustration that fills the row via `object-fit: cover`, with a tinted card overlaid on top showing tier name, price, description, features, and a CTA button.
+
+The item is intentionally given a **fixed pixel size** rather than scaling with the image's natural aspect ratio — this guarantees predictable layout regardless of which illustration is uploaded. Card position within that fixed canvas is controlled by two 0–100 sliders (horizontal + vertical), so editors can place the card anywhere on the illustration without writing CSS.
 
 Designed as a more flexible alternative to baking the card area into the illustration itself (the older [Pioneer Card pattern](../subscription/01-pioneer-card.md)) — here the illustration is purely background art, and the card is a CSS overlay that's fully editor-controlled.
 
@@ -18,11 +20,10 @@ section.tier-showcase
     h2.tier-showcase__heading
     p.tier-showcase__subheading
   for each tier block:
-    div#TierShowcase-{block.id}                       ← unique ID for scoped CSS targeting
-       .tier-showcase__item
-       .tier-showcase__item--{left|center|right}
+    div#TierShowcase-{block.id}.tier-showcase__item   ← fixed 1512×850, centered, flex column
+      ::before                                        ← top spacer (flex-grow = position_y)
       div.tier-showcase__bg                           ← position:absolute, fills item
-        img                                           ← object-fit:cover, scales naturally
+        img                                           ← object-fit:cover
         div.tier-showcase__bg-overlay                 ← optional tint (only if opacity > 0)
       div.tier-showcase__card                         ← position:relative, z-index:1
         h3.tier-showcase__name
@@ -34,7 +35,8 @@ section.tier-showcase
         hr.tier-showcase__divider                     ← optional toggle
         ul.tier-showcase__features
           li × N (with • bullet)
-        a.tier-showcase__button                       ← .tier-showcase__button--{outline|filled|ghost}
+        a.tier-showcase__button                       ← --outline|--filled|--ghost variant
+      ::after                                         ← bottom spacer (flex-grow = 100 - position_y)
 ```
 
 ## Section settings
@@ -46,7 +48,9 @@ section.tier-showcase
 | `heading_color` | color | `#034325` | |
 | `subheading_color` | color | `#034325` | |
 | `header_alignment` | select | `center` | left / center / right |
-| `background_color` | color | `#EEEEEE` | Section background (visible between blocks if any) |
+| `background_color` | color | `#EEEEEE` | Section background (visible between blocks and around the centered item on wide viewports) |
+
+> **Removed in latest revision:** the per-block Section Height group (`min_height`, `mobile_bg_height`) is gone. Item height is now a fixed `850px` from the CSS — no editor control. Re-introduce by adding the schema fields back and wiring a `--tier-min-height` inline custom property if needed.
 
 ## Block: `tier`
 
@@ -54,17 +58,18 @@ section.tier-showcase
 
 | Setting | Type | Default | Notes |
 |---|---|---|---|
-| `background_image` | image_picker | — | The illustration. Renders responsive widths 450–3840 |
+| `background_image` | image_picker | — | Illustration. Responsive widths 450–3840 |
 | `overlay_color` | color | `#000000` | Color of optional tint over image |
-| `overlay_opacity` | range 0–80% | `0` | Set > 0 to apply tint (e.g. for darker / more dramatic look) |
+| `overlay_opacity` | range 0–80% | `0` | Set > 0 to apply tint |
 
 ### Card position
 
 | Setting | Type | Default | Notes |
 |---|---|---|---|
-| `card_position` | select | `center` | left / center / right — controls horizontal alignment via `justify-content` |
+| `card_position` | range 0–100 (step 5) | `50` | Horizontal: 0 = flush left, 50 = centered, 100 = flush right. Math is `%`-based on item width so it tracks viewport shrink. |
+| `card_position_y` | range 0–100 (step 5) | `50` | Vertical: 0 = top, 50 = middle, 100 = bottom. Driven by flex-grow ratio on `::before` / `::after` spacers. |
 
-> **Scoped position override:** each block gets a unique `id="TierShowcase-{block.id}"`, so you can write per-instance custom CSS like `#TierShowcase-abc123 .tier-showcase__card { margin-left: 12%; }` to fine-tune position beyond the three preset options.
+> **Scoped CSS hook:** each block gets a unique `id="TierShowcase-{block.id}"`, so you can write per-instance custom CSS for fine-tuning beyond the sliders.
 
 ### Card style
 
@@ -72,9 +77,10 @@ section.tier-showcase
 |---|---|---|---|
 | `card_bg_color` | color | `#2a2116` | Card background (dark warm brown) |
 | `card_text_color` | color | `#ffffff` | Inherited by all card content |
-| `card_max_width` | range 280–640px | `460` | |
-| `card_padding` | range 16–64px | `32` | All sides |
-| `card_border_radius` | range 0–32px | `10` | |
+| `card_max_width` | range 280–640px (step 20) | `460` | Caps card width inside the 1512px item |
+| `card_min_height` | range 0–800px (step 20) | `0` | `0` = auto (sizes to content). Use to keep multiple tiers visually consistent |
+| `card_padding` | range 16–64px (step 4) | `32` | All sides |
+| `card_border_radius` | range 0–32px (step 2) | `10` | |
 | `card_text_alignment` | select | `center` | left / center / right |
 
 ### Content
@@ -98,6 +104,64 @@ section.tier-showcase
 | `button_style` | select | `outline` | outline / filled / ghost |
 | `open_new_tab` | checkbox | `false` | |
 
+## Layout model
+
+### Item — fixed canvas, centered, capped responsively
+
+```css
+.tier-showcase__item {
+  position: relative;
+  width: 1512px;
+  max-width: 100%;          /* shrinks below 1512px viewports — no horizontal scroll */
+  height: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tier-showcase__item + .tier-showcase__item {
+  margin-top: 128px;        /* gap between stacked tiers — only between, not above the first */
+}
+```
+
+The item is `display: flex; flex-direction: column` so the `::before` / `::after` spacers and the `.tier-showcase__card` participate in a column flex layout. The `.tier-showcase__bg` is `position: absolute; inset: 0` so it sits behind the column and is not part of the flex flow.
+
+### Vertical card position — flex-grow on spacers
+
+```css
+.tier-showcase__item::before,
+.tier-showcase__item::after {
+  content: '';
+  display: block;
+  min-height: 1.6rem;       /* breathing room at positions 0 and 100 */
+  flex-shrink: 0;
+}
+
+.tier-showcase__item::before { flex-grow: var(--tier-card-position-y, 50); }
+.tier-showcase__item::after  { flex-grow: calc(100 - var(--tier-card-position-y, 50)); }
+```
+
+At `card_position_y = 50` both grow `1 : 1` → card centered. At `0` the `::before` is `0` → card slides to top. At `100` the `::after` is `0` → card slides to bottom.
+
+### Horizontal card position — margin-left percentage math
+
+```css
+.tier-showcase__card {
+  width: 100%;
+  max-width: var(--tier-card-max-width, 460px);
+  margin-left: calc(1.6rem + (100% - var(--tier-card-max-width, 460px) - 3.2rem) * var(--tier-card-position, 50) / 100);
+  margin-right: 1.6rem;
+}
+```
+
+The calc is a percentage of the item's width, so as the item shrinks (below the 1512px breakpoint) the card's offset shrinks proportionally — no `position: absolute`, no JS, just flow math.
+
+- At `card_position = 0`: `margin-left = 1.6rem` (flush left with 1.6rem gutter)
+- At `card_position = 100`: `margin-left = 100% - max-width - 1.6rem` (flush right)
+- At `card_position = 50`: `margin-left = (100% - max-width) / 2` (centered)
+
 ## Typography spec
 
 Card content typography matches the Figma design tokens. `letter-spacing: -1.1%` from Figma is expressed as `-0.011em` (CSS doesn't accept percentages for `letter-spacing`); `line-height: 100%` is expressed as `line-height: 1`.
@@ -115,47 +179,6 @@ Because `line-height: 1` makes feature list rows touch each other, `.tier-showca
 
 The card uses `display: flex; flex-direction: column`, and the button gets `margin-top: auto`. That auto-margin consumes any remaining vertical space inside the card, **pushing the button to the bottom regardless of how short or long the description / features content is**. Every tier's CTA button stays vertically aligned to the bottom edge of its card, even when card heights differ.
 
-## Behaviour
-
-### Image height — scales with natural aspect ratio
-
-`.tier-showcase__bg img` uses `width: 100%; height: 100%; object-fit: cover` while `.tier-showcase__bg` is `position: absolute; inset: 0`. The **item's height** is determined by the **card** (which is in flow), so the image fills whatever vertical space the card needs. Because the card has padding + content but no fixed height, it adapts to its content — and the image fills around it.
-
-For a tighter image (less of it visible), reduce `card_padding` or `card_max_width`. For more image, increase `card_padding` or add empty content.
-
-### Card position — flex-based with custom CSS hooks
-
-```css
-.tier-showcase__item--left   { justify-content: flex-start; }
-.tier-showcase__item--center { justify-content: center; }
-.tier-showcase__item--right  { justify-content: flex-end; }
-```
-
-Plus side margin clamps so the card never kisses the viewport edge:
-
-```css
-.tier-showcase__item--left  .tier-showcase__card { margin-left:  clamp(1.6rem, 8%, 8rem); }
-.tier-showcase__item--right .tier-showcase__card { margin-right: clamp(1.6rem, 8%, 8rem); }
-```
-
-For per-instance overrides (e.g. "this specific Pioneer card should sit at exactly 12% from the left"), target the block's unique ID:
-
-```css
-#TierShowcase-{block.id} .tier-showcase__card {
-  margin-left: 12%;
-}
-```
-
-### Mobile (< 749px) — same layout as desktop
-
-The mobile layout uses the **same image-as-full-background + card-overlaid pattern** as desktop — the image is never stacked separately above or below the card. On mobile we only:
-
-- Force the card to `margin-left: auto; margin-right: auto` so it's always centered regardless of `card_position`
-- Cap card `max-width: 460px` with `width: calc(100% - 3.2rem)` so it has comfortable side gutters
-- Set `margin-top` and `margin-bottom` to `4rem` for vertical breathing room above and below
-
-Image stays `position: absolute; inset: 0` underneath the card, exactly like desktop. The `.tier-showcase__item`'s height is determined by the card's content, and the image fills that height via `object-fit: cover`.
-
 ### Button styles
 
 | Style | Look | When to use |
@@ -163,6 +186,23 @@ Image stays `position: absolute; inset: 0` underneath the card, exactly like des
 | `outline` | Transparent bg, 1px border in `currentColor` | Default — works on any card bg |
 | `filled` | `currentColor` background | When card bg is dark and you want a high-contrast CTA |
 | `ghost` | Transparent bg, no border, underlined text | Minimal/secondary CTAs |
+
+## Mobile (< 749px)
+
+```css
+@media (max-width: 749px) {
+  .tier-showcase__card {
+    margin-left: auto !important;          /* override card_position — always centered */
+    margin-right: auto !important;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    max-width: 460px;
+    width: calc(100% - 3.2rem);
+  }
+}
+```
+
+On mobile the `card_position` slider is overridden to always center horizontally (the slider math doesn't produce nice values on narrow viewports). The vertical-position spacers still respect `card_position_y`. The item itself remains `1512px max-width: 100%` so it fills the viewport, and `height: 850px` is unchanged (image fills via `object-fit: cover`).
 
 ## Example: Pioneer + Heirloom from the homepage
 
@@ -174,9 +214,11 @@ Image stays `position: absolute; inset: 0` underneath the card, exactly like des
       "type": "tier",
       "settings": {
         "background_image": "shopify://shop_images/pioneer-illustration.png",
-        "card_position": "center",
+        "card_position": 50,
+        "card_position_y": 50,
         "card_bg_color": "#2a2116",
         "card_text_color": "#ffffff",
+        "card_max_width": 460,
         "tier_name": "The Pioneer",
         "currency": "P",
         "amount": "20,000",
@@ -189,14 +231,15 @@ Image stays `position: absolute; inset: 0` underneath the card, exactly like des
       "type": "tier",
       "settings": {
         "background_image": "shopify://shop_images/heirloom-illustration.png",
-        "card_position": "right",
+        "card_position": 75,
+        "card_position_y": 50,
         "card_bg_color": "#bf934a",
         "card_text_color": "#ffffff",
         "tier_name": "The Heirloom",
         "currency": "P",
         "amount": "30,000",
         "description": "<p>For the gentleman who values the lineage of craft…</p>",
-        "features": "A curation of 5+ Premium items\nPremium Top & Bottom garments\nPremium-tier apparel and accessories\nExclusive access to The Fortunate Son events\nPremium-tier pair of shoes\nAnnual Limited Collection Birthday gift.",
+        "features": "A curation of 5+ Premium items\nPremium Top & Bottom garments\nPremium-tier apparel and accessories\nExclusive access to The Fortunate Son events\nPremium-tier pair of shoes",
         "button_label": "ADD TO CART"
       }
     }
@@ -209,6 +252,6 @@ Image stays `position: absolute; inset: 0` underneath the card, exactly like des
 
 | Need | Use |
 |---|---|
-| Tier cards with **separate illustration backgrounds**, mirrored layouts, full-bleed | **`tier-showcase`** (this section) |
+| Tier cards with **separate illustration backgrounds**, slider-positioned, full-bleed | **`tier-showcase`** (this section) |
 | Tier cards in a **clean grid** (3 cards side-by-side, white bg) | [`pricing-tiers`](../homepage/03-pricing-tiers.md) |
 | Single tier card with the card area **baked into the illustration** | [`image-banner` (Pioneer Card pattern)](../subscription/01-pioneer-card.md) |

@@ -838,72 +838,38 @@
 /* ============================================
    Quarterly Subscription hero - image_banner_XypHhk
    ============================================
-   Lifts the hero up so its image fills the viewport from the
-   very top, sitting behind the floating header pill. Header
-   reserve = sticky --header-height (set by sections/header.liquid)
-   + the 1.2rem top margin baked into .header-wrapper.
+   Instance-specific: hoist the section so the image fills the viewport
+   from the very top, sitting behind the floating header pill. Header
+   reserve = sticky --header-height + the 1.2rem top margin baked into
+   .header-wrapper. Card layout + fonts are no longer scoped here —
+   they come from the class-based `.banner--card-style` system below.
+
+   Desktop only: on mobile there's not enough vertical room for the card
+   to clear the header after the hoist, so we let the section flow
+   normally below the header on narrow viewports.
 */
+/* Base spacing — 128px gap between the hero and whatever section follows.
+   Applies on all viewports. Margin-top is set per-viewport below. */
 [id^="shopify-section-"][id$="__image_banner_XypHhk"] {
-  margin-top: calc(-1 * (var(--header-height, 6rem) + 1.2rem));
+  margin-bottom: 128px;
 }
 
 @media screen and (min-width: 750px) {
+  [id^="shopify-section-"][id$="__image_banner_XypHhk"] {
+    margin-top: calc(-1 * (var(--header-height, 6rem) + 1.2rem));
+  }
+
   [id$="__image_banner_XypHhk"] .banner__content {
     padding-top: calc(var(--header-height, 6rem) + 1.2rem);
   }
+}
 
-  /* Card styling per Figma spec: 808×493, 16px radius, 1px #8AA396 border, 32px padding.
-     Overrides Dawn's default min-width:45rem / max-width:71rem / height:fit-content. */
-  [id$="__image_banner_XypHhk"] .banner__box {
-    width: 808px;
-    max-width: 100%;
-    min-width: 0;
-    height: 493px;
-    padding: 32px;
-    border: 1px solid #8AA396;
-    border-radius: 16px;
-    background-color: white;
+/* Mobile: section flows below header normally — give it a small breathing
+   gap so the card doesn't butt against the header bar. */
+@media screen and (max-width: 749px) {
+  [id^="shopify-section-"][id$="__image_banner_XypHhk"] {
+    margin-top: 1.6rem;
   }
-}
-
-/* Reset Dawn's stacked-child margins inside this card — per-element margin-bottom
-   is the only thing driving spacing now. Covers `> * + *` (1rem default),
-   `.banner__heading + *` (1rem), and `> * + .banner__text` (1.5rem / 2rem). */
-[id$="__image_banner_XypHhk"] .banner__box > *,
-[id$="__image_banner_XypHhk"] .banner__box > * + * {
-  margin-top: 0;
-}
-
-[id$="__image_banner_XypHhk"] .banner__heading {
-  font-family: 'Glacial Indifference', sans-serif;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 1;
-  text-align: center;
-  color: #024325;
-  margin: 0 0 8px;
-}
-
-/* Wins over .banner__heading via source order — same specificity, defined later. */
-[id$="__image_banner_XypHhk"] .banner__subheading {
-  font-family: 'Cardo', serif;
-  font-weight: 400;
-  font-size: 48px;
-  line-height: 1;
-  text-align: center;
-  color: #024325;
-  margin: 0 0 32px;
-}
-
-[id$="__image_banner_XypHhk"] .banner__text,
-[id$="__image_banner_XypHhk"] .banner__text p {
-  font-family: 'Glacial Indifference', sans-serif;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1;
-  text-align: center;
-  color: #024325;
-  margin: 0 0 32px;
 }
 
 /* ============================================
@@ -945,4 +911,127 @@
 .banner__image-block-frame--fit-fill .banner__image-block-img { object-fit: fill; }
 .banner__image-block-frame--fit-scale-down .banner__image-block-img { object-fit: scale-down; }
 .banner__image-block-frame--fit-none .banner__image-block-img { object-fit: none; }
+
+/* ============================================
+   Card style — opt-in via section setting `use_card_style`.
+   Desktop only. Lifts the Quarterly Subscription hero layout into a
+   class-based system so any Image Banner can adopt it:
+     - Card layout: sized white box, rounded, bordered, padded
+     - Heading: small Glacial Indifference label
+     - Subheading: large Cardo serif title (set via the heading block's
+       Style = "Subheading" option)
+     - Text/description: Glacial Indifference body copy
+   Per-element margin-bottom drives spacing; Dawn's stacked-child margins
+   are reset inside this card so the rhythm stays tight.
+   ============================================ */
+
+@media screen and (min-width: 750px) {
+  .banner--card-style .banner__box {
+    width: 808px;
+    max-width: 100%;
+    min-width: 0;
+    height: 493px;
+    padding: 32px;
+    border: 1px solid #8AA396;
+    border-radius: 16px;
+  }
+}
+
+/* Mobile card layout — full-width box with smaller padding, content-driven
+   height, scaled-down border-radius. Same border + background as desktop.
+   Card overlays the hero image even when `show_text_below` is on: we force
+   the media back to absolute so the image fills the banner, and re-apply the
+   image_height min-heights to .banner__content so the banner has somewhere
+   for the absolute media to live. */
+@media screen and (max-width: 749px) {
+  .banner--card-style .banner__box {
+    width: calc(100% - 3.2rem);
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    padding: 2rem;
+    border: 1px solid #8AA396;
+    border-radius: 12px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Override Dawn's mobile-bottom rule that puts media in normal flow.
+     Card-style keeps the image as a full-bleed background on all sizes. */
+  .banner--card-style.banner--mobile-bottom .banner__media {
+    position: absolute;
+  }
+
+  /* Media is now absolute → content needs an explicit min-height per image_height
+     variant (mirrors the values Dawn applies in overlay mode on mobile). */
+  .banner--card-style.banner--mobile-bottom.banner--small .banner__content {
+    min-height: 28rem;
+  }
+
+  .banner--card-style.banner--mobile-bottom.banner--medium .banner__content {
+    min-height: 34rem;
+  }
+
+  .banner--card-style.banner--mobile-bottom.banner--large .banner__content {
+    min-height: 39rem;
+  }
+}
+
+.banner--card-style .banner__box > *,
+.banner--card-style .banner__box > * + * {
+  margin-top: 0;
+}
+
+.banner--card-style .banner__heading {
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+  color: #024325;
+  margin: 0 0 8px;
+}
+
+/* Subheading variant — same source order means this wins over .banner__heading
+   for elements that have both classes (Style = "Subheading" in editor). */
+.banner--card-style .banner__subheading {
+  font-family: 'Cardo', serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+  text-align: center;
+  color: #024325;
+  margin: 0 0 32px;
+}
+
+.banner--card-style .banner__text,
+.banner--card-style .banner__text p {
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
+  color: #024325;
+  margin: 0 0 32px;
+}
+
+/* Mobile font scale — scaled down from the desktop spec for narrower screens. */
+@media screen and (max-width: 749px) {
+  .banner--card-style .banner__heading {
+    font-size: 20px;
+    margin: 0 0 4px;
+  }
+
+  .banner--card-style .banner__subheading {
+    font-size: 32px;
+    margin: 0 0 16px;
+  }
+
+  .banner--card-style .banner__text,
+  .banner--card-style .banner__text p {
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 0 0 16px;
+  }
+}
 

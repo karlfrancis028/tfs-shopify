@@ -53,7 +53,7 @@
 
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if section.settings.use_card_style %} banner--card-style{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
   {%- if section.settings.image != blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -116,7 +116,12 @@
     </div>
   {%- endif -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+    <div
+      class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient"
+      {% if section.settings.card_background != blank %}
+        style="background-color: {{ section.settings.card_background }}; background-image: none;"
+      {% endif %}
+    >
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
@@ -176,7 +181,7 @@
                 assign btn_styles = btn_styles | append: 'color:' | append: block.settings.text_color | append: ';'
               endif
               if block.settings.btn_width != blank
-                assign btn_styles = btn_styles | append: 'width:' | append: block.settings.btn_width | append: ';'
+                assign btn_styles = btn_styles | append: 'width:100%;max-width:' | append: block.settings.btn_width | append: ';'
               endif
               if block.settings.btn_height != blank
                 assign btn_styles = btn_styles | append: 'height:' | append: block.settings.btn_height | append: ';'
@@ -431,6 +436,19 @@
       "default": "scheme-1"
     },
     {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background color",
+      "info": "Leave unset to use the color scheme. Set to override the gradient with a flat color (e.g. #ffffff for the card-style hero)."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_card_style",
+      "label": "Style as card",
+      "info": "Applies the card layout (sized white box with rounded border) and the card font styles (Glacial Indifference heading, Cardo subheading, Glacial Indifference body) on desktop.",
+      "default": false
+    },
+    {
       "type": "header",
       "content": "t:sections.image-banner.settings.mobile.content"
     },
@@ -676,8 +694,8 @@
         {
           "type": "text",
           "id": "btn_width",
-          "label": "Width",
-          "info": "e.g. 200px or 100%"
+          "label": "Max width",
+          "info": "Applied as max-width — the button is `width: 100%` and caps at this value. e.g. 300px or 20rem. Leave blank for the button's natural width."
         },
         {
           "type": "text",

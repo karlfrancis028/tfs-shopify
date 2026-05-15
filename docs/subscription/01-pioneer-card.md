@@ -151,3 +151,106 @@ On mobile the card is pulled out of absolute positioning and stacked below the i
   }
 }
 ```
+
+## Related: `banner--card-style` opt-in (Quarterly Subscription hero)
+
+A second pattern in this same section (`image-banner`) supports a **generic card overlay** that's not baked into the PNG — the card is drawn entirely by CSS over a photo background. Used by the Quarterly Subscription hero (`image_banner_XypHhk` on `templates/page.subscription-2.json`).
+
+### Section settings (added)
+
+| Setting | Type | Default | Effect |
+|---|---|---|---|
+| `card_background` | color | _(blank)_ | When set, applies inline `background-color` + `background-image: none` on `.banner__box` (kills the color-scheme gradient). Blank default means existing image-banner sections without an explicit value fall through to the color scheme unchanged — set this per-section (e.g. `#ffffff` for a white card). |
+| `use_card_style` | checkbox | `false` | Adds `banner--card-style` class to `.banner`. Enables the full card layout + typography rules below. |
+
+### Block settings (added)
+
+| Block | Setting | Notes |
+|---|---|---|
+| `heading` | `heading_style` (select: `heading` / `subheading`) | When `subheading`, adds `banner__subheading` class to the `<h2>`. Inside card-style: `subheading` renders as 48px Cardo (desktop) / 32px (mobile); `heading` renders as 32px Glacial Indifference (desktop) / 20px (mobile). |
+| `button` | `btn_width` | Now applied as **`max-width`** with `width: 100%`. Button stretches to fill its container up to the cap, instead of being a fixed width that can overflow narrow containers. |
+| `image` (new block) | `image`, `width`, `height`, `fit`, `alignment` | Resizable image block. `width`/`height` are CSS lengths on a wrapper div; `fit` is `object-fit` on the `<img>`; `alignment` is `justify-content` on the flex wrapper. Useful for inline logos inside the card. |
+
+### Card layout — class-based, both viewports
+
+```css
+@media (min-width: 750px) {
+  .banner--card-style .banner__box {
+    width: 808px;
+    height: 493px;
+    padding: 32px;
+    border: 1px solid #8AA396;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 749px) {
+  .banner--card-style .banner__box {
+    width: calc(100% - 3.2rem);
+    height: auto;
+    padding: 2rem;
+    border: 1px solid #8AA396;
+    border-radius: 12px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+```
+
+### Mobile overlay override
+
+When `show_text_below: true` (the default), Dawn sets `banner--mobile-bottom` which puts the image in normal flow (stacked above content). Card-style overrides this so the image stays as a full-bleed background and the card overlays:
+
+```css
+@media (max-width: 749px) {
+  .banner--card-style.banner--mobile-bottom .banner__media { position: absolute; }
+  .banner--card-style.banner--mobile-bottom.banner--large  .banner__content { min-height: 39rem; }
+  .banner--card-style.banner--mobile-bottom.banner--medium .banner__content { min-height: 34rem; }
+  .banner--card-style.banner--mobile-bottom.banner--small  .banner__content { min-height: 28rem; }
+}
+```
+
+Image absolute → doesn't contribute to height; we re-apply Dawn's per-size min-heights to `.banner__content` so the banner has somewhere for the absolute media to live.
+
+### Instance-specific hoist (Quarterly Subscription only)
+
+```css
+@media (min-width: 750px) {
+  [id^="shopify-section-"][id$="__image_banner_XypHhk"] {
+    margin-top: calc(-1 * (var(--header-height, 6rem) + 1.2rem));
+  }
+  [id$="__image_banner_XypHhk"] .banner__content {
+    padding-top: calc(var(--header-height, 6rem) + 1.2rem);
+  }
+}
+
+@media (max-width: 749px) {
+  [id^="shopify-section-"][id$="__image_banner_XypHhk"] {
+    margin-top: 1.6rem;          /* breathing room below header on mobile */
+  }
+}
+
+[id^="shopify-section-"][id$="__image_banner_XypHhk"] {
+  margin-bottom: 128px;          /* gap to the next section, all viewports */
+}
+```
+
+The negative top margin on desktop slides the hero behind the floating header pill (the header is transparent over the image). On mobile the hoist isn't viable (header would overlap the card) so the section flows below the header with a `1.6rem` gap.
+
+### Typography (card-style only)
+
+| Element | Desktop | Mobile |
+|---|---|---|
+| `.banner--card-style .banner__heading` | Glacial Indifference 32px, dark green `#024325`, `0 0 8px` | 20px, `0 0 4px` |
+| `.banner--card-style .banner__subheading` | Cardo 48px serif, dark green, `0 0 32px` | 32px, `0 0 16px` |
+| `.banner--card-style .banner__text` | Glacial Indifference 24px, dark green, `line-height: 1`, `0 0 32px` | 16px, `line-height: 1.4`, `0 0 16px` |
+
+Dawn's stacked-child margins inside the box are reset (`> * + * { margin-top: 0 }`) so per-element `margin-bottom` is the only thing driving spacing — keeps the rhythm tight.
+
+### When to use which pattern
+
+| Need | Use |
+|---|---|
+| Single tier card with the card area **baked into the illustration** | Pioneer card (this doc, top section) |
+| Generic card overlaid on a photo background, **no baked-in card art** | `banner--card-style` (this doc, below) |
+| Multiple tier cards stacked vertically with independent illustrations | [`tier-showcase`](../sections/tier-showcase.md) |
