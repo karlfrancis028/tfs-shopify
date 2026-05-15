@@ -32,7 +32,7 @@
     <div
       id="TierShowcase-{{ block.id }}"
       class="tier-showcase__item"
-      style="--tier-min-height: {{ block.settings.min_height }}px; --tier-mobile-bg-height: {{ block.settings.mobile_bg_height }}px; --tier-card-max-width: {{ block.settings.card_max_width }}px; --tier-card-position: {{ block.settings.card_position }}; --tier-card-position-y: {{ block.settings.card_position_y }};"
+      style="--tier-card-max-width: {{ block.settings.card_max_width }}px; --tier-card-position: {{ block.settings.card_position }}; --tier-card-position-y: {{ block.settings.card_position_y }};"
       {{ block.shopify_attributes }}
     >
       {%- if block.settings.background_image != blank -%}
@@ -200,30 +200,6 @@
           "step": 5,
           "unit": "%",
           "default": 0
-        },
-        {
-          "type": "header",
-          "content": "Section height"
-        },
-        {
-          "type": "range",
-          "id": "min_height",
-          "label": "Desktop minimum height",
-          "min": 300,
-          "max": 1000,
-          "step": 20,
-          "unit": "px",
-          "default": 600
-        },
-        {
-          "type": "range",
-          "id": "mobile_bg_height",
-          "label": "Mobile image height",
-          "min": 200,
-          "max": 700,
-          "step": 20,
-          "unit": "px",
-          "default": 400
         },
         {
           "type": "header",
