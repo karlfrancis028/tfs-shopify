@@ -834,3 +834,21 @@
   --buttons-radius: 999px;
   --buttons-radius-outset: 999px;
 }
+
+/* ============================================
+   Quarterly Subscription hero - image_banner_XypHhk
+   ============================================
+   Lifts the hero up so its image fills the viewport from the
+   very top, sitting behind the floating header pill. Header
+   reserve = sticky --header-height (set by sections/header.liquid)
+   + the 1.2rem top margin baked into .header-wrapper.
+*/
+[id^="shopify-section-"][id$="__image_banner_XypHhk"] {
+  margin-top: calc(-1 * (var(--header-height, 6rem) + 1.2rem));
+}
+
+@media screen and (min-width: 750px) {
+  [id$="__image_banner_XypHhk"] .banner__content {
+    padding-top: calc(var(--header-height, 6rem) + 1.2rem);
+  }
+}
