@@ -91,64 +91,6 @@
         "show_text_below": true
       }
     },
-    "image_banner_FeqadY": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_xdjXPb": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "",
-            "heading_size": "h1",
-            "heading_style": "heading"
-          }
-        },
-        "text_KWKWLF": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "",
-            "text_style": "body"
-          }
-        },
-        "buttons_7axQ3h": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Take your Oath of Discretion",
-            "button_link_1": "shopify://pages/gentlemans-dossier",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_xdjXPb",
-        "text_KWKWLF",
-        "buttons_7axQ3h"
-      ],
-      "custom_css": [
-        ".banner__buttons {text-align: center;}",
-        ".banner__buttons a {background: transparent !important; border: none !important; box-shadow: none !important; color: #173f2f !important; font-size: 18px; font-weight: 500; transition: none !important; margin: 0;}",
-        ".banner__buttons a:hover {background: transparent !important; color: #000000 !important; text-decoration: underline !important;}",
-        "#Banner-template--19767671357605__image_banner_FeqadY {max-width: 1080px; margin: 0 auto; top: 0 !important; bottom: 0 !important; left: 0 !important; right: 0 !important;}"
-      ],
-      "name": "Cover",
-      "settings": {
-        "image": "shopify://shop_images/SUBSCRIPTION_PAGE.png",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-right",
-        "desktop_content_alignment": "right",
-        "show_text_box": false,
-        "color_scheme": "scheme-1",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
-    },
     "tier_showcase_A8jr6d": {
       "type": "tier-showcase",
       "blocks": {
@@ -256,7 +198,6 @@
   "order": [
     "main",
     "image_banner_XypHhk",
-    "image_banner_FeqadY",
     "tier_showcase_A8jr6d"
   ]
 }
