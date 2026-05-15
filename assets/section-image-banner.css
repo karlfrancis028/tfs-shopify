@@ -851,6 +851,19 @@
   [id$="__image_banner_XypHhk"] .banner__content {
     padding-top: calc(var(--header-height, 6rem) + 1.2rem);
   }
+
+  /* Card styling per Figma spec: 808×493, 16px radius, 1px #8AA396 border, 32px padding.
+     Overrides Dawn's default min-width:45rem / max-width:71rem / height:fit-content. */
+  [id$="__image_banner_XypHhk"] .banner__box {
+    width: 808px;
+    max-width: 100%;
+    min-width: 0;
+    height: 493px;
+    padding: 32px;
+    border: 1px solid #8AA396;
+    border-radius: 16px;
+    background-color: white;
+  }
 }
 
 /* ============================================

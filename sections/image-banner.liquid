@@ -120,8 +120,14 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
+            {%- liquid
+              assign heading_classes = 'banner__heading'
+              if block.settings.heading_style == 'subheading'
+                assign heading_classes = 'banner__heading banner__subheading'
+              endif
+            -%}
             <h2
-              class="banner__heading inline-richtext br {{ block.settings.heading_size }}"
+              class="{{ heading_classes }} inline-richtext br {{ block.settings.heading_size }}"
               {{ block.shopify_attributes }}
             >
               {{ block.settings.heading }}
@@ -500,6 +506,17 @@
           ],
           "default": "h1",
           "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_style",
+          "label": "Style",
+          "info": "Adds a `banner__subheading` class for separate styling.",
+          "options": [
+            { "value": "heading", "label": "Heading" },
+            { "value": "subheading", "label": "Subheading" }
+          ],
+          "default": "heading"
         }
       ]
     },
