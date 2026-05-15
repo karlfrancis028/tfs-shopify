@@ -157,6 +157,16 @@
         "padding_bottom": 0
       }
     },
+    "custom_liquid_zzG6Cq": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 100,
+        "padding_bottom": 0
+      }
+    },
     "image_banner_C7DzYw": {
       "type": "image-banner",
       "blocks": {
@@ -210,16 +220,6 @@
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
         "show_text_below": true
-      }
-    },
-    "custom_liquid_zzG6Cq": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "custom_liquid": "",
-        "color_scheme": "",
-        "padding_top": 8,
-        "padding_bottom": 0
       }
     },
     "image_banner_6YHmxi": {
@@ -286,8 +286,6 @@
             "background_image": "shopify://shop_images/45_de6a85e9-ed30-4f5b-8689-1e8f521ef32a.png",
             "overlay_color": "#000000",
             "overlay_opacity": 0,
-            "min_height": 840,
-            "mobile_bg_height": 400,
             "card_position": 30,
             "card_position_y": 70,
             "card_bg_color": "#40392b",
@@ -313,26 +311,53 @@
         "tier_6NFhYP": {
           "type": "tier",
           "settings": {
+            "background_image": "shopify://shop_images/46_91652a09-6719-4e10-abdd-c4a548a168ad.png",
             "overlay_color": "#000000",
             "overlay_opacity": 0,
-            "min_height": 600,
-            "mobile_bg_height": 400,
-            "card_position": 50,
-            "card_position_y": 50,
-            "card_bg_color": "#2a2116",
+            "card_position": 70,
+            "card_position_y": 45,
+            "card_bg_color": "#be9349",
             "card_text_color": "#ffffff",
-            "card_max_width": 460,
-            "card_min_height": 0,
+            "card_max_width": 520,
+            "card_min_height": 700,
             "card_padding": 32,
             "card_border_radius": 10,
             "card_text_alignment": "center",
-            "tier_name": "The Pioneer",
+            "tier_name": "The Heirloom",
             "currency": "P",
-            "amount": "20,000",
+            "amount": "30,000",
             "price_suffix": "",
-            "description": "",
+            "description": "<p>For the gentleman who values the lineage of craft and the grace of enduring taste. This box unveils more premium selections, each curated to express the continuity of heritage and modern mastery.</p>",
             "show_divider": true,
-            "features": "",
+            "features": "A curation of 5+ Premium items\nPremium Top & Bottom garments\nPremium-tier apparel and accessories\nExclusive access to The Fortunate Son events\nPremium-tier pair of shoes\nAnnual Limited Collection Birthday gift",
+            "button_label": "ADD TO CART",
+            "button_link": "",
+            "button_style": "outline",
+            "open_new_tab": false,
+          }
+        },
+        "tier_d7478A": {
+          "type": "tier",
+          "settings": {
+            "background_image": "shopify://shop_images/47_189be329-74ec-4794-a92a-0a9314948599.png",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "card_position": 100,
+            "card_position_y": 60,
+            "card_bg_color": "#272522",
+            "card_text_color": "#ffffff",
+            "card_max_width": 520,
+            "card_min_height": 700,
+            "card_padding": 32,
+            "card_border_radius": 10,
+            "card_text_alignment": "center",
+            "tier_name": "The Legacy",
+            "currency": "P",
+            "amount": "50,000",
+            "price_suffix": "",
+            "description": "<p>For the distinguished few who build their own tradition. Each quarterly box is a collector’s edition of craftsmanship — pieces that bridge artistry and identity, precision and permanence.</p>",
+            "show_divider": true,
+            "features": "A curation of 5+ Premium items\nPremium Top & Bottom garments\nPremium-tier pair of Shoes\nPremium-tier apparel and accessories\nVIP access privileges on The Fortunate Son events\nPriority invitations to The Fortunate Son private experience",
             "button_label": "ADD TO CART",
             "button_link": "",
             "button_style": "outline",
@@ -342,7 +367,8 @@
       },
       "block_order": [
         "tier_hxgNyj",
-        "tier_6NFhYP"
+        "tier_6NFhYP",
+        "tier_d7478A"
       ],
       "name": "Tier Showcase",
       "settings": {
@@ -360,8 +386,8 @@
     "image_banner_FeqadY",
     "image_banner_idbwdg",
     "custom_liquid_PhCniU",
-    "image_banner_C7DzYw",
     "custom_liquid_zzG6Cq",
+    "image_banner_C7DzYw",
     "image_banner_6YHmxi",
     "tier_showcase_A8jr6d"
   ]
