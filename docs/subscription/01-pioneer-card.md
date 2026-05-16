@@ -3,7 +3,7 @@
 **Section ID:** `image_banner_idbwdg`
 **Section type:** `image-banner`
 **Section file:** `sections/image-banner.liquid`
-**Template:** `templates/page.subscription-2.json`
+**Template:** `templates/page.subscription-quarterly-2.json`
 **CSS:** `assets/section-image-banner.css`
 
 ## Purpose
@@ -33,7 +33,7 @@ section#shopify-section-…__image_banner_idbwdg
         div.banner__buttons             ← CTA button (margin-top: auto pushes to bottom)
 ```
 
-## Settings (in `templates/page.subscription-2.json`)
+## Settings (in `templates/page.subscription-quarterly-2.json`)
 
 | Setting | Value |
 |---|---|
@@ -154,7 +154,7 @@ On mobile the card is pulled out of absolute positioning and stacked below the i
 
 ## Related: `banner--card-style` opt-in (Quarterly Subscription hero)
 
-A second pattern in this same section (`image-banner`) supports a **generic card overlay** that's not baked into the PNG — the card is drawn entirely by CSS over a photo background. Used by the Quarterly Subscription hero (`image_banner_XypHhk` on `templates/page.subscription-2.json`).
+A second pattern in this same section (`image-banner`) supports a **generic card overlay** that's not baked into the PNG — the card is drawn entirely by CSS over a photo background. Used by the Quarterly Subscription hero (`image_banner_XypHhk` on `templates/page.subscription-quarterly-2.json`).
 
 ### Section settings (added)
 
