@@ -102,6 +102,14 @@
           </ul>
         {%- endif -%}
 
+        {%- if block.settings.show_examples_divider and block.settings.examples != blank -%}
+          <hr class="tier-showcase__divider">
+        {%- endif -%}
+
+        {%- if block.settings.examples != blank -%}
+          <p class="tier-showcase__examples">{{ block.settings.examples | newline_to_br }}</p>
+        {%- endif -%}
+
         {%- if block.settings.button_label != blank -%}
           <a
             class="tier-showcase__button tier-showcase__button--{{ block.settings.button_style }}"
@@ -339,6 +347,23 @@
           "id": "features",
           "label": "Features",
           "info": "One per line — rendered as bulleted list"
+        },
+        {
+          "type": "header",
+          "content": "Examples (optional)",
+          "info": "Free-form paragraph shown below the features list. Useful for monthly tiers that need a 'Examples may include...' callout."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_examples_divider",
+          "label": "Show divider above examples",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "examples",
+          "label": "Examples text",
+          "info": "Leave blank to hide. Press Enter for line breaks."
         },
         {
           "type": "header",

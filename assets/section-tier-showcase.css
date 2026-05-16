@@ -212,6 +212,21 @@
   margin-right: 0.4rem;
 }
 
+/* Optional examples paragraph — shown below the features list on tiers that
+   need a "Examples may include..." callout (e.g. monthly subscription).
+   Uses comfortable line-height since this is wrapping body copy, not the
+   tight line-height: 1 used elsewhere in the card. */
+.tier-showcase__examples {
+  font-family: 'Glacial Indifference', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.011em;
+  text-align: center;
+  margin: 0 0 2.4rem;
+  color: inherit;
+}
+
 /* ------- Button (3 variants) ------- */
 
 .tier-showcase__button {
