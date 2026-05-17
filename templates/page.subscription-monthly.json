@@ -49,7 +49,7 @@
         "text_cLpmJe": {
           "type": "text",
           "settings": {
-            "text": "Lorem ipsum dolor sit amet consectetur. Sed vitae sem id risus. Pretium enim leo varius elit laoreet aliquam in, a porttitor vitae.",
+            "text": "A monthly cultivation of craftsmanship, pursuit, and refined living — curated to introduce thoughtful objects, experiences, and discoveries within The Fortunate Son world.",
             "text_style": "body"
           }
         },
@@ -78,7 +78,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/TFS_Thank_you_Mailer_Boxes_Postcard_Card_2_1.png",
+        "image": "shopify://shop_images/Background_the_Art_of_Living_Well.jpg",
         "image_overlay_opacity": 0,
         "image_height": "large",
         "image_behavior": "none",
@@ -99,7 +99,7 @@
         "tier_hxgNyj": {
           "type": "tier",
           "settings": {
-            "background_image": "shopify://shop_images/45_de6a85e9-ed30-4f5b-8689-1e8f521ef32a.png",
+            "background_image": "shopify://shop_images/Group_23.png",
             "overlay_color": "#000000",
             "overlay_opacity": 0,
             "card_position": 30,
@@ -129,7 +129,7 @@
         "tier_6NFhYP": {
           "type": "tier",
           "settings": {
-            "background_image": "shopify://shop_images/46_91652a09-6719-4e10-abdd-c4a548a168ad.png",
+            "background_image": "shopify://shop_images/Group_24.png",
             "overlay_color": "#000000",
             "overlay_opacity": 0,
             "card_position": 70,
@@ -159,7 +159,7 @@
         "tier_d7478A": {
           "type": "tier",
           "settings": {
-            "background_image": "shopify://shop_images/47_189be329-74ec-4794-a92a-0a9314948599.png",
+            "background_image": "shopify://shop_images/Group_22.png",
             "overlay_color": "#000000",
             "overlay_opacity": 0,
             "card_position": 100,
